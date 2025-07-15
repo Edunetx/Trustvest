@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrustVest - Home</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #000000, #1a1a1a);
+      font-family: 'Segoe UI', sans-serif;
+      color: gold;
+    }
+    .container {
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 2rem;
+    }
+    .wallet {
+      background-color: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid gold;
+      margin: 20px 0;
+    }
+    .wallet h2 {
+      margin-bottom: 10px;
+      color: gold;
+    }
+    .wallet p {
+      font-size: 1.5rem;
+      color: #ccc;
+    }
+    .plans, .available {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .plan-card {
+      background-color: rgba(0,0,0,0.6);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid gold;
+    }
+    .plan-card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: gold;
+    }
+    .withdraw-btn {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 40px;
+      background-color: gold;
+      color: #000;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      background-color: #111;
+      border-top: 1px solid #333;
+    }
+    .bottom-nav a {
+      color: gold;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Welcome Back 👋</h1>
+
+  <div class="wallet">
+    <h2>Your Wallet</h2>
+    <p>₦0.00</p>
+  </div>
+
+  <section>
+    <h2>Your Active Plan</h2>
+    <div class="plan-card">
+      <h3>No active plan yet</h3>
+    </div>
+  </section>
+  <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+  import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+    authDomain: "trustvest-a1bd9.firebaseapp.com",
+    projectId: "trustvest-a1bd9",
+    storageBucket: "trustvest-a1bd9.firebasestorage.app",
+    messagingSenderId: "676220073092",
+    appId: "1:676220073092:web:b358f8821ac33da9babed1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userRef = doc(db, "Users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const username = userSnap.data().username;
+        document.getElementById("greeting").textContent = `Welcome ${username}`;
+      }
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+</script>
+
+<section>
+  <h2>Available Plans</h2>
+  <div class="plans available">
+    <div class="plan-card"><h3>₦3,000</h3></div>
+    <div class="plan-card"><h3>₦6,000</h3></div>
+    <div class="plan-card"><h3>₦12,000</h3></div>
+    <div class="plan-card"><h3>₦30,000</h3></div>
+    <div class="plan-card"><h3>₦60,000</h3></div>
+    <div class="plan-card"><h3>₦100,000</h3></div>
+    <div class="plan-card"><h3>₦150,000</h3></div>
+    <div class="plan-card"><h3>₦200,000</h3></div>
+    <div class="plan-card"><h3>₦500,000</h3></div>
+    <div class="plan-card"><h3>₦1,000,000</h3></div>
+  </div>
+</section>
+
+<a href="#" class="withdraw-btn">Withdraw Funds</a>
+
+<nav class="bottom-nav">
+  <a href="home.html"><span>Wallet</span></a>
+  <a href="plans.html"><span>Plans</span></a>
+  <a href="withdraw.html"><span>Withdraw</span></a>
+  <a href="me.html"><span>Me</span></a>
+</nav>
+
+</body>
+</html>
