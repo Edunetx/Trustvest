@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #000;
+      background-image: url('https://cdn.jsdelivr.net/gh/Julian-Nash/assets@main/tech-background.gif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .signup-container {
+      background-color: rgba(20, 20, 20, 0.88);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      max-width: 350px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h2 {
+      color: gold;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px auto;
+      display: block;
+      border: 1px solid gold;
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: #000;
+      color: gold;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    button {
+      width: 90%;
+      padding: 12px;
+      background-color: gold;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #ffd700;
+    }
+
+    .bottom-link {
+      color: #ccc;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .bottom-link a {
+      color: gold;
+      text-decoration: none;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #222;
+      color: gold;
+      padding: 12px 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+      display: none;
+      z-index: 999;
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container" id="signupContainer">
+    <h2>Sign Up</h2>
+    <input type="text" id="fullName" placeholder="Full Name (e.g., OGUNIYI DAMILOLA)" required />
+    <input type="text" id="matricNumber" placeholder="Matric Number (e.g., 230602076)" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password (6–12 chars)" required />
+    <button onclick="signUp()">Sign Up</button>
+    <div class="bottom-link">Already have an account? <a href="login.html">Sign in</a></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+      authDomain: "finsa-connect.firebaseapp.com",
+      projectId: "finsa-connect",
+      storageBucket: "finsa-connect.appspot.com",
+      messagingSenderId: "126845965255",
+      appId: "1:126845965255:web:c82539297a8464873d7fe2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.style.display = "block";
+      setTimeout(() => toast.style.display = "none", 4000);
+    }
+
+    window.signUp = async function () {
+      const container = document.getElementById("signupContainer");
+      const fullName = document.getElementById("fullName").value.trim();
+      const matricNumber = document.getElementById("matricNumber").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (fullName.split(" ").length < 2) return showToast("Enter full name (at least 2 words)");
+      if (!/^\d{9}$/.test(matricNumber)) return showToast("Matric number must be 9 digits");
+      if (password.length < 6 || password.length > 12) return showToast("Password must be 6–12 characters");
+
+      container.classList.add("loading");
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await setDoc(doc(db, "Users", user.uid), {
+          fullName,
+          matricNumber,
+          email
+        });
+
+        await sendEmailVerification(user);
+        showToast("✅ Sign up successful! Check your email (including Spam) for the verification link.");
+        setTimeout(() => window.location.href = "login.html", 5000);
+      } catch (error) {
+        let message = "Signup failed";
+        if (error.code === "auth/email-already-in-use") message = "Email already in use";
+        else if (error.code === "auth/invalid-email") message = "Invalid email address";
+        else if (error.code === "auth/weak-password") message = "Weak password (min 6 chars)";
+        else message = error.message;
+        showToast(message);
+      } finally {
+        container.classList.remove("loading");
+      }
+    }
+  </script>
+</body>
+</html>
