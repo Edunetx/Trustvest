@@ -35,9 +35,9 @@
       font-size: 1.5rem;
       color: #ccc;
     }
-    .plans, .available {
+    .plans {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 15px;
       margin: 20px 0;
     }
@@ -49,7 +49,7 @@
     }
     .plan-card h3 {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: gold;
     }
     .withdraw-btn {
@@ -76,17 +76,23 @@
     .bottom-nav a {
       color: gold;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+    .bottom-nav i {
+      font-size: 1.2rem;
+      margin-bottom: 3px;
+    }
   </style>
+
+  <script src="https://kit.fontawesome.com/a2e0d5b3f3.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="container">
-  <h1>Welcome</h1>
+  <h1 id="greeting">Welcome</h1>
 
   <div class="wallet">
     <h2>Your Wallet</h2>
@@ -99,7 +105,34 @@
       <h3>No active plan yet</h3>
     </div>
   </section>
-  <script type="module">
+
+  <section>
+    <h2>Available Plans</h2>
+    <div class="plans">
+      <div class="plan-card"><h3>₦3,000</h3></div>
+      <div class="plan-card"><h3>₦6,000</h3></div>
+      <div class="plan-card"><h3>₦12,000</h3></div>
+      <div class="plan-card"><h3>₦30,000</h3></div>
+      <div class="plan-card"><h3>₦60,000</h3></div>
+      <div class="plan-card"><h3>₦100,000</h3></div>
+      <div class="plan-card"><h3>₦150,000</h3></div>
+      <div class="plan-card"><h3>₦200,000</h3></div>
+      <div class="plan-card"><h3>₦500,000</h3></div>
+      <div class="plan-card"><h3>₦1,000,000</h3></div>
+    </div>
+  </section>
+
+  <a href="#" class="withdraw-btn">Withdraw Funds</a>
+</div>
+
+<nav class="bottom-nav">
+  <a href="home.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="plans.html"><i class="fas fa-chart-line"></i><span>Plans</span></a>
+  <a href="withdraw.html"><i class="fas fa-money-check-alt"></i><span>Withdraw</span></a>
+  <a href="me.html"><i class="fas fa-user"></i><span>Me</span></a>
+</nav>
+
+<script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
   import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
   import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
@@ -130,31 +163,6 @@
     }
   });
 </script>
-
-<section>
-  <h2>Available Plans</h2>
-  <div class="plans available">
-    <div class="plan-card"><h3>₦3,000</h3></div>
-    <div class="plan-card"><h3>₦6,000</h3></div>
-    <div class="plan-card"><h3>₦12,000</h3></div>
-    <div class="plan-card"><h3>₦30,000</h3></div>
-    <div class="plan-card"><h3>₦60,000</h3></div>
-    <div class="plan-card"><h3>₦100,000</h3></div>
-    <div class="plan-card"><h3>₦150,000</h3></div>
-    <div class="plan-card"><h3>₦200,000</h3></div>
-    <div class="plan-card"><h3>₦500,000</h3></div>
-    <div class="plan-card"><h3>₦1,000,000</h3></div>
-  </div>
-</section>
-
-<a href="#" class="withdraw-btn">Withdraw Funds</a>
-
-<nav class="bottom-nav">
-  <a href="home.html"><span>Wallet</span></a>
-  <a href="plans.html"><span>Plans</span></a>
-  <a href="withdraw.html"><span>Withdraw</span></a>
-  <a href="me.html"><span>Me</span></a>
-</nav>
 
 </body>
 </html>
