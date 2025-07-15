@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest | Home</title>
+  
+  <!-- Firebase Setup -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -29,25 +31,133 @@
         const userDoc = await getDoc(doc(db, "Users", user.uid));
         if (userDoc.exists()) {
           const data = userDoc.data();
-          document.getElementById('welcomeText').textContent = `Welcome, ${data.username || user.email}`;
+          document.getElementById('username').textContent = `Welcome, ${data.username || user.email}`;
           document.getElementById('walletBalance').textContent = `₦${data.walletBalance || '0.00'}`;
         }
       }
     });
   </script>
+
   <style>
     body {
-      background: linear-gradient(to bottom, #000, #1a1a1a);
-      color: gold;
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
+      background: linear-gradient(to bottom, #000000, #1a1a1a);
+      font-family: 'Segoe UI', sans-serif;
+      color: gold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      background-color: #111;
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .welcome {
+      margin: 20px 0;
+      font-size: 1.2rem;
+    }
+    .wallet-card {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 20px;
+      border: 1px solid gold;
+    }
+    .wallet-card .balance {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 10px 0 20px;
+    }
+    .wallet-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .wallet-actions a {
+      padding: 12px;
+      background: gold;
+      color: black;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .recent-activities {
+      width: 90%;
+      max-width: 400px;
+      background-color: rgba(0,0,0,0.4);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      color: #ccc;
+      font-size: 0.95rem;
+      border: 1px solid #333;
+    }
+    .recent-activities h4 {
+      color: gold;
+      margin-bottom: 10px;
+    }
+    .recent-activities ul {
+      list-style: none;
+      padding: 0;
+    }
+    .recent-activities li {
+      padding: 5px 0;
+      border-bottom: 1px dashed #444;
     }
   </style>
 </head>
 <body>
-  <h1 style="text-align:center; padding: 20px; font-size: 2rem; letter-spacing: 1px;">TRUSTVEST</h1>
-  <h3 id="welcomeText" style="text-align:center; margin-top:20px;">Welcome...</h3>
-  <h2 id="walletBalance" style="text-align:center; font-size: 2.5rem; margin: 10px 0;">₦0.00</h2>
+
+<header>TRUSTVEST</header>
+
+<div class="welcome" id="username">Welcome...</div>
+
+<div class="wallet-card">
+  <div class="balance" id="walletBalance">₦0.00</div>
+  <div class="wallet-actions">
+    <a href="/wallet/">Deposit</a>
+    <a href="/withdraw/">Withdraw</a>
+    <a href="/invite/">Referral Link</a>
+  </div>
+</div>
+
+<div class="recent-activities">
+  <h4>Recent Activities</h4>
+  <ul>
+    <li>You deposited ₦3000 yesterday</li>
+    <li>You withdrew ₦1500 today</li>
+    <li>Your ₦6000 plan matured last week</li>
+  </ul>
+</div>
+
 </body>
+  <div class="trust-badge">
+  <p>✅ Trusted by over 1,000 smart investors daily.</p>
+</div>
+
+<style>
+.trust-badge {
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 40px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  color: gold;
+  font-size: 0.95rem;
+  border: 1px solid #333;
+}
+</style>
 </html>
