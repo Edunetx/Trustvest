@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest Sign Up</title>
+  <title>Sign Up</title>
   <style>
     body {
       margin: 0;
@@ -19,7 +19,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .signup-container {
       background-color: rgba(20, 20, 20, 0.88);
       padding: 30px;
@@ -29,12 +28,7 @@
       width: 90%;
       text-align: center;
     }
-
-    h2 {
-      color: gold;
-      margin-bottom: 20px;
-    }
-
+    h2 { color: gold; margin-bottom: 20px; }
     input {
       width: 90%;
       padding: 10px;
@@ -46,11 +40,7 @@
       background-color: #000;
       color: gold;
     }
-
-    input::placeholder {
-      color: #ccc;
-    }
-
+    input::placeholder { color: #ccc; }
     button {
       width: 90%;
       padding: 12px;
@@ -62,22 +52,13 @@
       cursor: pointer;
       margin-top: 15px;
     }
-
-    button:hover {
-      background-color: #ffd700;
-    }
-
+    button:hover { background-color: #ffd700; }
     .bottom-link {
       color: #ccc;
       margin-top: 15px;
       font-size: 0.9rem;
     }
-
-    .bottom-link a {
-      color: gold;
-      text-decoration: none;
-    }
-
+    .bottom-link a { color: gold; text-decoration: none; }
     .toast {
       position: fixed;
       top: 20px;
@@ -90,17 +71,13 @@
       display: none;
       z-index: 999;
     }
-
-    .loading {
-      opacity: 0.6;
-      pointer-events: none;
-    }
+    .loading { opacity: 0.6; pointer-events: none; }
   </style>
 </head>
 <body>
   <div class="signup-container" id="signupContainer">
-    <h2>Create Your TrustVest Account</h2>
-    <input type="text" id="username" placeholder="Username (e.g., WealthMaster)" required />
+    <h2>Sign Up</h2>
+    <input type="text" id="username" placeholder="Username" required />
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Password (6–12 chars)" required />
     <button onclick="signUp()">Sign Up</button>
@@ -111,14 +88,14 @@
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
@@ -140,8 +117,8 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      if (username.length < 3) return showToast("Username must be at least 3 characters");
-      if (password.length < 6 || password.length > 12) return showToast("Password must be 6–12 characters");
+      if (!username || !email || !password) return showToast("Fill all fields!");
+      if (password.length < 6 || password.length > 12) return showToast("Password must be 6–12 characters.");
 
       container.classList.add("loading");
       try {
@@ -153,14 +130,12 @@
           email
         });
 
-        await sendEmailVerification(user);
-        showToast("✅ Signup successful! Check your email (Spam too) for verification link.");
-        setTimeout(() => window.location.href = "login.html", 5000);
+        showToast("Signup successful! Proceed to login.");
+        setTimeout(() => window.location.href = "login.html", 3000);
       } catch (error) {
         let message = "Signup failed";
         if (error.code === "auth/email-already-in-use") message = "Email already in use";
         else if (error.code === "auth/invalid-email") message = "Invalid email address";
-        else if (error.code === "auth/weak-password") message = "Weak password (min 6 chars)";
         else message = error.message;
         showToast(message);
       } finally {
