@@ -1,168 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest - Home</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom, #000000, #1a1a1a);
-      font-family: 'Segoe UI', sans-serif;
-      color: gold;
-    }
-    .container {
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      margin-top: 20px;
-      font-size: 2rem;
-    }
-    .wallet {
-      background-color: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid gold;
-      margin: 20px 0;
-    }
-    .wallet h2 {
-      margin-bottom: 10px;
-      color: gold;
-    }
-    .wallet p {
-      font-size: 1.5rem;
-      color: #ccc;
-    }
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .plan-card {
-      background-color: rgba(0,0,0,0.6);
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid gold;
-    }
-    .plan-card h3 {
-      margin: 0;
-      font-size: 1.1rem;
-      color: gold;
-    }
-    .withdraw-btn {
-      display: block;
-      margin: 30px auto;
-      padding: 12px 40px;
-      background-color: gold;
-      color: #000;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      background-color: #111;
-      border-top: 1px solid #333;
-    }
-    .bottom-nav a {
-      color: gold;
-      text-decoration: none;
-      font-size: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .bottom-nav i {
-      font-size: 1.2rem;
-      margin-bottom: 3px;
-    }
-  </style>
-
-  <script src="https://kit.fontawesome.com/a2e0d5b3f3.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>TrustVest | Home</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #004aad, #00bfff);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.1);
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+        #welcomeText {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .bottom-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .material-icons {
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        TrustVest Home
+    </header>
 
-<div class="container">
-  <h1 id="greeting">Welcome</h1>
+    <div id="welcomeText">Welcome</div>
 
-  <div class="wallet">
-    <h2>Your Wallet</h2>
-    <p>₦0.00</p>
-  </div>
-
-  <section>
-    <h2>Your Active Plan</h2>
-    <div class="plan-card">
-      <h3>No active plan yet</h3>
+    <div class="main-content">
+        <p>Your investments and earnings appear here soon.</p>
     </div>
-  </section>
 
-  <section>
-    <h2>Available Plans</h2>
-    <div class="plans">
-      <div class="plan-card"><h3>₦3,000</h3></div>
-      <div class="plan-card"><h3>₦6,000</h3></div>
-      <div class="plan-card"><h3>₦12,000</h3></div>
-      <div class="plan-card"><h3>₦30,000</h3></div>
-      <div class="plan-card"><h3>₦60,000</h3></div>
-      <div class="plan-card"><h3>₦100,000</h3></div>
-      <div class="plan-card"><h3>₦150,000</h3></div>
-      <div class="plan-card"><h3>₦200,000</h3></div>
-      <div class="plan-card"><h3>₦500,000</h3></div>
-      <div class="plan-card"><h3>₦1,000,000</h3></div>
+    <div class="bottom-nav">
+        <a href="wallet.html"><span class="material-icons">account_balance_wallet</span>Wallet</a>
+        <a href="plans.html"><span class="material-icons">bar_chart</span>Plans</a>
+        <a href="withdraw.html"><span class="material-icons">payments</span>Withdraw</a>
+        <a href="me.html"><span class="material-icons">person</span>Me</a>
     </div>
-  </section>
 
-  <a href="#" class="withdraw-btn">Withdraw Funds</a>
-</div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-<nav class="bottom-nav">
-  <a href="home.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="plans.html"><i class="fas fa-chart-line"></i><span>Plans</span></a>
-  <a href="withdraw.html"><i class="fas fa-money-check-alt"></i><span>Withdraw</span></a>
-  <a href="me.html"><i class="fas fa-user"></i><span>Me</span></a>
-</nav>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+            authDomain: "finsa-connect.firebaseapp.com",
+            projectId: "finsa-connect",
+            storageBucket: "finsa-connect.appspot.com",
+            messagingSenderId: "126845965255",
+            appId: "1:126845965255:web:c82539297a8464873d7fe2"
+        };
 
-<script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-  import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getFirestore();
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-    authDomain: "trustvest-a1bd9.firebaseapp.com",
-    projectId: "trustvest-a1bd9",
-    storageBucket: "trustvest-a1bd9.firebasestorage.app",
-    messagingSenderId: "676220073092",
-    appId: "1:676220073092:web:b358f8821ac33da9babed1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const userRef = doc(db, "Users", user.uid);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        const username = userSnap.data().username;
-        document.getElementById("greeting").textContent = `Welcome ${username}`;
-      }
-    } else {
-      window.location.href = "login.html";
-    }
-  });
-</script>
-
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const docRef = doc(db, "Users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const username = docSnap.data().username || user.email;
+                    document.getElementById('welcomeText').textContent = `Welcome, ${username}`;
+                } else {
+                    document.getElementById('welcomeText').textContent = `Welcome, ${user.email}`;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
