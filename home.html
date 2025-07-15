@@ -1,139 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>TrustVest | Home</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to bottom, #000000, #1a1a1a);
-            color: gold;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        header {
-            padding: 20px;
-            text-align: center;
-            background-color: #111;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: gold;
-        }
-        #welcomeText {
-            font-size: 1.4rem;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .balance {
-            font-size: 1.8rem;
-            color: gold;
-            margin-bottom: 20px;
-        }
-        .button-group a {
-            display: block;
-            width: 200px;
-            padding: 12px;
-            text-align: center;
-            background: gold;
-            color: black;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 8px 0;
-        }
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            background: #111;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        .bottom-nav a {
-            color: gold;
-            text-decoration: none;
-            font-size: 0.8rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .material-icons {
-            font-size: 22px;
-            margin-bottom: 3px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrustVest | Home</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #000000, #1a1a1a);
+      color: gold;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      padding: 25px 20px;
+      text-align: center;
+      background-color: #111;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: gold;
+      letter-spacing: 1px;
+    }
+    #welcomeText {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin: 30px 0 10px;
+    }
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .balance-card {
+      background-color: rgba(0,0,0,0.6);
+      padding: 30px;
+      text-align: center;
+      border: 2px solid gold;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 400px;
+    }
+    .balance-card h2 {
+      font-size: 2rem;
+      color: gold;
+      margin-bottom: 10px;
+    }
+    .balance-card p {
+      font-size: 1.3rem;
+      color: #ccc;
+    }
+    .button-group {
+      display: grid;
+      gap: 15px;
+      width: 90%;
+      max-width: 400px;
+    }
+    .button-group a {
+      display: block;
+      padding: 15px;
+      text-align: center;
+      background: gold;
+      color: black;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      background: #111;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    .bottom-nav a {
+      color: gold;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .material-icons {
+      font-size: 24px;
+      margin-bottom: 3px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        TrustVest Home
-    </header>
 
-    <div id="welcomeText">Welcome</div>
+<header>TrustVest Home</header>
 
-    <div class="main-content">
-        <div class="balance">₦0.00</div>
+<div id="welcomeText">Welcome</div>
 
-        <div class="button-group">
-            <a href="/wallet/">Deposit</a>
-            <a href="/withdraw/">Withdraw</a>
-            <a href="/invite/">Referral Link</a>
-        </div>
-    </div>
+<div class="main-content">
 
-    <div class="bottom-nav">
-        <a href="/home/"><span class="material-icons">home</span>Home</a>
-        <a href="/plans/"><span class="material-icons">bar_chart</span>Plans</a>
-        <a href="/invite/"><span class="material-icons">group_add</span>Invite</a>
-        <a href="/me/"><span class="material-icons">person</span>Me</a>
-    </div>
+  <div class="balance-card">
+    <h2>₦0.00</h2>
+    <p>Your Wallet Balance</p>
+  </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  <div class="button-group">
+    <a href="/wallet/">Deposit</a>
+    <a href="/withdraw/">Withdraw</a>
+    <a href="/invite/">Referral Link</a>
+  </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
-            authDomain: "finsa-connect.firebaseapp.com",
-            projectId: "finsa-connect",
-            storageBucket: "finsa-connect.appspot.com",
-            messagingSenderId: "126845965255",
-            appId: "1:126845965255:web:c82539297a8464873d7fe2"
-        };
+</div>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
-        const db = getFirestore();
+<div class="bottom-nav">
+  <a href="/home/"><span class="material-icons">home</span>Home</a>
+  <a href="/plans/"><span class="material-icons">bar_chart</span>Plans</a>
+  <a href="/invite/"><span class="material-icons">group_add</span>Invite</a>
+  <a href="/me/"><span class="material-icons">person</span>Me</a>
+</div>
 
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const docRef = doc(db, "Users", user.uid);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    const username = docSnap.data().username || user.email;
-                    document.getElementById('welcomeText').textContent = `Welcome, ${username}`;
-                } else {
-                    document.getElementById('welcomeText').textContent = `Welcome, ${user.email}`;
-                }
-            }
-        });
-    </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+    authDomain: "finsa-connect.firebaseapp.com",
+    projectId: "finsa-connect",
+    storageBucket: "finsa-connect.appspot.com",
+    messagingSenderId: "126845965255",
+    appId: "1:126845965255:web:c82539297a8464873d7fe2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const db = getFirestore();
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const docRef = doc(db, "Users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const username = docSnap.data().username || user.email;
+        document.getElementById('welcomeText').textContent = `Welcome, ${username}`;
+      } else {
+        document.getElementById('welcomeText').textContent = `Welcome, ${user.email}`;
+      }
+    }
+  });
+</script>
+
 </body>
 </html>
