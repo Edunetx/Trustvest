@@ -15,9 +15,6 @@
       background: linear-gradient(to bottom, #000000, #1a1a1a);
       color: gold;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
     header {
       text-align: center;
@@ -26,30 +23,21 @@
     h1 {
       font-size: 2rem;
     }
-    .balance-container {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
-    .card {
+    .balance-card {
       background-color: rgba(0,0,0,0.7);
       border: 1px solid gold;
       border-radius: 12px;
       padding: 20px;
-      width: 250px;
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
       text-align: center;
-    }
-    .card h2 {
-      color: gold;
-      margin: 0;
     }
     .quick-actions {
       display: flex;
       gap: 20px;
       justify-content: center;
-      margin-bottom: 40px;
+      margin: 20px auto;
       flex-wrap: wrap;
     }
     .quick-actions a {
@@ -60,18 +48,23 @@
       border-radius: 8px;
       font-weight: bold;
     }
-    .recent-activity {
-      max-width: 400px;
+    .recent-activity, .testimonials, .tips, .trusted, .cta {
+      max-width: 600px;
       width: 90%;
-      background-color: rgba(0,0,0,0.6);
+      margin: 40px auto;
       padding: 20px;
+      background-color: rgba(0,0,0,0.6);
       border-radius: 12px;
       border: 1px solid gold;
-      margin-bottom: 40px;
     }
-    .recent-activity h3 {
+    .recent-activity h3,
+    .testimonials h3,
+    .tips h3,
+    .trusted h3,
+    .cta h3 {
       color: gold;
       margin-bottom: 15px;
+      text-align: center;
     }
     .activity-item {
       display: flex;
@@ -80,8 +73,44 @@
       font-size: 0.95rem;
       color: #ccc;
     }
+    .testimonial-text {
+      min-height: 60px;
+      text-align: center;
+      color: #ccc;
+      font-style: italic;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .tips-list p {
+      background-color: rgba(20,20,20,0.8);
+      padding: 10px;
+      margin: 10px 0;
+      border-left: 4px solid gold;
+    }
+    .trusted-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .trusted-logos img {
+      width: 80px;
+      filter: grayscale(100%);
+      opacity: 0.8;
+    }
+    .cta {
+      text-align: center;
+    }
+    .cta a {
+      display: inline-block;
+      padding: 12px 24px;
+      background: gold;
+      color: black;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 10px;
+    }
     footer {
-      margin-top: auto;
       padding: 20px;
       text-align: center;
       color: #666;
@@ -94,15 +123,9 @@
   <h1 id="welcome">Welcome 👋</h1>
 </header>
 
-<div class="balance-container">
-  <div class="card">
-    <h3>Wallet Balance</h3>
-    <h2 id="wallet-balance">₦0</h2>
-  </div>
-  <div class="card">
-    <h3>Total Earnings</h3>
-    <h2 id="total-earnings">₦0</h2>
-  </div>
+<div class="balance-card">
+  <h3>Your Finance Summary</h3>
+  <p id="wallet-info">Wallet: ₦0 | Earnings: ₦0</p>
 </div>
 
 <div class="quick-actions">
@@ -116,6 +139,41 @@
   <div id="activity-list">
     <p>No recent activity found.</p>
   </div>
+</div>
+
+<div class="testimonials">
+  <h3>What People Are Saying</h3>
+  <div id="testimonial" class="testimonial-text">TrustVest changed my life!</div>
+</div>
+
+<div class="tips">
+  <h3>Finance Tips</h3>
+  <div class="tips-list">
+    <p>Start small, grow consistently.</p>
+    <p>Compound interest is your best friend.</p>
+    <p>Beware of platforms promising unrealistic returns.</p>
+    <p>Financial discipline builds generational wealth.</p>
+    <p>Stay invested, stay informed.</p>
+  </div>
+</div>
+
+<div class="trusted">
+  <h3>Trusted By</h3>
+  <div class="trusted-logos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/GTBank_Logo.svg" alt="GTBank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Access_Bank_logo.svg" alt="Access Bank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FirstBank_Nigeria_logo.svg" alt="FirstBank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/MasterCard_Logo.svg" alt="MasterCard">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Paypal_2014_logo.png" alt="PayPal">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Flutterwave_Logo.png" alt="Flutterwave">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Paystack_logo.png" alt="Paystack">
+  </div>
+</div>
+
+<div class="cta">
+  <h3>Ready to Grow Your Wealth?</h3>
+  <a href="plans.html">Get Started</a>
 </div>
 
 <footer>
@@ -138,16 +196,13 @@
   auth.onAuthStateChanged(user => {
     if (user) {
       const uid = user.uid;
-      document.getElementById('welcome').innerText = `Welcome, ${user.email}`;
-
       db.collection('Users').doc(uid).get().then(doc => {
         if (doc.exists) {
           const data = doc.data();
-          document.getElementById('wallet-balance').innerText = `₦${(data.walletBalance || 0).toLocaleString()}`;
-          document.getElementById('total-earnings').innerText = `₦${(data.totalEarnings || 0).toLocaleString()}`;
+          document.getElementById('welcome').innerText = `Welcome, ${data.name}`;
+          document.getElementById('wallet-info').innerText = `Wallet: ₦${(data.walletBalance || 0).toLocaleString()} | Earnings: ₦${(data.totalEarnings || 0).toLocaleString()}`;
         }
       });
-
       db.collection('transactions')
         .where('uid', '==', uid)
         .orderBy('date', 'desc')
@@ -177,6 +232,102 @@
       window.location.href = 'login.html';
     }
   });
+
+  const testimonials = [
+    "TrustVest helped me grow my side hustle money safely.",
+    "No stress platform. Auto earnings, smooth withdrawals.",
+    "I trust this more than most apps I used before.",
+    "A platform that's clear and delivers.",
+    "Started with ₦3,000, now I’m up ₦15,000.",
+    "Love the clean dashboard and smooth updates.",
+    "Finally, something real in Nigeria for investments.",
+    "My brother referred me, now I'm referring my friends.",
+    "Withdrawals are fast, support responds quickly.",
+    "I use TrustVest like a savings tool that works for me.",
+    "Got my first returns in under a month!",
+    "Even my skeptical friends now joined.",
+    "From student budget to earning small passive income.",
+    "It’s safe, simple, and effective.",
+    "I love the structure and security.",
+    "Earnings are always updated on time.",
+    "Perfect platform for first-timers.",
+    "No tricks. Just what they say.",
+    "Growing steadily month after month.",
+    "TrustVest makes finance feel easy.",
+    "Easy to use even on my phone.",
+    "Professional looking, trustworthy results.",
+    "No unnecessary emails or stress.",
+    "I use this like a mini pension.",
+    "Clear breakdown of my earnings daily.",
+    "Started with ₦6,000, now I’m upgrading plans.",
+    "The UI looks premium, feels legit.",
+    "My bank balance thanks me now.",
+    "Finally, no fake ROI apps again.",
+    "Flutterwave integration gives me peace.",
+    "Very neat withdrawals process.",
+    "This platform earns my trust daily.",
+    "No delay. No wahala.",
+    "I check my balance like it’s a game.",
+    "Referral system is simple to use.",
+    "I built my confidence here.",
+    "Finally a Nigerian app with global structure.",
+    "Never had a reason to complain.",
+    "Telling my siblings to join too.",
+    "No stress, no fear, just steady growth.",
+    "You don’t even need huge capital to begin.",
+    "Gradually building my small fortune here.",
+    "Even in small amounts, growth feels good.",
+    "I trust my wallet more here than my bank app.",
+    "When they said transparency, they meant it.",
+    "Perfect platform for my passive income journey.",
+    "Tested. Trusted. Recommended.",
+    "Friends laughed, now they ask me how.",
+    "No scams, no silly promises, just results.",
+    "Love seeing my earnings add up daily.",
+    "Exactly the kind of app Nigeria needs.",
+    "Steady growth, zero headache.",
+    "TrustVest keeps impressing me.",
+    "They prioritize user safety, that’s clear.",
+    "Perfect mix of fintech and simplicity.",
+    "I refer this with confidence now.",
+    "A calm, peaceful earning process.",
+    "Nothing hidden, all clear numbers.",
+    "I enjoy checking my wallet weekly.",
+    "Financial discipline made easy.",
+    "The transparency is unmatched.",
+    "Good experience so far, no regrets.",
+    "Withdrawal works exactly as promised.",
+    "The plans fit every budget type.",
+    "I love upgrading my plan monthly.",
+    "Feels like a financial journey partner.",
+    "Earn, withdraw, repeat. Simple as that.",
+    "Their updates keep improving the app.",
+    "Every step is easy to understand.",
+    "I built trust here step-by-step.",
+    "Even my mum now asks me about it.",
+    "Clear timeline for every transaction.",
+    "Zero confusion. Just growth.",
+    "I feel smarter using this app.",
+    "Love the clean and calm colors.",
+    "My small steps are adding up fast.",
+    "Perfect for side hustlers like me.",
+    "The app motivates me to save more.",
+    "Even the FAQ makes everything clear.",
+    "Each earnings update makes me smile.",
+    "TrustVest delivers exactly what I need.",
+    "My dashboard feels like progress."
+  ];
+
+  let testimonialIndex = 0;
+  const testimonialElement = document.getElementById('testimonial');
+  setInterval(() => {
+    testimonialElement.style.opacity = 0;
+    setTimeout(() => {
+      testimonialElement.innerText = testimonials[testimonialIndex];
+      testimonialElement.style.opacity = 1;
+      testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+    }, 500);
+  }, 2000);
 </script>
 
 </body>
