@@ -1,163 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest | Home</title>
-  
-  <!-- Firebase Setup -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
-      authDomain: "finsa-connect.firebaseapp.com",
-      projectId: "finsa-connect",
-      storageBucket: "finsa-connect.appspot.com",
-      messagingSenderId: "126845965255",
-      appId: "1:126845965255:web:c82539297a8464873d7fe2"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore();
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "/login.html";
-      } else {
-        const userDoc = await getDoc(doc(db, "Users", user.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          document.getElementById('username').textContent = `Welcome, ${data.username || user.email}`;
-          document.getElementById('walletBalance').textContent = `₦${data.walletBalance || '0.00'}`;
-        }
-      }
-    });
-  </script>
-
+  <title>TrustVest - Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #000000, #1a1a1a);
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #000000, #1a1a1a);
       color: gold;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
     }
     header {
-      width: 100%;
-      padding: 20px;
       text-align: center;
-      background-color: #111;
+      padding: 40px 20px;
+    }
+    h1 {
       font-size: 2rem;
-      font-weight: bold;
-      letter-spacing: 2px;
     }
-    .welcome {
-      margin: 20px 0;
-      font-size: 1.2rem;
-    }
-    .wallet-card {
-      width: 90%;
-      max-width: 400px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      margin-bottom: 20px;
-      border: 1px solid gold;
-    }
-    .wallet-card .balance {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin: 10px 0 20px;
-    }
-    .wallet-actions {
+    .balance-container {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
     }
-    .wallet-actions a {
-      padding: 12px;
+    .card {
+      background-color: rgba(0,0,0,0.7);
+      border: 1px solid gold;
+      border-radius: 12px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+    }
+    .card h2 {
+      color: gold;
+      margin: 0;
+    }
+    .quick-actions {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .quick-actions a {
+      text-decoration: none;
+      padding: 12px 24px;
       background: gold;
       color: black;
       border-radius: 8px;
-      text-decoration: none;
       font-weight: bold;
     }
-    .recent-activities {
-      width: 90%;
+    .recent-activity {
       max-width: 400px;
-      background-color: rgba(0,0,0,0.4);
+      width: 90%;
+      background-color: rgba(0,0,0,0.6);
       padding: 20px;
-      margin-bottom: 20px;
       border-radius: 12px;
-      color: #ccc;
-      font-size: 0.95rem;
-      border: 1px solid #333;
+      border: 1px solid gold;
+      margin-bottom: 40px;
     }
-    .recent-activities h4 {
+    .recent-activity h3 {
       color: gold;
+      margin-bottom: 15px;
+    }
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 10px;
+      font-size: 0.95rem;
+      color: #ccc;
     }
-    .recent-activities ul {
-      list-style: none;
-      padding: 0;
-    }
-    .recent-activities li {
-      padding: 5px 0;
-      border-bottom: 1px dashed #444;
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      text-align: center;
+      color: #666;
     }
   </style>
 </head>
 <body>
 
-<header>TRUSTVEST</header>
+<header>
+  <h1 id="welcome">Welcome 👋</h1>
+</header>
 
-<div class="welcome" id="username">Welcome...</div>
-
-<div class="wallet-card">
-  <div class="balance" id="walletBalance">₦0.00</div>
-  <div class="wallet-actions">
-    <a href="/wallet/">Deposit</a>
-    <a href="/withdraw/">Withdraw</a>
-    <a href="/invite/">Referral Link</a>
+<div class="balance-container">
+  <div class="card">
+    <h3>Wallet Balance</h3>
+    <h2 id="wallet-balance">₦0</h2>
+  </div>
+  <div class="card">
+    <h3>Total Earnings</h3>
+    <h2 id="total-earnings">₦0</h2>
   </div>
 </div>
 
-<div class="recent-activities">
-  <h4>Recent Activities</h4>
-  <ul>
-    <li>You deposited ₦3000 yesterday</li>
-    <li>You withdrew ₦1500 today</li>
-    <li>Your ₦6000 plan matured last week</li>
-  </ul>
+<div class="quick-actions">
+  <a href="deposit.html">Deposit</a>
+  <a href="plans.html">Plans</a>
+  <a href="withdraw.html">Withdraw</a>
 </div>
+
+<div class="recent-activity">
+  <h3>Recent Activity</h3>
+  <div id="activity-list">
+    <p>No recent activity found.</p>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 TrustVest. Your Future, Your Investment.
+</footer>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+    authDomain: "finsa-connect.firebaseapp.com",
+    projectId: "finsa-connect",
+    storageBucket: "finsa-connect.appspot.com",
+    messagingSenderId: "126845965255",
+    appId: "1:126845965255:web:c82539297a8464873d7fe2"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      const uid = user.uid;
+      document.getElementById('welcome').innerText = `Welcome, ${user.email}`;
+
+      db.collection('Users').doc(uid).get().then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          document.getElementById('wallet-balance').innerText = `₦${(data.walletBalance || 0).toLocaleString()}`;
+          document.getElementById('total-earnings').innerText = `₦${(data.totalEarnings || 0).toLocaleString()}`;
+        }
+      });
+
+      db.collection('transactions')
+        .where('uid', '==', uid)
+        .orderBy('date', 'desc')
+        .limit(5)
+        .get()
+        .then(snapshot => {
+          const list = document.getElementById('activity-list');
+          list.innerHTML = '';
+          if (snapshot.empty) {
+            list.innerHTML = '<p>No recent activity found.</p>';
+          } else {
+            snapshot.forEach(doc => {
+              const tx = doc.data();
+              const amountSign = tx.type === 'withdrawal' ? '-' : '+';
+              const date = tx.date.toDate().toLocaleDateString();
+              const div = document.createElement('div');
+              div.className = 'activity-item';
+              div.innerHTML = `
+                <span>${amountSign}₦${tx.amount.toLocaleString()}</span>
+                <span>${tx.type.charAt(0).toUpperCase() + tx.type.slice(1)} • ${date}</span>
+              `;
+              list.appendChild(div);
+            });
+          }
+        });
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+</script>
 
 </body>
-  <div class="trust-badge">
-  <p>✅ Trusted by over 1,000 smart investors daily.</p>
-</div>
-
-<style>
-.trust-badge {
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 40px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  color: gold;
-  font-size: 0.95rem;
-  border: 1px solid #333;
-}
-</style>
 </html>
