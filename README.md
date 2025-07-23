@@ -16,10 +16,6 @@
 - 🎨 Gradient-rich, modern UI with mobile-first responsiveness  
 
 ---
-
-## 📂 Project Structure
-TrustVest/ │ ├── index.html              # Homepage with Login / Signup ├── login.html               # Login Page ├── signup.html              # Signup Page ├── wallet.html              # Wallet Overview ├── plans.html               # Investment Plans ├── withdraw.html            # Withdraw Funds ├── me.html                  # User Profile & Settings ├── admin.html               # Admin Panel (Firebase Connected) ├── css/ │   └── styles.css           # Stylesheets ├── js/ │   ├── auth.js              # Auth Logic │   ├── wallet.js            # Wallet Logic │   ├── plans.js             # Investment Logic │   ├── withdraw.js          # Withdraw Logic │   └── admin.js             # Admin Panel Logic └── assets/ └── images/              # Logos, Icons, Images
---
 📄 License
 
 All rights reserved. This project is the intellectual property of the TrustVest team. Unauthorized reproduction or commercial use is prohibited.
