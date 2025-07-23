@@ -33,6 +33,10 @@
       margin: 20px auto;
       text-align: center;
     }
+    .balance-card p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
     .quick-actions {
       display: flex;
       gap: 20px;
@@ -160,13 +164,13 @@
 <div class="trusted">
   <h3>Trusted By</h3>
   <div class="trusted-logos">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/GTBank_Logo.svg" alt="GTBank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Access_Bank_logo.svg" alt="Access Bank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/FirstBank_Nigeria_logo.svg" alt="FirstBank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/MasterCard_Logo.svg" alt="MasterCard">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Paypal_2014_logo.png" alt="PayPal">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Flutterwave_Logo.png" alt="Flutterwave">
+    <img src="https://1000logos.net/wp-content/uploads/2017/06/GTBank-Logo.png" alt="GTBank">
+    <img src="https://1000logos.net/wp-content/uploads/2021/06/Access-Bank-logo.png" alt="Access Bank">
+    <img src="https://1000logos.net/wp-content/uploads/2021/05/FirstBank-Logo.png" alt="FirstBank">
+    <img src="https://1000logos.net/wp-content/uploads/2021/04/Mastercard-logo.png" alt="MasterCard">
+    <img src="https://1000logos.net/wp-content/uploads/2017/06/VISA-Logo.png" alt="Visa">
+    <img src="https://1000logos.net/wp-content/uploads/2021/05/PayPal-logo.png" alt="PayPal">
+    <img src="https://seeklogo.com/images/F/flutterwave-logo-F8781D4C2D-seeklogo.com.png" alt="Flutterwave">
     <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Paystack_logo.png" alt="Paystack">
   </div>
 </div>
@@ -199,7 +203,7 @@
       db.collection('Users').doc(uid).get().then(doc => {
         if (doc.exists) {
           const data = doc.data();
-          document.getElementById('welcome').innerText = `Welcome, ${data.name}`;
+          document.getElementById('welcome').innerText = `Welcome, ${data.name || data.username || "Investor"}`;
           document.getElementById('wallet-info').innerText = `Wallet: ₦${(data.walletBalance || 0).toLocaleString()} | Earnings: ₦${(data.totalEarnings || 0).toLocaleString()}`;
         }
       });
