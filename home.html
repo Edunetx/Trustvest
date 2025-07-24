@@ -3,127 +3,188 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TrustVest - Home</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-xyz" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-      color: #fff;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      font-size: 24px;
-      background: linear-gradient(to right, #c79081, #dfa579);
-      font-weight: bold;
-    }
-    .summary-card {
-      background: linear-gradient(145deg, #1c1c1c, #2e2e2e);
-      margin: 20px;
-      border-radius: 15px;
-      padding: 20px;
-      font-size: 1.1rem;
-    }
-    .trusted-logos {
-      text-align: center;
-      padding: 10px;
-    }
-    .trusted-logos img {
-      height: 40px;
-      margin: 0 15px;
-      filter: none;
-    }
-    .testimonials {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      margin: 20px;
-      border-radius: 15px;
-      min-height: 80px;
-      font-style: italic;
-    }
-    nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-around;
-      background: #111;
-      padding: 10px 0;
-      border-top: 1px solid #333;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      text-align: center;
-    }
-    nav a i {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }body {
+  background: linear-gradient(to bottom right, #112d4e, #3f72af, #fce38a);
+  color: white;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+header {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #3f72af, #112d4e);
+  color: #fce38a;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, #fce38a, #f7c873);
+  color: #112d4e;
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 50px 10px 50px 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  font-size: 1.2rem;
+}
+
+.trusted-section {
+  text-align: center;
+  margin: 30px auto;
+}
+
+.trusted-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: #fce38a;
+}
+
+.trusted-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.trusted-logos img {
+  height: 40px;
+  filter: none;
+}
+
+.testimonials {
+  margin: 40px auto;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.testimonial-box {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 30px 5px 30px 5px;
+  padding: 20px;
+  font-size: 1rem;
+  color: #fff;
+  min-height: 100px;
+  transition: all 0.5s ease-in-out;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to right, #3f72af, #112d4e);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.bottom-nav a {
+  color: #fce38a;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottom-nav i {
+  font-size: 1.3rem;
+  margin-bottom: 2px;
+}
+
   </style>
 </head>
 <body>
-  <header>Welcome to TrustVest</header>  <div class="summary-card">
-    <h3>Your Finance Summary</h3>
-    <p>Wallet Balance: ₦10,000</p>
-    <p>Total Earnings: ₦15,500</p>
-    <p>Last Transaction: ₦2,000 on July 20</p>
-  </div>  <div class="trusted-logos">
-    <p>Trusted by:</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Mastercard-logo.png" alt="MasterCard">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Google_Pay_Logo.svg" alt="Google Pay">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Apple_Pay_logo.svg" alt="Apple Pay">
-  </div>  <div class="testimonials" id="testimonialBox">
-    "TrustVest changed how I save!" – Ada O.
-  </div>  <nav>
-    <a href="home.html"><i class="fas fa-home"></i>Home</a>
-    <a href="plans.html"><i class="fas fa-chart-line"></i>Plans</a>
-    <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
-    <a href="support.html"><i class="fas fa-headset"></i>Support</a>
-  </nav>  <script>
+  <header>
+    Welcome to TrustVest
+  </header>  <div class="summary-card">
+    <p><strong>Wallet Balance:</strong> ₦5,500</p>
+    <p><strong>Total Earnings:</strong> ₦11,000</p>
+    <p><strong>Withdrawable:</strong> ₦2,000</p>
+  </div>  <div class="trusted-section">
+    <h3>Trusted By</h3>
+    <div class="trusted-logos">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/MasterCard_Logo.svg" alt="Mastercard">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/PayPal_Logo.svg" alt="PayPal">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Flutterwave_Logo.svg" alt="Flutterwave">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+    </div>
+  </div>  <div class="testimonials">
+    <h3 style="color:#fce38a; margin-bottom:10px">What People Say</h3>
+    <div class="testimonial-box" id="testimonial-box"></div>
+  </div>  <div class="bottom-nav">
+    <a href="#">
+      <i class="fas fa-home"></i>
+      Home
+    </a>
+    <a href="#">
+      <i class="fas fa-chart-line"></i>
+      Plans
+    </a>
+    <a href="#">
+      <i class="fas fa-user"></i>
+      Profile
+    </a>
+    <a href="#">
+      <i class="fas fa-headset"></i>
+      Support
+    </a>
+  </div>  <script>
     const testimonials = [
-      "TrustVest changed how I save! – Ada O.",
-      "I earned ₦30k in one month! – John T.",
-      "No stress, just profits. – Fatima A.",
-      "I love the simplicity. – Segun M.",
-      "Reliable and fast payouts. – Nkechi E.",
-      "Easy to track my earnings! – Daniel O.",
-      "The best investment app in Nigeria! – Musa A.",
-      "TrustVest gives me peace of mind. – Rose B.",
-      "Customer support is 🔥 – Femi K.",
-      "Referral bonus is cool too! – Ayo J.",
-      "Started small, now I earn big. – Chidi N.",
-      "I use it every day! – Mary O.",
-      "Smart way to grow savings. – Ahmed R.",
-      "It's better than a bank! – Deborah T.",
-      "Investing made simple. – Emmanuel Z.",
-      "Perfect for students. – Grace U.",
-      "Safe and secure. – Uche B.",
-      "TrustVest is a lifesaver! – Kemi F.",
-      "Transparent and trustworthy. – Lanre Y.",
-      "I introduced my whole family. – Ruth L.",
-      "Great returns. – Bashir M.",
-      "User interface is smooth. – Cynthia C.",
-      "Auto-earn feature is mad. – David K.",
-      "Works even on low data. – Joy I.",
-      "I’m never going back to banks. – Kolapo P.",
-      "You earn while you sleep. – Faith G.",
-      "Stress-free withdrawals. – Janet A.",
-      "Simple signup. – Ifeanyi E.",
-      "Good for long-term savings. – Queen S.",
-      "TrustVest is the future. – Henry N."
+      "TrustVest helped me save faster than I imagined!",
+      "Clean interface, smooth navigation — I love it.",
+      "I earned my first ₦10,000 with TrustVest in a month!",
+      "Highly recommend to all students looking to invest.",
+      "Quick deposits via PalmPay. Easy peasy!",
+      "Support team replies fast, very helpful.",
+      "15% deduction but the returns make up for it.",
+      "Best investment app I’ve used so far.",
+      "Simple dashboard with just what I need.",
+      "Can’t believe how easy it is to withdraw.",
+      "My balance updates daily — I like the automation.",
+      "Even my roommate is using it now 😂",
+      "I got ₦1,800 just from referrals!",
+      "Works better than many crypto apps.",
+      "Doesn’t lag, fast and responsive.",
+      "Design looks professional and modern.",
+      "I like that the summary card is clear and bold.",
+      "No stress setup. Sign up was under 2 mins.",
+      "Real legit earnings. TrustVest delivers.",
+      "Been consistent for over 2 months now.",
+      "Customer care helped me recover my PIN.",
+      "Best ₦3,000 I’ve ever invested.",
+      "The testimonials are actually motivating.",
+      "Thank you for building this!",
+      "Zero scam vibes, I feel secure.",
+      "I use it daily and it keeps me focused.",
+      "Great for NYSC allowance savings too!",
+      "Can’t wait to share this with more people.",
+      "Simple UI + helpful community.",
+      "My wallet updated as promised — love it!"
     ];
 
-    let current = 0;
-    setInterval(() => {
-      current = (current + 1) % testimonials.length;
-      document.getElementById("testimonialBox").innerText = testimonials[current];
-    }, 2500);
+    let testimonialIndex = 0;
+    const box = document.getElementById("testimonial-box");
+
+    function showNextTestimonial() {
+      box.textContent = testimonials[testimonialIndex];
+      testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+    }
+
+    showNextTestimonial();
+    setInterval(showNextTestimonial, 2500);
   </script></body>
 </html>
