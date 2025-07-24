@@ -2,189 +2,228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustVest - Home</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <title>TrustVest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }body {
-  background: linear-gradient(to bottom right, #112d4e, #3f72af, #fce38a);
-  color: white;
-  min-height: 100vh;
-  padding-bottom: 100px;
-}
-
-header {
-  padding: 20px;
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: bold;
-  background: linear-gradient(to right, #3f72af, #112d4e);
-  color: #fce38a;
-}
-
-.summary-card {
-  background: linear-gradient(135deg, #fce38a, #f7c873);
-  color: #112d4e;
-  width: 90%;
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 50px 10px 50px 10px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  font-size: 1.2rem;
-}
-
-.trusted-section {
-  text-align: center;
-  margin: 30px auto;
-}
-
-.trusted-section h3 {
-  margin-bottom: 15px;
-  font-size: 1.3rem;
-  color: #fce38a;
-}
-
-.trusted-logos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.trusted-logos img {
-  height: 40px;
-  filter: none;
-}
-
-.testimonials {
-  margin: 40px auto;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-}
-
-.testimonial-box {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 30px 5px 30px 5px;
-  padding: 20px;
-  font-size: 1rem;
-  color: #fff;
-  min-height: 100px;
-  transition: all 0.5s ease-in-out;
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: linear-gradient(to right, #3f72af, #112d4e);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  z-index: 1000;
-}
-
-.bottom-nav a {
-  color: #fce38a;
-  text-decoration: none;
-  font-size: 0.9rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.bottom-nav i {
-  font-size: 1.3rem;
-  margin-bottom: 2px;
-}
-
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #17406d, #3baea0, #f6d365);
+      color: #fff;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+    header i {
+      margin-right: 10px;
+    }
+    .container {
+      padding: 1rem;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .section-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .balance-value {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .testimonial {
+      animation: fadeIn 2s infinite alternate;
+    }
+    @keyframes fadeIn {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+    }
+    .trusted-logos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 2rem 1rem;
+      background: #fff;
+    }
+    .trusted-logos img {
+      height: 40px;
+      object-fit: contain;
+    }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.8rem 0;
+      backdrop-filter: blur(8px);
+    }
+    .bottom-nav a {
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+      text-decoration: none;
+    }
+    .bottom-nav i {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+    }
+    .announcement-banner {
+      background-color: #ffe600;
+      color: #000;
+      padding: 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .popup-notification {
+      position: fixed;
+      top: 70px;
+      right: 10px;
+      background: #1abc9c;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 998;
+      animation: fadeIn 1s ease-in-out;
+    }
   </style>
 </head>
-<body>
-  <header>
-    Welcome to TrustVest
-  </header>  <div class="summary-card">
-    <p><strong>Wallet Balance:</strong> ₦5,500</p>
-    <p><strong>Total Earnings:</strong> ₦11,000</p>
-    <p><strong>Withdrawable:</strong> ₦2,000</p>
-  </div>  <div class="trusted-section">
-    <h3>Trusted By</h3>
-    <div class="trusted-logos">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/MasterCard_Logo.svg" alt="Mastercard">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/PayPal_Logo.svg" alt="PayPal">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Flutterwave_Logo.svg" alt="Flutterwave">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
-    </div>
-  </div>  <div class="testimonials">
-    <h3 style="color:#fce38a; margin-bottom:10px">What People Say</h3>
-    <div class="testimonial-box" id="testimonial-box"></div>
-  </div>  <div class="bottom-nav">
-    <a href="#">
-      <i class="fas fa-home"></i>
-      Home
-    </a>
-    <a href="#">
-      <i class="fas fa-chart-line"></i>
-      Plans
-    </a>
-    <a href="#">
-      <i class="fas fa-user"></i>
-      Profile
-    </a>
-    <a href="#">
-      <i class="fas fa-headset"></i>
-      Support
-    </a>
-  </div>  <script>
-    const testimonials = [
-      "TrustVest helped me save faster than I imagined!",
-      "Clean interface, smooth navigation — I love it.",
-      "I earned my first ₦10,000 with TrustVest in a month!",
-      "Highly recommend to all students looking to invest.",
-      "Quick deposits via PalmPay. Easy peasy!",
-      "Support team replies fast, very helpful.",
-      "15% deduction but the returns make up for it.",
-      "Best investment app I’ve used so far.",
-      "Simple dashboard with just what I need.",
-      "Can’t believe how easy it is to withdraw.",
-      "My balance updates daily — I like the automation.",
-      "Even my roommate is using it now 😂",
-      "I got ₦1,800 just from referrals!",
-      "Works better than many crypto apps.",
-      "Doesn’t lag, fast and responsive.",
-      "Design looks professional and modern.",
-      "I like that the summary card is clear and bold.",
-      "No stress setup. Sign up was under 2 mins.",
-      "Real legit earnings. TrustVest delivers.",
-      "Been consistent for over 2 months now.",
-      "Customer care helped me recover my PIN.",
-      "Best ₦3,000 I’ve ever invested.",
-      "The testimonials are actually motivating.",
-      "Thank you for building this!",
-      "Zero scam vibes, I feel secure.",
-      "I use it daily and it keeps me focused.",
-      "Great for NYSC allowance savings too!",
-      "Can’t wait to share this with more people.",
-      "Simple UI + helpful community.",
-      "My wallet updated as promised — love it!"
-    ];
+<body>  <div class="announcement-banner" id="announcementBanner">
+    <span id="announcementText">🔥 New Promo: Earn 20% Bonus on ₦50k+ plans!</span>
+    <button onclick="document.getElementById('announcementBanner').style.display='none'">❌</button>
+  </div>  <div class="popup-notification" id="popupNotif">🔔 New message from TrustVest support</div>  <header>
+    <i class="fas fa-piggy-bank"></i>
+    TRUSTVEST
+  </header>  <div class="container">
+    <div class="card">
+      <div class="section-title">Wallet Balance</div>
+      <div class="balance-value" id="walletBalance">₦0.00</div>
+    </div><div class="card">
+  <div class="section-title">Recent Transactions</div>
+  <ul id="recentTransactions">
+    <li>Loading...</li>
+  </ul>
+</div>
 
-    let testimonialIndex = 0;
-    const box = document.getElementById("testimonial-box");
+<div class="card">
+  <div class="section-title">Your Active Plans</div>
+  <ul>
+    <li>Gold Plan - ₦50,000</li>
+    <li>Silver Plan - ₦10,000</li>
+  </ul>
+</div>
 
-    function showNextTestimonial() {
-      box.textContent = testimonials[testimonialIndex];
-      testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+<div class="card testimonial" id="testimonialBox">Loading testimonials...</div>
+
+<div class="card">
+  <div class="section-title">Earnings Summary</div>
+  <p>Total Earned: ₦15,000<br> Last Withdrawal: ₦5,000</p>
+</div>
+
+  </div>  <div class="trusted-logos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/GTBank_logo.png" alt="GTBank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Zenith_Bank_logo.png" alt="Zenith Bank">
+    <img src="https://seeklogo.com/images/F/flutterwave-logo-E75D8E1E97-seeklogo.com.png" alt="Flutterwave">
+  </div>  <nav class="bottom-nav">
+    <a href="#"><i class="fas fa-home"></i>Home</a>
+    <a href="plans.html"><i class="fas fa-briefcase"></i>Plans</a>
+    <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
+    <a href="support.html"><i class="fas fa-headset"></i>Support</a>
+  </nav>  <script>
+    // Show popup notification for 4s
+    setTimeout(() => {
+      const notif = document.getElementById('popupNotif');
+      notif.style.display = 'block';
+      setTimeout(() => notif.style.display = 'none', 4000);
+    }, 2500);
+
+    // Show announcement on load
+    window.onload = () => {
+      document.getElementById('announcementBanner').style.display = 'flex';
     }
 
-    showNextTestimonial();
-    setInterval(showNextTestimonial, 2500);
-  </script></body>
+    // Fetch wallet balance from Firestore
+    const firebaseConfig = {
+      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+      authDomain: "finsa-connect.firebaseapp.com",
+      projectId: "finsa-connect",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        db.collection('Users').doc(user.uid).get().then(doc => {
+          const balance = doc.data().balance || 0;
+          document.getElementById('walletBalance').innerText = `₦${balance.toLocaleString()}`;
+        });
+      }
+    });
+
+    // Fake rotating testimonials
+    const testimonials = [
+      "TrustVest helped me earn while I sleep!",
+      "Reliable platform with great customer support!",
+      "Instant withdrawal, very impressive.",
+      "My ₦100k now earns for me daily.",
+      "I love the simple interface!",
+      "Best investment decision I've made.",
+      "I joined 2 weeks ago, already made profit!",
+      "No stress, just earnings!",
+      "Highly recommended for students!",
+      "Finally something real in Nigeria!",
+      "Excellent experience so far!",
+      "I got referral bonus instantly.",
+      "Top-notch admin response time.",
+      "I use TrustVest daily now!",
+      "So glad I tried this.",
+      "Secured and professional system.",
+      "Helpful support and good returns.",
+      "My savings have grown!",
+      "Referral rewards are fair!",
+      "Withdrawals are fast.",
+      "UI is clean and friendly!",
+      "No regrets joining!",
+      "They keep their promises!",
+      "This is my financial plug!",
+      "Even ₦3k works here!",
+      "Student-friendly investment app.",
+      "I referred 10 people already!",
+      "Love the notification system.",
+      "TrustVest is 🔥🔥🔥"
+    ];
+
+    let index = 0;
+    setInterval(() => {
+      document.getElementById('testimonialBox').innerText = testimonials[index];
+      index = (index + 1) % testimonials.length;
+    }, 2500);
+  </script>  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script></body>
 </html>
