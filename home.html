@@ -1,229 +1,384 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TrustVest</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #17406d, #3baea0, #f6d365);
-      color: #fff;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
+
+    body {
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      padding-bottom: 80px;
+    }
+
     header {
+      padding: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-      font-size: 1.6rem;
-      font-weight: 600;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
     }
-    header i {
-      margin-right: 10px;
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .container {
-      padding: 1rem;
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-    .section-title {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-    .balance-value {
-      font-size: 2rem;
+
+    .logo-icon {
+      background: #FFD700;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 8px;
       font-weight: bold;
     }
-    .testimonial {
-      animation: fadeIn 2s infinite alternate;
+
+    .summary-cards {
+      margin: 25px 15px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
     }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .card h3 {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+
+    .card p {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .announcement-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffeaa7;
+      color: #2d3436;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 9999;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .announcement-popup button {
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      margin-left: 10px;
+      color: #d63031;
+      cursor: pointer;
+    }
+
     @keyframes fadeIn {
-      0% {opacity: 0;}
-      100% {opacity: 1;}
-    }
-    .trusted-logos {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      padding: 2rem 1rem;
-      background: #fff;
-    }
-    .trusted-logos img {
-      height: 40px;
-      object-fit: contain;
-    }
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.3);
-      display: flex;
-      justify-content: space-around;
-      padding: 0.8rem 0;
-      backdrop-filter: blur(8px);
-    }
-    .bottom-nav a {
-      color: white;
-      font-size: 0.9rem;
-      text-align: center;
-      text-decoration: none;
-    }
-    .bottom-nav i {
-      display: block;
-      font-size: 1.3rem;
-      margin-bottom: 0.2rem;
-    }
-    .announcement-banner {
-      background-color: #ffe600;
-      color: #000;
-      padding: 1rem;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 999;
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .popup-notification {
-      position: fixed;
-      top: 70px;
-      right: 10px;
-      background: #1abc9c;
-      color: #fff;
-      padding: 1rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 998;
-      animation: fadeIn 1s ease-in-out;
+      from { opacity: 0; transform: translate(-50%, -10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
     }
   </style>
 </head>
-<body>  <div class="announcement-banner" id="announcementBanner">
-    <span id="announcementText">🔥 New Promo: Earn 20% Bonus on ₦50k+ plans!</span>
-    <button onclick="document.getElementById('announcementBanner').style.display='none'">❌</button>
-  </div>  <div class="popup-notification" id="popupNotif">🔔 New message from TrustVest support</div>  <header>
-    <i class="fas fa-piggy-bank"></i>
-    TRUSTVEST
-  </header>  <div class="container">
-    <div class="card">
-      <div class="section-title">Wallet Balance</div>
-      <div class="balance-value" id="walletBalance">₦0.00</div>
-    </div><div class="card">
-  <div class="section-title">Recent Transactions</div>
-  <ul id="recentTransactions">
-    <li>Loading...</li>
-  </ul>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">TV</div>
+    <span>TrustVest</span>
+  </div>
+</header>
+
+<!-- Announcement Popup -->
+<div class="announcement-popup" id="announcementBox">
+  <span id="announcementText">📢 Latest update goes here</span>
+  <button onclick="dismissAnnouncement()">✖</button>
 </div>
 
-<div class="card">
-  <div class="section-title">Your Active Plans</div>
-  <ul>
-    <li>Gold Plan - ₦50,000</li>
-    <li>Silver Plan - ₦10,000</li>
-  </ul>
+<!-- Summary Cards -->
+<div class="summary-cards">
+  <div class="card">
+    <h3>Wallet Balance</h3>
+    <p id="walletBalance">₦0.00</p>
+  </div>
+  <div class="card">
+    <h3>Active Plan</h3>
+    <p id="activePlan">None</p>
+  </div>
+  <div class="card">
+    <h3>Total Earned</h3>
+    <p id="totalEarned">₦0.00</p>
+  </div>
+  <div class="card">
+    <h3>Referrals</h3>
+    <p id="referrals">0</p>
+  </div>
 </div>
 
-<div class="card testimonial" id="testimonialBox">Loading testimonials...</div>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import {
+    getFirestore, doc, getDoc, collection, getDocs
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import {
+    getAuth, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-<div class="card">
-  <div class="section-title">Earnings Summary</div>
-  <p>Total Earned: ₦15,000<br> Last Withdrawal: ₦5,000</p>
-</div>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+    authDomain: "finsa-connect.firebaseapp.com",
+    projectId: "finsa-connect",
+    storageBucket: "finsa-connect.appspot.com",
+    messagingSenderId: "126845965255",
+    appId: "1:126845965255:web:c82539297a8464873d7fe2"
+  };
 
-  </div>  <div class="trusted-logos">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/GTBank_logo.png" alt="GTBank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Zenith_Bank_logo.png" alt="Zenith Bank">
-    <img src="https://seeklogo.com/images/F/flutterwave-logo-E75D8E1E97-seeklogo.com.png" alt="Flutterwave">
-  </div>  <nav class="bottom-nav">
-    <a href="#"><i class="fas fa-home"></i>Home</a>
-    <a href="plans.html"><i class="fas fa-briefcase"></i>Plans</a>
-    <a href="profile.html"><i class="fas fa-user"></i>Profile</a>
-    <a href="support.html"><i class="fas fa-headset"></i>Support</a>
-  </nav>  <script>
-    // Show popup notification for 4s
-    setTimeout(() => {
-      const notif = document.getElementById('popupNotif');
-      notif.style.display = 'block';
-      setTimeout(() => notif.style.display = 'none', 4000);
-    }, 2500);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth();
 
-    // Show announcement on load
-    window.onload = () => {
-      document.getElementById('announcementBanner').style.display = 'flex';
-    }
-
-    // Fetch wallet balance from Firestore
-    const firebaseConfig = {
-      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
-      authDomain: "finsa-connect.firebaseapp.com",
-      projectId: "finsa-connect",
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        db.collection('Users').doc(user.uid).get().then(doc => {
-          const balance = doc.data().balance || 0;
-          document.getElementById('walletBalance').innerText = `₦${balance.toLocaleString()}`;
-        });
+  // Show latest announcement if exists
+  async function showAnnouncement() {
+    const announcementsRef = collection(db, "announcements");
+    const snapshot = await getDocs(announcementsRef);
+    let latest = null;
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      if (!latest || data.timestamp?.seconds > latest.timestamp?.seconds) {
+        latest = data;
       }
     });
+    if (latest && localStorage.getItem("dismissedAnn") !== latest.title) {
+      document.getElementById("announcementText").textContent = "📢 " + latest.title;
+      document.getElementById("announcementBox").style.display = "block";
+    }
+  }
 
-    // Fake rotating testimonials
-    const testimonials = [
-      "TrustVest helped me earn while I sleep!",
-      "Reliable platform with great customer support!",
-      "Instant withdrawal, very impressive.",
-      "My ₦100k now earns for me daily.",
-      "I love the simple interface!",
-      "Best investment decision I've made.",
-      "I joined 2 weeks ago, already made profit!",
-      "No stress, just earnings!",
-      "Highly recommended for students!",
-      "Finally something real in Nigeria!",
-      "Excellent experience so far!",
-      "I got referral bonus instantly.",
-      "Top-notch admin response time.",
-      "I use TrustVest daily now!",
-      "So glad I tried this.",
-      "Secured and professional system.",
-      "Helpful support and good returns.",
-      "My savings have grown!",
-      "Referral rewards are fair!",
-      "Withdrawals are fast.",
-      "UI is clean and friendly!",
-      "No regrets joining!",
-      "They keep their promises!",
-      "This is my financial plug!",
-      "Even ₦3k works here!",
-      "Student-friendly investment app.",
-      "I referred 10 people already!",
-      "Love the notification system.",
-      "TrustVest is 🔥🔥🔥"
-    ];
+  function dismissAnnouncement() {
+    const text = document.getElementById("announcementText").textContent.replace("📢 ", "");
+    localStorage.setItem("dismissedAnn", text);
+    document.getElementById("announcementBox").style.display = "none";
+  }
 
-    let index = 0;
-    setInterval(() => {
-      document.getElementById('testimonialBox').innerText = testimonials[index];
-      index = (index + 1) % testimonials.length;
-    }, 2500);
-  </script>  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script></body>
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const userRef = doc(db, "Users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        document.getElementById("walletBalance").textContent = `₦${userData.wallet || 0}`;
+        document.getElementById("totalEarned").textContent = `₦${userData.earned || 0}`;
+        document.getElementById("referrals").textContent = userData.referrals || 0;
+        document.getElementById("activePlan").textContent = userData.activePlan || "None";
+      }
+    }
+    showAnnouncement();
+  });
+</script>
+<!-- 🔻 Fake Testimonials Section -->
+<section style="padding: 1.5rem 1rem; background: linear-gradient(135deg, #fdfbfb, #ebedee);">
+  <h2 style="text-align:center; font-size: 1.4rem; margin-bottom: 1rem;">What Our Users Say</h2>
+  <div id="testimonialBox" style="height: 100px; overflow: hidden; position: relative;">
+    <div id="testimonialContent" style="transition: transform 0.5s ease-in-out;">
+      <!-- Testimonials will be inserted here via JS -->
+    </div>
+  </div>
+</section>
+
+<!-- 🔻 Call To Action -->
+<section style="text-align:center; padding: 2rem 1rem;">
+  <div style="background: linear-gradient(to right, #38b2ac, #4299e1); padding: 1.5rem; border-radius: 20px; color: white;">
+    <h3 style="font-size: 1.4rem;">Start Growing Your Money Today</h3>
+    <p style="margin-top: 0.5rem;">Select from a variety of investment plans that suit you best.</p>
+    <a href="plans.html" style="display: inline-block; margin-top: 1rem; background: white; color: #2b6cb0; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: bold;">Choose a Plan</a>
+  </div>
+</section>
+
+<!-- 🔻 Trusted By Logos -->
+<section style="padding: 2rem 1rem; background: linear-gradient(135deg, #edf2f7, #e2e8f0);">
+  <h2 style="text-align: center; font-size: 1.4rem; margin-bottom: 1rem;">Trusted By</h2>
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" style="height: 40px;" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Mastercard-logo.png" alt="MasterCard" style="height: 40px;" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style="height: 40px;" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" style="height: 40px;" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Pay" style="height: 40px;" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Pay" style="height: 40px;" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Verve_logo.svg" alt="Verve" style="height: 40px;" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" alt="AmEx" style="height: 40px;" />
+  </div>
+</section>
+
+<!-- 🔻 Testimonials Script -->
+<script>
+  const testimonials = [
+    "TrustVest changed my savings habit forever!",
+    "I made 20% in 3 months with no stress.",
+    "Super easy to use and always reliable.",
+    "I was skeptical at first, but now I recommend to all my friends.",
+    "Very secure and responsive team!",
+    "Even ₦3k plan returns are amazing.",
+    "Clean interface. I love the dark mode too.",
+    "It’s like a digital Ajo — but smarter!",
+    "I use TrustVest for short-term targets now.",
+    "Withdrawal came within 24 hours. Respect!",
+    "Helpful support team, shout out to Maria!",
+    "Started with ₦10k, now I do ₦100k monthly.",
+    "Cool layout, smooth performance.",
+    "Real-time wallet updates are 🔥",
+    "No ads, just clean investment management.",
+    "I’m earning while my money sleeps 😎",
+    "Great for students and workers alike.",
+    "I trust this more than traditional savings.",
+    "Planning my December trip already!",
+    "Easy to withdraw anytime, no wahala.",
+    "Best fintech idea from Nigeria, honestly.",
+    "Nice admin panel for finance control.",
+    "Smart algorithms handle everything well.",
+    "I like how plans are flexible.",
+    "Tested with ₦5k, now on ₦50k plan!",
+    "Kudos to the developers 👏",
+    "No fake promises — just steady growth.",
+    "The 15% fee is fair for this result.",
+    "I use it alongside my salary account.",
+    "Great onboarding experience too!"
+  ];
+
+  const container = document.getElementById("testimonialContent");
+
+  testimonials.forEach(text => {
+    const div = document.createElement("div");
+    div.style.padding = "0.7rem";
+    div.style.marginBottom = "0.7rem";
+    div.style.background = "linear-gradient(to right, #e0c3fc, #8ec5fc)";
+    div.style.borderRadius = "15px";
+    div.style.textAlign = "center";
+    div.style.color = "#333";
+    div.innerText = text;
+    container.appendChild(div);
+  });
+
+  let offset = 0;
+  setInterval(() => {
+    offset += 1;
+    if (offset * 100 >= container.scrollHeight - 100) {
+      offset = 0;
+    }
+    container.style.transform = `translateY(-${offset * 100}px)`;
+  }, 2500);
+</script>
+<!-- Call to Action -->
+    <section class="text-center p-4 mt-6">
+      <div class="rounded-xl bg-gradient-to-r from-green-400 via-lime-400 to-yellow-300 text-white p-5 shadow-md">
+        <h3 class="text-lg font-bold mb-2">Ready to grow your money?</h3>
+        <a href="plans.html" class="inline-block px-5 py-2 bg-white text-green-700 font-semibold rounded-full transition hover:scale-105">
+          Choose a Plan
+        </a>
+      </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 w-full z-50 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white flex justify-around items-center py-3 rounded-t-xl shadow-lg">
+      <a href="home.html" class="flex flex-col items-center text-xs">
+        <i class="fas fa-home text-lg"></i>
+        Home
+      </a>
+      <a href="plans.html" class="flex flex-col items-center text-xs">
+        <i class="fas fa-coins text-lg"></i>
+        Plans
+      </a>
+      <a href="profile.html" class="flex flex-col items-center text-xs">
+        <i class="fas fa-user-circle text-lg"></i>
+        Profile
+      </a>
+      <a href="support.html" class="flex flex-col items-center text-xs">
+        <i class="fas fa-headset text-lg"></i>
+        Support
+      </a>
+    </nav>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+        authDomain: "finsa-connect.firebaseapp.com",
+        projectId: "finsa-connect",
+        storageBucket: "finsa-connect.appspot.com",
+        messagingSenderId: "126845965255",
+        appId: "1:126845965255:web:c82539297a8464873d7fe2"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const auth = firebase.auth();
+
+      // Fetch user's balance from Firestore
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          const email = user.email;
+          db.collection("Users").doc(email).get().then((doc) => {
+            if (doc.exists) {
+              const data = doc.data();
+              document.getElementById("username").textContent = data.username || "User";
+              document.getElementById("walletBalance").textContent = `₦${data.wallet || 0}`;
+              document.getElementById("earnings").textContent = `₦${data.earnings || 0}`;
+              document.getElementById("withdrawals").textContent = `₦${data.withdrawals || 0}`;
+            }
+          });
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+
+      // Show announcement popup if one exists
+      const announcementPopup = document.getElementById("announcementPopup");
+      const announcementMessage = document.getElementById("announcementMessage");
+      const closeAnnouncement = document.getElementById("closeAnnouncement");
+
+      db.collection("announcements")
+        .orderBy("timestamp", "desc")
+        .limit(1)
+        .get()
+        .then((querySnapshot) => {
+          if (!querySnapshot.empty) {
+            const latest = querySnapshot.docs[0].data();
+            announcementMessage.textContent = latest.title || "New Announcement!";
+            announcementPopup.style.display = "block";
+          }
+        });
+
+      closeAnnouncement.addEventListener("click", () => {
+        announcementPopup.style.display = "none";
+      });
+
+      // Notification popup delay
+      window.onload = () => {
+        setTimeout(() => {
+          const note = document.getElementById("notificationBadge");
+          note.style.opacity = 1;
+        }, 3000);
+      };
+    </script>
+  </body>
 </html>
