@@ -3,160 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest | Sign Up</title>
+  <title>TrustVest Signup</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js"></script>
   <style>
     body {
-      background: linear-gradient(to bottom, #000000, #1a1a1a);
-      color: gold;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1c1c3c, #004f56, #00856f);
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
     }
-    h1 {
-      margin-bottom: 20px;
-    }
-    form {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border: 1px solid gold;
-      border-radius: 12px;
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
       width: 90%;
       max-width: 400px;
-      position: relative;
+      backdrop-filter: blur(10px);
     }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
     input {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
+      margin-top: 10px;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
+      font-size: 16px;
+      background-color: #ffffff18;
+      color: white;
     }
-    .password-container {
-      position: relative;
-    }
-    .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: gold;
-      font-size: 0.9rem;
-    }
+
     button {
       width: 100%;
       padding: 12px;
-      background: gold;
-      color: black;
+      margin-top: 20px;
       border: none;
-      border-radius: 8px;
-      font-weight: bold;
+      border-radius: 10px;
+      background-color: #00b894;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
+      transition: 0.3s;
     }
+
+    button:hover {
+      background-color: #019875;
+    }
+
     .link {
       margin-top: 15px;
-      color: gold;
       text-align: center;
-      font-size: 0.9rem;
     }
+
     .link a {
-      color: gold;
-      text-decoration: underline;
+      color: #00ffe0;
+      text-decoration: none;
+      font-size: 14px;
     }
-    .error {
-      color: red;
-      font-size: 0.85rem;
-      margin-bottom: 10px;
-      text-align: center;
+
+    .link a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-<h1>TrustVest Sign Up</h1>
-
-<form id="signup-form">
-  <div class="error" id="error-message"></div>
-  <input type="text" id="username" placeholder="Username" required />
-  <input type="email" id="email" placeholder="Email" required />
-
-  <div class="password-container">
+  <div class="card">
+    <div class="logo">
+      <img src="assets/logo.png" alt="TrustVest Logo" />
+    </div>
+    <h2 style="text-align: center;">Create Your Account</h2>
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="email" id="email" placeholder="Email Address" required />
     <input type="password" id="password" placeholder="Password" required />
-    <span class="toggle-password" id="togglePassword">SHOW</span>
+    <button onclick="signUp()">Sign Up</button>
+
+    <div class="link">
+      Already signed up? <a href="login.html">Login now</a>
+    </div>
   </div>
 
-  <button type="submit">Create Account</button>
-</form>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+      authDomain: "trustvest-a1bd9.firebaseapp.com",
+      databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
+      projectId: "trustvest-a1bd9",
+      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      messagingSenderId: "676220073092",
+      appId: "1:676220073092:web:b358f8821ac33da9babed1"
+    };
 
-<div class="link">
-  Already have an account? <a href="/login.html">Login here</a>
-</div>
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-  import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    async function signUp() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
-    authDomain: "finsa-connect.firebaseapp.com",
-    projectId: "finsa-connect",
-    storageBucket: "finsa-connect.appspot.com",
-    messagingSenderId: "126845965255",
-    appId: "1:126845965255:web:c82539297a8464873d7fe2"
-  };
+      if (!name || !email || !password) {
+        alert("Please fill all fields");
+        return;
+      }
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-  const db = getFirestore();
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
 
-  const signupForm = document.getElementById('signup-form');
-  const errorMessage = document.getElementById('error-message');
-  const togglePassword = document.getElementById('togglePassword');
-  const passwordInput = document.getElementById('password');
+        await db.collection("Users").doc(user.uid).set({
+          uid: user.uid,
+          name,
+          email,
+          role: "user"
+        });
 
-  togglePassword.addEventListener('click', () => {
-    const type = passwordInput.type === 'password' ? 'text' : 'password';
-    passwordInput.type = type;
-    togglePassword.textContent = type === 'password' ? 'SHOW' : 'HIDE';
-  });
+        await db.collection("walletSummary").doc(user.uid).set({
+          wallet: 0,
+          income: 0,
+          referrals: 0,
+          plan: "None"
+        });
 
-  signupForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    errorMessage.textContent = '';
-
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = passwordInput.value.trim();
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      await setDoc(doc(db, "Users", user.uid), {
-        username: username,
-        walletBalance: 0,
-        referralCode: user.uid,
-        createdAt: new Date()
-      });
-
-      window.location.href = "/home/";
-    } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
-        errorMessage.textContent = 'Email is already in use.';
-      } else if (error.code === 'auth/weak-password') {
-        errorMessage.textContent = 'Password should be at least 6 characters.';
-      } else if (error.code === 'auth/invalid-email') {
-        errorMessage.textContent = 'Invalid email address.';
-      } else {
-        errorMessage.textContent = 'Something went wrong. Please try again.';
+        alert("Signup successful!");
+        window.location.href = "home.html";
+      } catch (error) {
+        console.error("Signup error:", error.message);
+        alert("Signup failed: " + error.message);
       }
     }
-  });
-</script>
+  </script>
 
 </body>
 </html>
