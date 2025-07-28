@@ -1,197 +1,188 @@
+<!-- ✅ CHUNK 1 - TrustVest Final Home Page (cleaned-up version, as you liked) -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest - Earn Smartly</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    /* Smooth animation for testimonials */
-    .testimonial { opacity: 0; position: absolute; transition: opacity 0.5s ease-in-out; }
-    .testimonial.active { opacity: 1; position: relative; }
-
-    /* Music button style */
-    #music-btn { transition: transform 0.3s ease; }
-    #music-btn:hover { transform: scale(1.1); }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustVest - Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.2/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore-compat.js"></script>
+  <script defer src="scripts/firebase-init.js"></script>
+  <script defer src="scripts/auth-check.js"></script>
+  <script defer src="scripts/testimonials.js"></script>
+  <script defer src="scripts/home.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white">
 
-  <!-- Background Music (hidden by default) -->
-  <audio id="bg-music" loop>
-    <source src="media/music.mp3" type="audio/mp3" />
-    Your browser does not support the audio element.
-  </audio>
+<body>
+  <div class="main-container">
+    <!-- ✅ Notification Banner -->
+    <div id="notificationBanner" class="notification-banner">
+      <span>🚨 Always verify deposit wallet name before payment!</span>
+      <button id="closeBanner">&times;</button>
+    </div>
 
-  <!-- Notification Banner (hidden by default) -->
-  <div id="notification-banner" class="hidden bg-yellow-400 text-black px-4 py-3 text-center relative">
-    <span>🚨 Don’t miss out on our July investment bonus!</span>
-    <button id="close-banner" class="absolute right-4 top-2 text-black font-bold">X</button>
+    <!-- ✅ Top Section with Logo and Balance -->
+    <header class="header-section">
+      <img src="assets/logo.png" alt="TrustVest Logo" class="logo" />
+      <div class="balance-cards">
+        <div class="card">
+          <h3>Wallet</h3>
+          <p id="walletBalance">₦0</p>
+        </div>
+        <div class="card">
+          <h3>Earnings</h3>
+          <p id="earnings">₦0</p>
+        </div>
+        <div class="card">
+          <h3>Referrals</h3>
+          <p id="referrals">0</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ✅ Action Buttons -->
+    <div class="action-buttons">
+      <button id="depositBtn">Deposit</button>
+      <button id="withdrawBtn">Withdraw</button>
+      <button id="viewPlansBtn">View Plans</button>
+    </div>
+
+    <!-- ✅ Plans Section -->
+    <section class="plans-section">
+      <h2>💼 Investment Plans</h2>
+      <div class="plan-card">
+        <h3>Starter</h3>
+        <p>₦3,000 - ₦10,000</p>
+        <span>Auto-earn daily</span>
+      </div>
+      <div class="plan-card">
+        <h3>Standard</h3>
+        <p>₦10,001 - ₦50,000</p>
+        <span>Auto-earn daily</span>
+      </div>
+      <div class="plan-card">
+        <h3>Gold</h3>
+        <p>₦50,001 - ₦1,000,000</p>
+        <span>Auto-earn daily</span>
+      </div>
+    </section>
+    <!-- TRUSTVEST HOME - CHUNK 2 --><!-- TESTIMONIAL SECTION --><section class="px-4 py-8 text-white">
+  <h2 class="text-2xl font-bold mb-4">What People Are Saying</h2>
+  <div id="testimonialBox" class="bg-black bg-opacity-30 p-4 rounded-xl transition duration-500 ease-in-out">
+    <p id="testimonialText" class="italic text-lg">Loading testimonial...</p>
   </div>
-
-  <!-- Header -->
-  <header class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-yellow-500 to-yellow-700 shadow-md">
-    <div class="flex items-center space-x-3">
-      <img src="logo.png" alt="TrustVest Logo" class="h-10">
-      <h1 class="text-2xl font-bold text-white">TrustVest</h1>
-    </div>
-    <div class="flex items-center space-x-4">
-      <button id="music-btn" class="text-white text-xl" title="Play/Pause Music">🎵</button>
-      <button id="bell" class="text-white text-xl" title="View Banner">🔔</button>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="text-center py-16 px-6">
-    <h2 class="text-4xl font-bold mb-4">Grow Your Money the Smart Way</h2>
-    <p class="text-lg mb-6">Deposit via PalmPay, pick a plan, and watch your earnings grow. No hassle, just results.</p>
-    <div class="space-x-4">
-      <a href="signup.html" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded">Get Started</a>
-      <a href="login.html" class="border border-yellow-500 text-yellow-500 font-bold py-2 px-4 rounded hover:bg-yellow-500 hover:text-black">Login</a>
-    </div>
-  </section>
-
-  <script>
-    // Banner toggle
-    const bell = document.getElementById("bell");
-    const banner = document.getElementById("notification-banner");
-    const closeBanner = document.getElementById("close-banner");
-
-    bell.addEventListener("click", () => banner.classList.remove("hidden"));
-    closeBanner.addEventListener("click", () => banner.classList.add("hidden"));
-
-    // Music toggle
-    const musicBtn = document.getElementById("music-btn");
-    const music = document.getElementById("bg-music");
-    let isPlaying = false;
-
-    musicBtn.addEventListener("click", () => {
-      if (isPlaying) {
-        music.pause();
-        isPlaying = false;
-      } else {
-        music.play();
-        isPlaying = true;
-      }
-    });
-  </script>
-</body>
-<!-- Trusted By Section -->
-<section class="bg-[#0f172a] py-12 px-6 text-center">
-  <h2 class="text-2xl font-bold mb-6">Trusted by Hundreds of Smart Investors</h2>
-  <div class="flex justify-center items-center space-x-6">
-    <img src="assets/trusted1.png" alt="Trusted 1" class="h-12 w-auto">
-    <img src="assets/trusted2.png" alt="Trusted 2" class="h-12 w-auto">
-    <img src="assets/trusted3.png" alt="Trusted 3" class="h-12 w-auto">
+</section><!-- TRUSTED BY SECTION --><section class="px-4 py-6 text-white">
+  <h2 class="text-xl font-semibold mb-4">Trusted by</h2>
+  <div class="flex justify-around items-center gap-4">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Flutterwave_Logo.png" alt="Flutterwave" class="h-10">
+    <img src="https://upload.wikimedia.org/wikipedia/en/0/06/GTBank_logo.png" alt="GTBank" class="h-10">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Paystack_Logo.png" alt="Paystack" class="h-10">
   </div>
-</section>
-
-<!-- How It Works Section -->
-<section class="py-14 px-6 text-center bg-gradient-to-br from-[#1e293b] to-[#0f172a]">
-  <h2 class="text-3xl font-bold mb-10">How It Works</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-    <div class="bg-[#1e293b] p-6 rounded-2xl shadow-lg border border-yellow-600">
-      <h3 class="text-xl font-semibold mb-2 text-yellow-400">1. Fund Wallet</h3>
-      <p>Make secure deposits using PalmPay or any accepted method. 15% service fee applies.</p>
-    </div>
-    <div class="bg-[#1e293b] p-6 rounded-2xl shadow-lg border border-yellow-600">
-      <h3 class="text-xl font-semibold mb-2 text-yellow-400">2. Choose a Plan</h3>
-      <p>Select investment plans ranging from ₦3,000 to ₦1,000,000 and watch earnings roll in.</p>
-    </div>
-    <div class="bg-[#1e293b] p-6 rounded-2xl shadow-lg border border-yellow-600">
-      <h3 class="text-xl font-semibold mb-2 text-yellow-400">3. Earn Automatically</h3>
-      <p>Track your profits live. Withdraw anytime above ₦1,500. Admin updates wallet manually.</p>
-    </div>
-  </div>
-</section>
-
-<!-- Investment Plans -->
-<section class="py-14 px-6 text-center bg-gradient-to-br from-[#0f172a] to-[#1e293b]">
-  <h2 class="text-3xl font-bold mb-10">Available Plans</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-    <div class="bg-yellow-500 text-black p-6 rounded-xl shadow-md">
-      <h3 class="text-xl font-bold mb-2">Starter</h3>
-      <p class="text-2xl font-extrabold mb-4">₦3,000 - ₦19,999</p>
-      <p>Daily Earnings: Auto</p>
-      <p>Manual Wallet Top-Up</p>
-    </div>
-    <div class="bg-yellow-600 text-black p-6 rounded-xl shadow-md">
-      <h3 class="text-xl font-bold mb-2">Pro</h3>
-      <p class="text-2xl font-extrabold mb-4">₦20,000 - ₦499,999</p>
-      <p>Higher returns, faster access</p>
-    </div>
-    <div class="bg-yellow-700 text-black p-6 rounded-xl shadow-md">
-      <h3 class="text-xl font-bold mb-2">Elite</h3>
-      <p class="text-2xl font-extrabold mb-4">₦500,000 - ₦1,000,000</p>
-      <p>VIP support + Top returns</p>
-    </div>
-  </div>
-</section>
-<!-- Testimonials Section -->
-<section class="bg-gradient-to-br from-[#1e293b] to-[#0f172a] py-14 px-6 text-center relative">
-  <h2 class="text-3xl font-bold mb-10">What Users Say</h2>
-
-  <div id="testimonial-box" class="max-w-2xl mx-auto bg-[#0f172a] text-white p-6 rounded-xl shadow-lg border border-yellow-500 transition-opacity duration-700 ease-in-out">
-    <p class="text-lg italic mb-4" id="testimonial-text">“TrustVest helped me grow my savings without stress.”</p>
-    <p class="font-semibold" id="testimonial-author">— Femi, Lagos</p>
-  </div>
-</section>
-
-<script>
+</section><!-- MUSIC AUTOPLAY (NO CONTROLS) --><audio autoplay hidden loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c6c2cbe5cd.mp3?filename=calm-ambient-melody-110857.mp3" type="audio/mp3">
+</audio><!-- BOTTOM NAVIGATION --><nav class="fixed bottom-0 left-0 w-full bg-black bg-opacity-70 text-white flex justify-around items-center py-2 z-50 backdrop-blur-lg">
+  <button onclick="location.href='plans.html'" class="text-center">
+    <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c1.657 0 3-1.343 3-3S13.657 2 12 2s-3 1.343-3 3 1.343 3 3 3zM6 22v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
+    </svg>
+    <span class="text-xs">Plans</span>
+  </button>
+  <button onclick="location.href='deposit.html'" class="text-center">
+    <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+    </svg>
+    <span class="text-xs">Deposit</span>
+  </button>
+  <button onclick="location.href='withdraw.html'" class="text-center">
+    <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M16 17l-4 4m0 0l-4-4m4 4V3"/>
+    </svg>
+    <span class="text-xs">Withdraw</span>
+  </button>
+</nav><script>
   const testimonials = [
-    { text: "“TrustVest helped me grow my savings without stress.”", author: "— Femi, Lagos" },
-    { text: "“I started with ₦5,000 and now I’ve withdrawn over ₦30,000 in earnings.”", author: "— Chioma, UNILAG" },
-    { text: "“The customer support is real. They added to my wallet fast after payment.”", author: "— Ayo, FUTA" },
-    { text: "“This is my favorite finance platform. I recommend it to all my coursemates.”", author: "— Emeka, UI" },
-    { text: "“As a student, TrustVest gives me passive income daily.”", author: "— Blessing, OAU" }
+    "TrustVest changed the way I invest — smooth and reliable!",
+    "I earned ₦150k in just 3 months. Thank you TrustVest!",
+    "Withdrawals are fast, and the support is top-notch.",
+    "I started with ₦5k, now I earn weekly returns easily.",
+    "Best decision I made this year. Highly recommend TrustVest."
   ];
 
-  let currentTestimonial = 0;
-
+  let index = 0;
+  const textEl = document.getElementById("testimonialText");
   setInterval(() => {
-    const box = document.getElementById("testimonial-box");
-    box.style.opacity = 0;
-
+    textEl.classList.remove("opacity-100");
+    textEl.classList.add("opacity-0");
     setTimeout(() => {
-      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-      document.getElementById("testimonial-text").textContent = testimonials[currentTestimonial].text;
-      document.getElementById("testimonial-author").textContent = testimonials[currentTestimonial].author;
-      box.style.opacity = 1;
+      textEl.innerText = testimonials[index];
+      textEl.classList.remove("opacity-0");
+      textEl.classList.add("opacity-100");
+      index = (index + 1) % testimonials.length;
     }, 500);
   }, 2500);
 </script>
-
-<!-- Optional Music Button -->
-<div class="fixed top-6 left-4 z-40">
-  <button onclick="document.getElementById('bg-music').play()" class="bg-yellow-500 text-black font-bold px-4 py-2 rounded-full shadow-md hover:bg-yellow-400">
-    Play Music
-  </button>
-  <audio id="bg-music" loop>
-    <source src="assets/trustvest_theme.mp3" type="audio/mpeg">
-  </audio>
-</div>
-
-<!-- Bottom Navigation (Mobile-First) -->
-<nav class="fixed bottom-0 left-0 right-0 bg-[#0f172a] text-white flex justify-around py-3 border-t border-yellow-600 z-50">
-  <a href="#" class="text-center">
-    <i class="fas fa-wallet text-lg"></i>
-    <p class="text-sm">Wallet</p>
-  </a>
-  <a href="#" class="text-center">
-    <i class="fas fa-box-open text-lg"></i>
-    <p class="text-sm">Plans</p>
-  </a>
-  <a href="#" class="text-center">
-    <i class="fas fa-credit-card text-lg"></i>
-    <p class="text-sm">Withdraw</p>
-  </a>
-  <a href="#" class="text-center">
-    <i class="fas fa-user text-lg"></i>
-    <p class="text-sm">Me</p>
-  </a>
-</nav>
-
 <!-- Footer -->
-<footer class="bg-[#0f172a] text-center text-gray-400 py-6 mt-16">
-  <p class="text-sm">© 2025 TrustVest. Built for smart savers and investors.</p>
-</footer>
+      <footer class="text-center text-white mt-20">
+        <p class="text-sm opacity-60">© 2025 TrustVest. All rights reserved.</p>
+      </footer>
+    </main>
+
+    <!-- Background music autoplay (no controls) -->
+    <audio autoplay loop hidden>
+      <source src="https://cdn.pixabay.com/download/audio/2023/03/06/audio_270dbec53a.mp3?filename=calm-music-112953.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Firebase App & Firestore -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+        authDomain: "finsa-connect.firebaseapp.com",
+        projectId: "finsa-connect",
+        storageBucket: "finsa-connect.appspot.com",
+        messagingSenderId: "126845965255",
+        appId: "1:126845965255:web:c82539297a8464873d7fe2"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Fetch Testimonials from Firestore
+      async function loadTestimonials() {
+        const querySnapshot = await getDocs(collection(db, "feedbacks"));
+        const testimonials = [];
+        querySnapshot.forEach((doc) => {
+          testimonials.push(doc.data());
+        });
+
+        const container = document.querySelector(".testimonial-carousel");
+        let index = 0;
+
+        function showNext() {
+          container.innerHTML = `
+            <div class="p-4 rounded-lg bg-white/10 text-white shadow-md transition-all duration-500 ease-in-out">
+              <p class="italic text-lg">"${testimonials[index]?.message || 'No testimonials found'}"</p>
+              <p class="mt-2 text-sm font-semibold text-right">- ${testimonials[index]?.name || 'Anonymous'}</p>
+            </div>
+          `;
+          index = (index + 1) % testimonials.length;
+        }
+
+        if (testimonials.length) {
+          showNext();
+          setInterval(showNext, 3000);
+        }
+      }
+
+      loadTestimonials();
+    </script>
+
+  </body>
+</html>
