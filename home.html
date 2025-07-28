@@ -4,100 +4,165 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TrustVest - Home</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <link rel="icon" href="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" type="image/png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  <script src="https://kit.fontawesome.com/a2d9d5d56b.js" crossorigin="anonymous"></script>
   <style>
     body {
-      background: linear-gradient(to bottom right, #0f172a, #1e293b);
-      color: white;
+      background: linear-gradient(to bottom right, #0f1a2b, #111827);
+    }
+    audio {
+      display: none;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="flex items-center justify-between px-4 py-3 bg-gray-900 bg-opacity-80 shadow-md">
-    <div class="flex items-center space-x-3">
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="w-10 h-10 rounded-full">
-      <span class="text-2xl font-bold tracking-wide">TrustVest</span>
+<body class="text-white font-sans">
+
+  <!-- Background Music -->
+  <audio autoplay loop>
+    <source src="assets/music.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Logo Header -->
+  <header class="flex justify-center items-center py-4">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="h-14 rounded-full shadow-lg" />
+  </header>
+
+  <!-- Welcome Message -->
+  <section class="text-center mb-6 px-4">
+    <h1 class="text-2xl font-bold">Welcome to TrustVest</h1>
+    <p class="text-sm text-gray-300 mt-2">Your smart finance partner</p>
+  </section>
+  <!-- Summary Grid -->
+  <section class="px-4">
+    <div class="grid grid-cols-2 gap-4">
+
+      <!-- Plan Type -->
+      <div class="bg-gradient-to-br from-green-600 to-green-800 rounded-2xl shadow-lg p-4">
+        <p class="text-sm text-gray-200">Plan Type</p>
+        <h2 class="text-xl font-bold mt-1">₦10,000</h2>
+      </div>
+
+      <!-- Referrals -->
+      <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-lg p-4">
+        <p class="text-sm text-gray-200">Referrals</p>
+        <h2 class="text-xl font-bold mt-1">3</h2>
+      </div>
+
+      <!-- Total Earnings -->
+      <div class="bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-2xl shadow-lg p-4">
+        <p class="text-sm text-gray-200">Total Income</p>
+        <h2 class="text-xl font-bold mt-1">₦6,000</h2>
+      </div>
+
+      <!-- Wallet Balance -->
+      <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl shadow-lg p-4">
+        <p class="text-sm text-gray-200">Wallet Balance</p>
+        <h2 class="text-xl font-bold mt-1">₦4,000</h2>
+      </div>
+
     </div>
-    <div class="flex items-center space-x-4">
-      <button id="supportBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm">Support</button>
+  </section>
+
+  <!-- Spacer -->
+  <div class="my-6"></div>
+  <!-- Header -->
+  <header class="bg-gradient-to-br from-green-700 via-green-800 to-green-900 text-white rounded-b-3xl px-6 py-6 shadow-md">
+    <div class="flex items-center justify-between">
+      <div class="text-left">
+        <h1 class="text-2xl font-bold">Welcome back, Tife</h1>
+        <p class="text-sm text-green-100">TrustVest | Smart Finance</p>
+      </div>
+      <div class="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-green-800 font-bold">
+        T
+      </div>
+    </div>
+    <div class="mt-6 bg-white/10 backdrop-blur-md rounded-2xl p-4 shadow-inner">
+      <div class="text-sm text-green-100 mb-1">Your Balance</div>
+      <div class="text-3xl font-extrabold text-white">₦0.00</div>
+      <div class="text-xs text-green-200 mt-1">Earnings update daily by 12pm</div>
     </div>
   </header>
 
-  <!-- Trusted By Section -->
-  <section class="py-6 px-4">
-    <h2 class="text-xl font-semibold mb-3">Trusted By</h2>
-    <div class="flex space-x-4 items-center">
-      <img src="https://seeklogo.com/images/P/paga-logo-8E1A94B946-seeklogo.com.png" alt="Paga" class="w-24 h-auto"/>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/FirstBank_Logo.svg/2560px-FirstBank_Logo.svg.png" alt="FirstBank" class="w-32 h-auto"/>
+  <!-- Welcome / Highlight Section -->
+  <section class="px-4 py-6">
+    <div class="bg-gradient-to-br from-yellow-300 to-yellow-500 text-gray-900 rounded-2xl shadow-lg p-4">
+      <h2 class="text-lg font-semibold mb-1">📢 Welcome to TrustVest</h2>
+      <p class="text-sm">
+        Start investing from just ₦3,000 and earn passive income! All deposits go through PalmPay.
+      </p>
     </div>
   </section>
   <!-- Action Buttons -->
-  <section class="px-4 py-6">
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <button class="bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl text-lg font-semibold shadow-lg">Deposit</button>
-      <button class="bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-xl text-lg font-semibold shadow-lg">Withdraw</button>
-      <button class="bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-xl text-lg font-semibold shadow-lg">Plans</button>
+  <section class="px-4 mt-4 grid grid-cols-3 gap-4">
+    <button class="bg-green-700 text-white rounded-xl py-3 font-semibold shadow-lg">Deposit</button>
+    <button class="bg-yellow-600 text-white rounded-xl py-3 font-semibold shadow-lg">Withdraw</button>
+    <button class="bg-blue-700 text-white rounded-xl py-3 font-semibold shadow-lg">Plans</button>
+  </section>
+
+  <!-- Summary Grid -->
+  <section class="mt-6 px-4 grid grid-cols-2 gap-4 text-white">
+    <div class="bg-green-800 rounded-2xl p-4 shadow">
+      <p class="text-sm">Plan Type</p>
+      <h3 class="text-lg font-bold mt-1">None</h3>
+    </div>
+    <div class="bg-green-900 rounded-2xl p-4 shadow">
+      <p class="text-sm">Referrals</p>
+      <h3 class="text-lg font-bold mt-1">0</h3>
+    </div>
+    <div class="bg-green-700 rounded-2xl p-4 shadow col-span-2">
+      <p class="text-sm">Total Income</p>
+      <h3 class="text-2xl font-bold mt-1">₦0.00</h3>
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section class="px-4 py-6">
-    <h2 class="text-xl font-semibold mb-4">What Our Users Say</h2>
-    <div id="testimonial-box" class="bg-gray-800 p-4 rounded-xl text-white shadow-lg h-24 flex items-center justify-center text-center text-sm sm:text-base"></div>
+  <!-- Testimonials (Auto-updating fake) -->
+  <section class="mt-8 px-4">
+    <h2 class="text-white text-lg font-semibold mb-2">What people are saying</h2>
+    <div id="testimonialBox" class="bg-white text-gray-800 rounded-xl p-4 shadow-md h-20 overflow-hidden relative">
+      <div id="testimonialText" class="absolute animate-fade-in-out">“TrustVest helped me save and earn safely.”</div>
+    </div>
   </section>
 
   <script>
     const testimonials = [
-      "TrustVest is the best investment app I've used in Nigeria!",
-      "Got my withdrawal in less than 24 hours. Impressive!",
-      "Simple UI and smooth experience. Highly recommend.",
-      "15% charge but great ROI. Worth every naira.",
-      "Legit platform. Been using for months now!"
+      "“TrustVest helped me save and earn safely.”",
+      "“I deposited ₦5,000 and got daily earnings!”",
+      "“Smooth withdrawal and real profits.”",
+      "“Excellent platform for students and workers.”",
+      "“Investing has never been easier.”",
     ];
-    let index = 0;
-    const box = document.getElementById("testimonial-box");
-
-    function rotateTestimonial() {
-      box.textContent = testimonials[index];
-      index = (index + 1) % testimonials.length;
-    }
-    rotateTestimonial();
-    setInterval(rotateTestimonial, 2000);
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % testimonials.length;
+      document.getElementById("testimonialText").innerText = testimonials[idx];
+    }, 2500);
   </script>
-  <!-- Support Section -->
-  <section class="px-4 py-6 text-center">
-    <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full shadow-md text-sm sm:text-base">
-      💬 Support
-    </button>
+
+  <!-- Trusted By Logos -->
+  <section class="mt-8 px-4">
+    <h2 class="text-white text-lg font-semibold mb-2">Trusted By</h2>
+    <div class="flex items-center justify-around bg-white rounded-2xl p-3 shadow-md">
+      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="Logo 1" class="h-10 object-contain" />
+      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="Logo 2" class="h-10 object-contain" />
+      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="Logo 3" class="h-10 object-contain" />
+    </div>
   </section>
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 w-full bg-gradient-to-r from-green-700 to-green-900 text-white shadow-inner z-50">
+    <div class="grid grid-cols-4 text-center text-sm">
+      <button class="py-3 font-semibold border-t-4 border-white">Home</button>
+      <button onclick="location.href='plans.html'" class="py-3">Plans</button>
+      <button onclick="location.href='me.html'" class="py-3">Me</button>
+      <button onclick="location.href='support.html'" class="py-3">Support</button>
+    </div>
+  </nav>
 
-  <!-- Footer -->
-  <footer class="text-center py-4 text-white text-sm">
-    © 2025 TrustVest. All rights reserved.
-  </footer>
-
-  <!-- Background Music (auto-play, hidden) -->
-  <audio autoplay loop style="display: none;">
-    <source src="https://www.bensound.com/bensound-music/bensound-ukulele.mp3" type="audio/mp3">
+  <!-- Background Music (auto-play) -->
+  <audio autoplay loop>
+    <source src="assets/sound/bg.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
   </audio>
 
-  <!-- Firebase App Initialization -->
-  <script type="module">
-    // Import Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
-      authDomain: "finsa-connect.firebaseapp.com",
-      projectId: "finsa-connect",
-      storageBucket: "finsa-connect.appspot.com",
-      messagingSenderId: "126845965255",
-      appId: "1:126845965255:web:c82539297a8464873d7fe2"
-    };
-
-    initializeApp(firebaseConfig);
-  </script>
 </body>
 </html>
