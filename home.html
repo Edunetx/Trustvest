@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest - Home</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a2d9d5d56b.js" crossorigin="anonymous"></script>
   <style>
     body {
@@ -13,17 +13,13 @@
     audio {
       display: none;
     }
-    @keyframes spinLoader {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
-    }
   </style>
 </head>
 <body class="text-white font-sans">
 
-  <!-- 🔄 Loading Screen -->
-  <div id="loader" class="fixed inset-0 bg-black flex items-center justify-center z-50">
-    <div class="w-16 h-16 border-4 border-white border-t-green-500 rounded-full animate-spin"></div>
+  <!-- 🔄 Loader -->
+  <div id="loader" class="fixed inset-0 z-50 bg-black flex items-center justify-center">
+    <video src="assets/loader.mp4" autoplay muted loop class="w-24 h-24 rounded-full"></video>
   </div>
 
   <!-- 🔊 Background Music -->
@@ -42,113 +38,70 @@
     <p class="text-sm text-gray-300 mt-2">Your smart finance partner</p>
   </section>
 
-  <!-- 📊 Summary Grid -->
+  <!-- 📊 Wallet Summary Grid -->
   <section class="px-4">
     <div class="grid grid-cols-2 gap-4">
       <div class="bg-gradient-to-br from-blue-900 to-blue-700 rounded-2xl shadow-lg p-4">
         <p class="text-sm text-gray-200">Plan Type</p>
-        <h2 class="text-xl font-bold mt-1">₦10,000</h2>
+        <h2 id="plan" class="text-xl font-bold mt-1">Loading...</h2>
       </div>
       <div class="bg-gradient-to-br from-blue-800 to-blue-600 rounded-2xl shadow-lg p-4">
         <p class="text-sm text-gray-200">Referrals</p>
-        <h2 class="text-xl font-bold mt-1">3</h2>
+        <h2 id="referrals" class="text-xl font-bold mt-1">Loading...</h2>
       </div>
       <div class="bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-2xl shadow-lg p-4">
         <p class="text-sm text-gray-200">Total Income</p>
-        <h2 class="text-xl font-bold mt-1">₦6,000</h2>
+        <h2 id="income" class="text-xl font-bold mt-1">₦0.00</h2>
       </div>
       <div class="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl shadow-lg p-4">
         <p class="text-sm text-gray-200">Wallet Balance</p>
-        <h2 class="text-xl font-bold mt-1">₦4,000</h2>
+        <h2 id="wallet" class="text-xl font-bold mt-1">₦0.00</h2>
       </div>
     </div>
   </section>
 
-  <!-- Spacer -->
-  <div class="my-6"></div>
-
-  <!-- ✅ Welcome Back Card -->
-  <header class="bg-gradient-to-br from-green-700 via-green-800 to-green-900 text-white rounded-b-3xl px-6 py-6 shadow-md">
+  <!-- ✅ Welcome Card -->
+  <header class="bg-gradient-to-br from-green-700 via-green-800 to-green-900 text-white rounded-b-3xl px-6 py-6 shadow-md mt-6">
     <div class="flex items-center justify-between">
       <div class="text-left">
-        <h1 class="text-2xl font-bold">Welcome back, Tife</h1>
+        <h1 class="text-2xl font-bold">Welcome back, <span id="username">User</span></h1>
         <p class="text-sm text-green-100">TrustVest | Smart Finance</p>
       </div>
       <div class="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-green-800 font-bold">
-        T
+        <span id="initial">U</span>
       </div>
     </div>
     <div class="mt-6 bg-white/10 backdrop-blur-md rounded-2xl p-4 shadow-inner">
       <div class="text-sm text-green-100 mb-1">Your Balance</div>
-      <div class="text-3xl font-extrabold text-white">₦0.00</div>
+      <div id="wallet2" class="text-3xl font-extrabold text-white">₦0.00</div>
       <div class="text-xs text-green-200 mt-1">Earnings update daily by 12pm</div>
     </div>
   </header>
 
-  <!-- 📲 Action Buttons -->
+  <!-- 🔘 Action Buttons -->
   <section class="px-4 mt-4 grid grid-cols-3 gap-4">
     <button class="bg-green-700 text-white rounded-xl py-3 font-semibold shadow-lg">Deposit</button>
     <button class="bg-yellow-600 text-white rounded-xl py-3 font-semibold shadow-lg">Withdraw</button>
-    <button class="bg-blue-700 text-white rounded-xl py-3 font-semibold shadow-lg">Plans</button>
-  </section>
-
-  <!-- 📈 Summary Repeated -->
-  <section class="mt-6 px-4 grid grid-cols-2 gap-4 text-white">
-    <div class="bg-green-800 rounded-2xl p-4 shadow">
-      <p class="text-sm">Plan Type</p>
-      <h3 class="text-lg font-bold mt-1">None</h3>
-    </div>
-    <div class="bg-green-900 rounded-2xl p-4 shadow">
-      <p class="text-sm">Referrals</p>
-      <h3 class="text-lg font-bold mt-1">0</h3>
-    </div>
-    <div class="bg-green-700 rounded-2xl p-4 shadow col-span-2">
-      <p class="text-sm">Total Income</p>
-      <h3 class="text-2xl font-bold mt-1">₦0.00</h3>
-    </div>
+    <button onclick="location.href='plans.html'" class="bg-blue-700 text-white rounded-xl py-3 font-semibold shadow-lg">Plans</button>
   </section>
 
   <!-- 💬 Testimonials -->
   <section class="mt-8 px-4 mb-28">
     <h2 class="text-white text-lg font-semibold mb-2">What people are saying</h2>
-    <div id="testimonialBox" class="bg-white text-gray-800 rounded-xl p-4 shadow-md h-20 overflow-hidden relative">
+    <div id="testimonialBox" class="bg-gradient-to-br from-green-700 to-green-900 text-white rounded-2xl p-4 shadow-md h-20 overflow-hidden relative transform rotate-1">
       <div id="testimonialText" class="absolute animate-fade-in-out">“TrustVest helped me save and earn safely.”</div>
     </div>
   </section>
 
-  <script>
-    const testimonials = [
-      "“TrustVest helped me save and earn safely.”",
-      "“I deposited ₦5,000 and got daily earnings!”",
-      "“Smooth withdrawal and real profits.”",
-      "“Excellent platform for students and workers.”",
-      "“Investing has never been easier.”",
-    ];
-    let idx = 0;
-    setInterval(() => {
-      idx = (idx + 1) % testimonials.length;
-      document.getElementById("testimonialText").innerText = testimonials[idx];
-    }, 2500);
-
-    // Loader timeout
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
-      }, 1000);
-    });
-  </script>
-
-  <!-- ✅ Trusted By -->
+  <!-- 🤝 Trusted By -->
   <section class="mt-2 px-4 mb-24">
     <h2 class="text-white text-lg font-semibold mb-2">Trusted By</h2>
-    <div class="flex items-center justify-around bg-white rounded-2xl p-3 shadow-md">
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="Logo 1" class="h-10 object-contain" />
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="Logo 2" class="h-10 object-contain" />
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="Logo 3" class="h-10 object-contain" />
+    <div class="flex items-center justify-center bg-gradient-to-r from-green-800 to-green-900 rounded-2xl p-3 shadow-md">
+      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="h-10 object-contain" />
     </div>
   </section>
 
-  <!-- ✅ Bottom Nav -->
+  <!-- 🔚 Bottom Nav -->
   <nav class="fixed bottom-0 left-0 w-full bg-gradient-to-r from-green-700 to-green-900 text-white shadow-inner z-50">
     <div class="grid grid-cols-4 text-center text-xs">
       <button class="py-2 font-semibold border-t-4 border-white flex flex-col items-center">
@@ -165,6 +118,74 @@
       </button>
     </div>
   </nav>
+
+  <!-- 🧠 Testimonial Auto Switch -->
+  <script>
+    const testimonials = [
+      "“TrustVest helped me save and earn safely.”",
+      "“I deposited ₦5,000 and got daily earnings!”",
+      "“Smooth withdrawal and real profits.”",
+      "“Excellent platform for students and workers.”",
+      "“Investing has never been easier.”"
+    ];
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % testimonials.length;
+      document.getElementById("testimonialText").innerText = testimonials[idx];
+    }, 2500);
+  </script>
+
+  <!-- 🔥 Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+      authDomain: "finsa-connect.firebaseapp.com",
+      projectId: "finsa-connect",
+      storageBucket: "finsaconnect.appspot.com",
+      messagingSenderId: "126845965255",
+      appId: "1:126845965255:web:c82539297a8464873d7fe2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const uid = user.uid;
+
+      const userSnap = await getDoc(doc(db, "Users", uid));
+      const walletSnap = await getDoc(doc(db, "walletSummary", uid));
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        document.getElementById("username").innerText = userData.name || "User";
+        document.getElementById("initial").innerText = (userData.name || "U")[0];
+      }
+
+      if (walletSnap.exists()) {
+        const w = walletSnap.data();
+        document.getElementById("wallet").innerText = `₦${w.wallet || 0}`;
+        document.getElementById("wallet2").innerText = `₦${w.wallet || 0}`;
+        document.getElementById("income").innerText = `₦${w.income || 0}`;
+        document.getElementById("referrals").innerText = w.referrals || 0;
+        document.getElementById("plan").innerText = w.plan || "None";
+      }
+    });
+
+    // Hide loader after 3 seconds
+    setTimeout(() => {
+      document.getElementById("loader").style.display = "none";
+    }, 3000);
+  </script>
 
 </body>
 </html>
