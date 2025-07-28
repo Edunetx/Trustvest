@@ -3,102 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest Signup</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js"></script>
+  <title>TrustVest – Sign Up</title>
   <style>
-    body {
-      margin: 0;
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #1c1c3c, #004f56, #00856f);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
-
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-      width: 90%;
+    body {
+      background: linear-gradient(to bottom right, #00333f, #117e91);
+      color: #fff;
+      overflow: hidden;
+    }
+    .video-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .signup-container {
       max-width: 400px;
-      backdrop-filter: blur(10px);
+      margin: 80px auto;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
     }
-
-    .logo {
+    .signup-container img {
+      width: 100px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    h2 {
       text-align: center;
       margin-bottom: 20px;
     }
-
-    .logo img {
-      height: 50px;
-    }
-
     input {
       width: 100%;
       padding: 12px;
-      margin-top: 10px;
+      margin: 10px 0;
       border: none;
       border-radius: 10px;
-      font-size: 16px;
-      background-color: #ffffff18;
-      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
     }
-
+    input::placeholder {
+      color: #ccc;
+    }
+    .input-group {
+      position: relative;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ccc;
+    }
     button {
       width: 100%;
       padding: 12px;
-      margin-top: 20px;
+      background: #00c7d3;
       border: none;
       border-radius: 10px;
-      background-color: #00b894;
-      color: white;
-      font-size: 16px;
+      color: #fff;
+      font-weight: bold;
+      margin-top: 15px;
       cursor: pointer;
       transition: 0.3s;
     }
-
     button:hover {
-      background-color: #019875;
+      background: #00a2ac;
     }
-
-    .link {
-      margin-top: 15px;
+    .links {
       text-align: center;
+      margin-top: 15px;
+      font-size: 0.9em;
     }
-
-    .link a {
-      color: #00ffe0;
+    .links a {
+      color: #00f7ff;
       text-decoration: none;
-      font-size: 14px;
-    }
-
-    .link a:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="logo">
-      <img src="assets/logo.png" alt="TrustVest Logo" />
+  <!-- Tech video background -->
+  <iframe class="video-bg" src="https://www.youtube.com/embed/CnTGNDu5JHY?autoplay=1&mute=1&controls=0&loop=1&playlist=CnTGNDu5JHY&modestbranding=1&showinfo=0"
+    frameborder="0" allow="autoplay; loop; muted" allowfullscreen></iframe>
+
+  <div class="signup-container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" />
+    <h2>Create an Account</h2>
+
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="email" id="email" placeholder="Email" required />
+
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Password" required />
+      <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
     </div>
-    <h2 style="text-align: center;">Create Your Account</h2>
-    <input type="text" id="name" placeholder="Full Name" required />
-    <input type="email" id="email" placeholder="Email Address" required />
-    <input type="password" id="password" placeholder="Password" required />
+    <div class="input-group">
+      <input type="password" id="retypePassword" placeholder="Retype Password" required />
+      <span class="toggle-password" onclick="togglePassword('retypePassword')">👁️</span>
+    </div>
+
     <button onclick="signUp()">Sign Up</button>
 
-    <div class="link">
-      Already signed up? <a href="login.html">Login now</a>
+    <div class="links">
+      <p>Already have an account? <a href="login.html">Login now</a></p>
+      <p><a href="#" onclick="forgotPassword()">Forgot Password?</a></p>
     </div>
   </div>
+
+  <!-- Firebase + Script -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -106,22 +129,33 @@
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
-    const app = firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
     async function signUp() {
-      const name = document.getElementById('name').value.trim();
+      const username = document.getElementById('username').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
+      const retype = document.getElementById('retypePassword').value;
 
-      if (!name || !email || !password) {
-        alert("Please fill all fields");
+      if (!username || !email || !password || !retype) {
+        alert("All fields are required!");
+        return;
+      }
+
+      if (password !== retype) {
+        alert("Passwords do not match.");
         return;
       }
 
@@ -130,25 +164,25 @@
         const user = userCredential.user;
 
         await db.collection("Users").doc(user.uid).set({
-          uid: user.uid,
-          name,
-          email,
-          role: "user"
+          username: username,
+          email: email,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        await db.collection("walletSummary").doc(user.uid).set({
-          wallet: 0,
-          income: 0,
-          referrals: 0,
-          plan: "None"
-        });
-
-        alert("Signup successful!");
+        alert("Signup successful! Redirecting...");
         window.location.href = "home.html";
       } catch (error) {
-        console.error("Signup error:", error.message);
-        alert("Signup failed: " + error.message);
+        alert(error.message);
       }
+    }
+
+    function forgotPassword() {
+      const email = prompt("Enter your email to reset password:");
+      if (!email) return;
+
+      auth.sendPasswordResetEmail(email)
+        .then(() => alert("Password reset email sent!"))
+        .catch(error => alert(error.message));
     }
   </script>
 
