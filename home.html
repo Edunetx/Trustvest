@@ -3,199 +3,227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest</title>
-  <link rel="icon" href="assets/logo.png" type="image/png"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-</head>
-<body class="bg-gradient-to-br from-[#001F3F] via-[#003366] to-[#005580] text-white min-h-screen">
+  <title>TrustVest - Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://img.icons8.com/ios-filled/50/eagle.png" type="image/png" />
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+      authDomain: "finsa-connect.firebaseapp.com",
+      projectId: "finsa-connect",
+      storageBucket: "finsa-connect.appspot.com",
+      messagingSenderId: "126845965255",
+      appId: "1:126845965255:web:c82539297a8464873d7fe2"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
 
-  <!-- Notification Banner -->
-  <div id="notificationBanner" class="fixed inset-0 z-50 bg-black bg-opacity-80 flex flex-col items-center justify-center p-6 text-center hidden">
-    <img src="assets/logo.png" class="w-16 h-16 mb-4" alt="TrustVest Logo">
-    <h2 class="text-xl font-semibold mb-2">Important Update</h2>
-    <p class="mb-4 text-sm max-w-sm">TrustVest now offers instant deposits via PalmPay and an auto-earning system! Tap “Plans” to begin investing today.</p>
-    <button onclick="dismissBanner()" class="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-full text-white font-bold">Close</button>
+    .notification-banner {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      background-color: #ffc107;
+      color: #222;
+      padding: 15px;
+      z-index: 9999;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      display: none;
+      text-align: center;
+    }
+
+    .notification-banner .close-btn {
+      float: right;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .notif-bell {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      color: gold;
+      cursor: pointer;
+      animation: glow 1s infinite alternate;
+      z-index: 9999;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px gold; }
+      to   { text-shadow: 0 0 15px orange; }
+    }
+  </style>
+</head>
+<body>
+  <div class="notification-banner" id="notificationBanner">
+    🔔 Update: Welcome to TrustVest! 🚀 We're growing every day. Stay tuned for new plans, higher returns, and student-friendly investment tools! 💼📈💸 
+    <span class="close-btn" onclick="this.parentElement.style.display='none'">&times;</span>
   </div>
 
-  <!-- Header -->
-  <header class="flex items-center justify-between px-5 py-4 shadow-md bg-transparent">
-    <div class="flex items-center space-x-3">
-      <img src="assets/logo.png" alt="TrustVest Logo" class="w-10 h-10"/>
-      <h1 class="text-2xl font-bold tracking-wide">TrustVest</h1>
-    </div>
-    <div class="relative">
-      <span class="absolute top-0 right-0 w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C8.67 6.165 8 7.388 8 8.75V14.16c0 .538-.214 1.055-.595 1.435L6 17h5" />
-      </svg>
-    </div>
+  <div class="notif-bell" onclick="toggleNotification()">
+    🔔
+  </div>
+
+  <header style="text-align: center; padding: 30px 20px;">
+    <h1 style="font-size: 32px; margin: 0; color: gold;">TrustVest</h1>
+    <p style="margin-top: 8px;">Invest Smart. Earn More. 🎯</p>
   </header>
 
-  <!-- Balance Summary -->
-  <section class="px-4 mt-6 grid grid-cols-2 gap-4 text-center">
-    <div class="bg-gradient-to-br from-[#004466] to-[#003355] p-4 rounded-2xl shadow-lg">
-      <h2 class="text-sm text-gray-300">Balance</h2>
-      <p id="balance" class="text-xl font-bold">₦0.00</p>
-    </div>
-    <div class="bg-gradient-to-br from-[#004466] to-[#003355] p-4 rounded-2xl shadow-lg">
-      <h2 class="text-sm text-gray-300">Earnings</h2>
-      <p id="earnings" class="text-xl font-bold">₦0.00</p>
-    </div>
-    <div class="bg-gradient-to-br from-[#004466] to-[#003355] p-4 rounded-2xl shadow-lg">
-      <h2 class="text-sm text-gray-300">Referrals</h2>
-      <p id="referrals" class="text-xl font-bold">0</p>
-    </div>
-    <div class="bg-gradient-to-br from-[#004466] to-[#003355] p-4 rounded-2xl shadow-lg">
-      <h2 class="text-sm text-gray-300">Plan</h2>
-      <p id="currentPlan" class="text-xl font-bold">None</p>
-    </div>
-  </section>
-<!-- Action Buttons -->
-  <section class="px-4 mt-8 grid grid-cols-3 gap-3 text-center">
-    <button class="bg-green-500 text-white py-3 rounded-xl font-semibold">Deposit</button>
-    <button class="bg-yellow-500 text-white py-3 rounded-xl font-semibold">Plans</button>
-    <button class="bg-red-500 text-white py-3 rounded-xl font-semibold">Withdraw</button>
-  </section>
-
-  <!-- How it Works -->
-  <section class="px-4 mt-10 text-center">
-    <h2 class="text-xl font-bold mb-2">How TrustVest Works</h2>
-    <p class="text-sm text-gray-200">Deposit funds, choose a plan, and watch your earnings grow. You can withdraw anytime once you hit ₦1,500.</p>
-  </section>
-
-  <!-- Plans Section -->
-  <section class="px-4 mt-6">
-    <h2 class="text-lg font-bold mb-3">Investment Plans</h2>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="bg-gradient-to-r from-[#006680] to-[#004466] p-4 rounded-xl shadow-md text-center">
-        <h3 class="font-semibold">Starter</h3>
-        <p class="text-sm text-gray-300">₦3,000 - ₦10,000</p>
-      </div>
-      <div class="bg-gradient-to-r from-[#006680] to-[#004466] p-4 rounded-xl shadow-md text-center">
-        <h3 class="font-semibold">Bronze</h3>
-        <p class="text-sm text-gray-300">₦15,000 - ₦50,000</p>
-      </div>
-      <div class="bg-gradient-to-r from-[#006680] to-[#004466] p-4 rounded-xl shadow-md text-center">
-        <h3 class="font-semibold">Silver</h3>
-        <p class="text-sm text-gray-300">₦55,000 - ₦200,000</p>
-      </div>
-      <div class="bg-gradient-to-r from-[#006680] to-[#004466] p-4 rounded-xl shadow-md text-center">
-        <h3 class="font-semibold">Gold</h3>
-        <p class="text-sm text-gray-300">₦250,000 - ₦1M</p>
-      </div>
+  <section style="padding: 20px; text-align: center;">
+    <h2 style="font-size: 24px; margin-bottom: 10px;">Trusted By</h2>
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+      <img src="https://img.icons8.com/color/48/trust--v1.png" alt="Trusted Logo" />
+      <img src="https://img.icons8.com/color/48/contract.png" alt="Trusted Logo" />
+      <img src="https://img.icons8.com/color/48/money.png" alt="Trusted Logo" />
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="text-center mt-10">
-    <h2 class="text-lg font-semibold mb-2">Ready to grow your wealth?</h2>
-    <button class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-full font-bold text-white">Start Earning</button>
+  <section style="padding: 30px 20px;">
+    <h2 style="font-size: 22px; margin-bottom: 15px;">Testimonials</h2>
+    <div id="testimonial-box" style="text-align: center; font-style: italic;"></div>
   </section>
-  <!-- Testimonials -->
-      <section class="py-8 px-4">
-        <h2 class="text-xl font-semibold mb-4">What People Say</h2>
-        <div class="space-y-4">
-          <div class="rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 shadow">
-            “TrustVest has transformed how I handle small investments.”
-          </div>
-          <div class="rounded-xl bg-gradient-to-r from-green-500 to-lime-500 text-white p-4 shadow">
-            “I started with ₦5,000 and now I’ve withdrawn 3 times already!”
-          </div>
-          <div class="rounded-xl bg-gradient-to-r from-pink-500 to-red-500 text-white p-4 shadow">
-            “Customer support is responsive and friendly!”
-          </div>
-          <!-- Add more fake testimonials dynamically via JS -->
-        </div>
-      </section>
 
-      <!-- Trusted By Section -->
-      <section class="py-8 px-4">
-        <h2 class="text-xl font-semibold mb-4">Trusted By</h2>
-        <div class="grid grid-cols-3 gap-4 bg-gradient-to-r from-[#131b23] to-[#111] p-4 rounded-xl shadow">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" class="h-10 object-contain" />
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" class="h-10 object-contain" />
-          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-10 object-contain" />
-          <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Flutterwave_Logo.svg" class="h-10 object-contain" />
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Stripe_Logo%2C_revised_2016.svg" class="h-10 object-contain" />
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Opay_Logo.png" class="h-10 object-contain" />
-        </div>
-      </section>
-      <!-- Notification Banner -->
-      <div id="notificationBanner" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
-        <div class="bg-gradient-to-br from-yellow-500 to-orange-500 text-white p-6 rounded-2xl text-center w-11/12 max-w-md relative">
-          <button id="closeBanner" class="absolute top-2 right-4 text-white text-xl">&times;</button>
-          <img src="/assets/logo.png" alt="TrustVest" class="w-12 h-12 mx-auto mb-4">
-          <h2 class="text-xl font-bold mb-2">Important Notice</h2>
-          <p class="text-sm">Welcome to TrustVest! Enjoy automatic earnings, safe plans from ₦3,000 up, and seamless PalmPay deposits. Stay financially informed!</p>
-        </div>
+  <script>
+    const testimonials = [
+      "I invested ₦5,000 and earned ₦8,000 in 3 weeks. So legit! 💸",
+      "TrustVest changed my saving habits. Love it. 🔥",
+      "Best platform ever. Fast support and good returns!",
+      "As a student, this gives me peace of mind financially.",
+      "It’s safe, reliable, and well-designed. Highly recommend!",
+      "First time using it and I’m already impressed. ✅",
+      "Invested ₦20,000, got ₦30,000 — love it!",
+      "User-friendly and transparent! ✨",
+      "Simple plans, fast payments. Will invest again!",
+      "Big shoutout to the team for building this. 🔥🔥🔥"
+    ];
+
+    let index = 0;
+    function showTestimonial() {
+      document.getElementById('testimonial-box').textContent = testimonials[index];
+      index = (index + 1) % testimonials.length;
+    }
+    setInterval(showTestimonial, 2500);
+    showTestimonial();
+
+    function toggleNotification() {
+      const banner = document.getElementById('notificationBanner');
+      banner.style.display = banner.style.display === 'none' || banner.style.display === '' ? 'block' : 'none';
+    }
+  </script>
+  <section style="padding: 30px 20px;">
+    <h2 style="font-size: 22px; text-align: center; color: gold;">Why Choose TrustVest? 🤔</h2>
+    <ul style="list-style: none; padding: 0; margin-top: 20px;">
+      <li style="margin-bottom: 15px;">✅ Up to 25% return on investments</li>
+      <li style="margin-bottom: 15px;">✅ Daily plan options available</li>
+      <li style="margin-bottom: 15px;">✅ Admin-verified wallet top-up</li>
+      <li style="margin-bottom: 15px;">✅ Easy withdrawal from ₦1,500</li>
+      <li style="margin-bottom: 15px;">✅ Student-friendly and transparent</li>
+    </ul>
+  </section>
+
+  <section style="padding: 30px 20px; text-align: center;">
+    <h2 style="font-size: 22px; color: gold;">How It Works ⚙️</h2>
+    <ol style="text-align: left; max-width: 600px; margin: auto; padding-left: 20px;">
+      <li style="margin-bottom: 15px;">1️⃣ Sign up with your student email</li>
+      <li style="margin-bottom: 15px;">2️⃣ Fund your wallet manually via Palmpay</li>
+      <li style="margin-bottom: 15px;">3️⃣ Choose an investment plan</li>
+      <li style="margin-bottom: 15px;">4️⃣ Earn returns automatically</li>
+      <li style="margin-bottom: 15px;">5️⃣ Withdraw earnings once it hits ₦1,500</li>
+    </ol>
+  </section>
+
+  <section style="padding: 30px 20px; text-align: center;">
+    <h2 style="font-size: 22px; color: gold;">Investment Plans 📊</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+      <div style="background: linear-gradient(135deg, #ffd700, #ffa500); padding: 20px; border-radius: 15px; width: 250px;">
+        <h3>Mini Plan</h3>
+        <p>₦3,000 - ₦10,000</p>
+        <p>Daily Profit: 4%</p>
       </div>
-
-    </main>
-
-    <!-- Bottom Navbar -->
-    <nav class="fixed bottom-0 w-full bg-gradient-to-r from-[#0f1a2b] to-[#111827] border-t border-gray-800 shadow-md z-40">
-      <div class="flex justify-around text-sm text-white py-2">
-        <a href="home.html" class="flex flex-col items-center">
-          <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6m-6 0H7v6h10v-6H7"></path></svg>
-          Home
-        </a>
-        <a href="plans.html" class="flex flex-col items-center">
-          <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24"><path d="M3 10h18M3 6h18M3 14h18M3 18h18"></path></svg>
-          Plans
-        </a>
-        <a href="support.html" class="flex flex-col items-center">
-          <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24"><path d="M18.364 5.636A9 9 0 105.636 18.364 9 9 0 0018.364 5.636z"></path></svg>
-          Support
-        </a>
-        <a href="profile.html" class="flex flex-col items-center">
-          <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM4 20c0-2.21 3.58-4 8-4s8 1.79 8 4"></path></svg>
-          Me
-        </a>
+      <div style="background: linear-gradient(135deg, #ffd700, #ffa500); padding: 20px; border-radius: 15px; width: 250px;">
+        <h3>Standard Plan</h3>
+        <p>₦15,000 - ₦50,000</p>
+        <p>Daily Profit: 5%</p>
       </div>
-    </nav>
+      <div style="background: linear-gradient(135deg, #ffd700, #ffa500); padding: 20px; border-radius: 15px; width: 250px;">
+        <h3>Gold Plan</h3>
+        <p>₦55,000 - ₦1M</p>
+        <p>Daily Profit: 6%</p>
+      </div>
+    </div>
+  </section>
+  <section style="padding: 30px 20px; text-align: center;">
+    <h2 style="font-size: 22px; color: gold;">Trusted by Students 🎓</h2>
+    <div style="max-width: 600px; margin: auto;">
+      <div id="testimonial-box" style="background: white; color: black; padding: 15px; border-radius: 10px; margin-top: 20px; font-style: italic;">
+        "I doubled my savings in just 3 weeks!"
+      </div>
+    </div>
+  </section>
 
-    <!-- Scripts -->
-    <script>
-      // Notification banner
-      window.addEventListener('load', () => {
-        const banner = document.getElementById('notificationBanner');
-        const close = document.getElementById('closeBanner');
-        banner.classList.remove('hidden');
-        close.addEventListener('click', () => {
-          banner.classList.add('hidden');
-        });
-      });
+  <section style="padding: 30px 20px;">
+    <h2 style="font-size: 22px; color: gold; text-align: center;">FAQs ❓</h2>
+    <details style="margin: 10px 0;">
+      <summary>Is TrustVest safe?</summary>
+      <p>Yes! Admins manually verify top-ups and your profits are auto-calculated. No scams here!</p>
+    </details>
+    <details style="margin: 10px 0;">
+      <summary>Can I withdraw anytime?</summary>
+      <p>You can withdraw once you’ve earned ₦1,500 or more in profits.</p>
+    </details>
+    <details style="margin: 10px 0;">
+      <summary>Do I need a bank account?</summary>
+      <p>Yes, your earnings will be sent to your bank account after withdrawal is approved.</p>
+    </details>
+  </section>
 
-      // Fake testimonials auto-scroll (extendable)
-      const testimonials = [
-        "Best investment platform for students!",
-        "Simple, fast, and reliable.",
-        "I made profits within a week.",
-        "Referral bonuses are real!",
-        "Love the customer service!",
-        "I withdrew ₦10,000 after my first plan!",
-        "App loads super fast on my device.",
-        "No hidden charges at all.",
-        "PalmPay works without issues.",
-        "TrustVest is a 10/10."
-      ];
+  <section style="padding: 40px 20px; background: #111;">
+    <h2 style="color: gold; text-align: center;">Get Started with TrustVest 🚀</h2>
+    <p style="text-align: center; color: white; margin-bottom: 20px;">Login or sign up below to start investing smartly.</p>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+      <a href="login.html" class="btn-primary">Login</a>
+      <a href="signup.html" class="btn-secondary">Sign Up</a>
+    </div>
+  </section>
+  <footer style="padding: 20px; background: black; text-align: center; color: white;">
+    <p>&copy; 2025 TrustVest. All rights reserved.</p>
+    <p>Built by Finance Students for Students.</p>
+  </footer>
 
-      const testimonialContainer = document.querySelector('.space-y-4');
-      setInterval(() => {
-        const testimonial = document.createElement('div');
-        testimonial.className = "rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4 shadow";
-        testimonial.innerText = testimonials[Math.floor(Math.random() * testimonials.length)];
-        testimonialContainer.prepend(testimonial);
-        if (testimonialContainer.childNodes.length > 8) {
-          testimonialContainer.removeChild(testimonialContainer.lastChild);
-        }
-      }, 2500);
-    </script>
-  </body>
+  <script>
+    const testimonials = [
+      "I doubled my savings in just 3 weeks!",
+      "Best student investment platform!",
+      "Simple and stress-free process.",
+      "Legit earnings daily 😎",
+      "Perfect for student budgeting!",
+      "Withdrawal was very fast 🔥",
+      "I started with ₦5,000 and it worked!",
+      "TrustVest is a game changer!",
+      "Finally something transparent 😌",
+      "Profits come in while I sleep 💤"
+    ];
+    let currentTestimonial = 0;
+    const testimonialBox = document.getElementById('testimonial-box');
+
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      testimonialBox.innerText = testimonials[currentTestimonial];
+    }, 2000);
+  </script>
+</body>
 </html>
