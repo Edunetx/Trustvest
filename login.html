@@ -1,209 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TrustVest - Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustVest Login</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
   <style>
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    body {
+      font-family: 'Poppins', sans-serif;
       background-color: #000;
       color: white;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
-      overflow: hidden;
     }
 
-    .login-container {
-      background: rgba(0, 0, 0, 0.8);
+    .container {
+      background: #111;
       padding: 2rem;
-      border-radius: 16px;
+      border-radius: 10px;
       width: 90%;
       max-width: 400px;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
-    }
-
-    .logo {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .logo img {
-      max-width: 150px;
-      height: auto;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
       position: relative;
     }
 
-    label {
-      font-size: 0.9rem;
-      display: block;
-      margin-bottom: 0.5rem;
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+      position: relative;
     }
 
     input {
       width: 100%;
-      padding: 0.75rem;
+      padding: 0.9rem 1rem;
       padding-right: 40px;
-      background: #111;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background: #222;
       color: white;
-      border: 1px solid #444;
-      border-radius: 8px;
     }
 
     .toggle-password {
       position: absolute;
       right: 10px;
-      top: 38px;
+      top: 50%;
+      transform: translateY(-50%);
       cursor: pointer;
-      color: white;
+      font-size: 1.2rem;
+      color: #ccc;
     }
 
-    .btn-login {
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      border: none;
-      padding: 0.75rem;
+    button {
       width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 5px;
+      background: linear-gradient(135deg, #00b09b, #96c93d);
       color: white;
-      border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: background 0.3s ease;
     }
 
-    .btn-login:hover {
-      transform: scale(1.05);
+    button:hover {
+      opacity: 0.9;
     }
 
-    .bottom-links {
-      text-align: center;
+    .extra-links {
       margin-top: 1rem;
-      font-size: 0.85rem;
+      text-align: center;
+      font-size: 0.9rem;
     }
 
-    .bottom-links a {
-      color: #00c6ff;
+    .extra-links a {
+      color: #00b09b;
       text-decoration: none;
     }
 
-    .bottom-links a:hover {
-      text-decoration: underline;
+    .logo {
+      width: 100px;
+      display: block;
+      margin: 0 auto 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <div class="logo">
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+  <div class="container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" />
+    <h2>Welcome Back</h2>
+    <div class="input-group">
+      <input type="email" id="email" placeholder="Email" required />
     </div>
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" placeholder="Enter your username">
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Password" required />
+      <span class="toggle-password" onclick="togglePassword()">👁️</span>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter your password">
-      <span class="toggle-password" onclick="togglePassword()">👁️‍🗨️</span>
-    </div>
-    <button class="btn-login" onclick="login()">Login</button>
-    <div class="bottom-links">
-      <p><a href="#" onclick="resetPassword()">Forgot password?</a></p>
-      <p>Don't have an account? <a href="signup.html">Sign up now</a></p>
+    <button onclick="login()">Login</button>
+    <div class="extra-links">
+      <a href="#" onclick="resetPassword()">Forgot Password?</a><br><br>
+      Don't have an account? <a href="signup.html">Sign up now</a>
     </div>
   </div>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDKs -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
-      databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    window.togglePassword = function () {
-      const password = document.getElementById("password");
-      const toggle = document.querySelector(".toggle-password");
-      if (password.type === "password") {
-        password.type = "text";
-        toggle.textContent = "🙈";
+    window.togglePassword = () => {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = document.querySelector('.toggle-password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.textContent = '🙈';
       } else {
-        password.type = "password";
-        toggle.textContent = "👁️‍🗨️";
+        passwordInput.type = 'password';
+        toggleIcon.textContent = '👁️';
       }
     }
 
-    window.login = async function () {
-      const username = document.getElementById("username").value.trim();
+    window.login = () => {
+      const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      if (!username || !password) {
-        alert("Please enter both username and password.");
-        return;
-      }
-
-      const usersRef = collection(db, "Users");
-      const q = query(usersRef, where("username", "==", username));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        alert("No user found with that username.");
-        return;
-      }
-
-      const userDoc = querySnapshot.docs[0];
-      const userData = userDoc.data();
-      const email = userData.email;
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "home.html";
-      } catch (error) {
-        alert("Login failed: " + error.message);
-      }
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // ✅ Login successful, redirect
+          window.location.href = "home.html";
+        })
+        .catch((error) => {
+          alert("Login failed: " + error.message);
+        });
     }
 
-    window.resetPassword = async function () {
-      const username = prompt("Enter your username to reset password:");
-      if (!username) return;
-
-      const usersRef = collection(db, "Users");
-      const q = query(usersRef, where("username", "==", username));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        alert("No user found with that username.");
-        return;
-      }
-
-      const email = querySnapshot.docs[0].data().email;
-      try {
-        await sendPasswordResetEmail(auth, email);
-        alert("Password reset link sent to your email.");
-      } catch (error) {
-        alert("Error: " + error.message);
+    window.resetPassword = () => {
+      const email = prompt("Enter your email to reset password:");
+      if (email) {
+        sendPasswordResetEmail(auth, email)
+          .then(() => {
+            alert("Password reset link sent to " + email);
+          })
+          .catch((error) => {
+            alert("Error: " + error.message);
+          });
       }
     }
   </script>
