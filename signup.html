@@ -1,125 +1,172 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustVest - Sign Up</title>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/lu.min.css" rel="stylesheet">
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustVest Signup</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #001f3f, #003c58);
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .container {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 2rem;
-      border-radius: 1rem;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
-    .container img {
-      width: 120px;
-      margin-bottom: 1rem;
-    }
-    h2 {
-      margin-bottom: 1rem;
-    }
-    input {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: none;
-      border-radius: 8px;
-    }
-    .password-container {
-      position: relative;
-    }
-    .password-container i {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-    }
-    button {
-      background: #00cc88;
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-weight: bold;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
-    .link {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-    .link a {
-      color: #00ccff;
-      text-decoration: none;
-    }
+      font-family: 'Segoe UI', sans-serif;
+    }body, html {
+  height: 100%;
+  overflow: hidden;
+}
+
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-box {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.form-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.form-box img {
+  display: block;
+  width: 100px;
+  height: auto;
+  margin: 0 auto 20px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+}
+
+.form-group i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  cursor: pointer;
+}
+
+.form-box button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, teal, #0f5);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-box .bottom-text {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.form-box .bottom-text a {
+  color: #0ff;
+  text-decoration: none;
+}
+
   </style>
-</head>
-<body>
-  <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <h2>Create Your Account</h2>
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <div class="password-container">
-      <input type="password" id="password" placeholder="Password" required />
-      <i class="lu-eye" id="togglePassword" onclick="togglePw('password', this)"></i>
+</head><body>
+  <video autoplay muted loop class="bg-video">
+    <source src="https://cdn.coverr.co/videos/coverr-financial-stock-market-data-4474/1080p.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+  <div class="overlay"></div>  <div class="container">
+    <div class="form-box">
+      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+      <h2>Create Account</h2>
+      <form id="signupForm">
+        <div class="form-group">
+          <input type="text" id="username" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" placeholder="Password" required>
+          <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+        </div>
+        <div class="form-group">
+          <input type="password" id="confirmPassword" placeholder="Retype Password" required>
+          <i class="fa-solid fa-eye-slash" id="toggleConfirmPassword"></i>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+      <div class="bottom-text">
+        Already have an account? <a href="login.html">Login now</a>
+      </div>
     </div>
-    <div class="password-container">
-      <input type="password" id="confirmPassword" placeholder="Retype Password" required />
-      <i class="lu-eye" id="toggleConfirmPassword" onclick="togglePw('confirmPassword', this)"></i>
-    </div>
-    <button onclick="signUp()">Sign Up</button>
-    <div class="link">
-      Already have an account? <a href="login.html">Login now</a>
-    </div>
-  </div>  <script>
+  </div>  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
+      storageBucket: "trustvest-a1bd9.firebasestorage.app",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
 
-    function togglePw(fieldId, iconEl) {
-      const input = document.getElementById(fieldId);
-      if (input.type === "password") {
-        input.type = "text";
-        iconEl.className = "lu-eye-off";
-      } else {
-        input.type = "password";
-        iconEl.className = "lu-eye";
-      }
-    }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    async function signUp() {
-      const username = document.getElementById("username").value.trim();
-      const email = document.getElementById("email").value.trim();
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
 
@@ -129,16 +176,15 @@
       }
 
       try {
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const uid = userCredential.user.uid;
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-        await db.collection("Users").doc(uid).set({
+        await setDoc(doc(db, "Users", user.uid), {
           username,
           email,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          uid: user.uid,
           role: "user",
-          wallet: 0,
-          earnings: 0
+          createdAt: new Date()
         });
 
         alert("Signup successful! Redirecting to login...");
@@ -146,6 +192,26 @@
       } catch (error) {
         alert(error.message);
       }
-    }
-  </script></body>
-</html>
+    });
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+      togglePassword.classList.toggle("fa-eye");
+      togglePassword.classList.toggle("fa-eye-slash");
+    });
+
+    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+
+    toggleConfirmPassword.addEventListener("click", () => {
+      const type = confirmPasswordInput.type === "password" ? "text" : "password";
+      confirmPasswordInput.type = type;
+      toggleConfirmPassword.classList.toggle("fa-eye");
+      toggleConfirmPassword.classList.toggle("fa-eye-slash");
+    });
+  </script></body></html>
