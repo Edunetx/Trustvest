@@ -1,198 +1,170 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up | TrustVest</title>
+  <title>TrustVest - Sign Up</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";const firebaseConfig = {
+  apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+  authDomain: "trustvest-a1bd9.firebaseapp.com",
+  databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
+  projectId: "trustvest-a1bd9",
+  storageBucket: "trustvest-a1bd9.appspot.com",
+  messagingSenderId: "676220073092",
+  appId: "1:676220073092:web:b358f8821ac33da9babed1"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.signUp = async function () {
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (!username || !email || !password || password !== confirmPassword) {
+    alert("Please fill out all fields correctly.");
+    return;
+  }
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "Users", user.uid), {
+      username,
+      email,
+      role: "user",
+      createdAt: new Date().toISOString(),
+    });
+
+    window.location.href = "login.html";
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+  </script>
   <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
     body {
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", sans-serif;
       background-color: #000;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: white;
       height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    .signup-container {
-      background: #111;
+    .form-container {
+      background: rgba(255, 255, 255, 0.06);
       padding: 30px;
-      border-radius: 15px;
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
       width: 90%;
-      max-width: 360px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      max-width: 400px;
+      backdrop-filter: blur(10px);
     }
-
-    .signup-container h2 {
+    .form-container h2 {
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: gold;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background-color: #222;
+      margin-bottom: 25px;
       color: #fff;
-      font-size: 14px;
     }
-
-    .form-group input::placeholder {
-      color: #888;
-    }
-
-    .password-toggle {
+    .form-group {
+      margin-bottom: 15px;
       position: relative;
     }
-
-    .password-toggle-icon {
+    .form-group input {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      border: none;
+      border-radius: 10px;
+      background-color: #111;
+      color: white;
+    }
+    .form-group svg {
       position: absolute;
-      right: 12px;
-      top: 32%;
+      right: 10px;
+      top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 16px;
-      color: #bbb;
+      stroke: white;
     }
-
-    .signup-button {
+    .btn {
       width: 100%;
       padding: 12px;
-      background: gold;
       border: none;
-      color: black;
+      background: linear-gradient(45deg, #00b09b, #96c93d);
+      color: #fff;
+      border-radius: 10px;
       font-weight: bold;
-      border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
+      transition: 0.3s ease;
     }
-
-    .login-link {
+    .btn:hover {
+      opacity: 0.8;
+    }
+    .redirect {
       text-align: center;
-      margin-top: 14px;
-      font-size: 13px;
+      margin-top: 15px;
+      font-size: 14px;
     }
-
-    .login-link a {
-      color: gold;
-      text-decoration: none;
+    .redirect a {
+      color: #00ffcc;
+      text-decoration: underline;
+    }
+    .logo {
+      width: 80px;
+      display: block;
+      margin: 0 auto 20px;
     }
   </style>
 </head>
 <body>
-  <div class="signup-container">
+  <div class="form-container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
     <h2>Create Account</h2>
-    <form id="signupForm">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Enter username" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter email" required />
-      </div>
-      <div class="form-group password-toggle">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter password" required />
-        <span class="password-toggle-icon" onclick="togglePassword('password')">👁️</span>
-      </div>
-      <div class="form-group password-toggle">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" placeholder="Confirm password" required />
-        <span class="password-toggle-icon" onclick="togglePassword('confirmPassword')">👁️</span>
-      </div>
-      <button class="signup-button" type="submit">Sign Up</button>
-    </form>
-    <div class="login-link">
-      Already have an account? <a href="login.html">Login</a>
+    <div class="form-group">
+      <input type="text" id="username" placeholder="Username" />
     </div>
-  </div>
+    <div class="form-group">
+      <input type="email" id="email" placeholder="Email" />
+    </div>
+    <div class="form-group">
+      <input type="password" id="password" placeholder="Password" />
+      <svg id="togglePass" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+      </svg>
+    </div>
+    <div class="form-group">
+      <input type="password" id="confirmPassword" placeholder="Retype Password" />
+    </div>
+    <button class="btn" onclick="signUp()">Sign Up</button>
+    <div class="redirect">
+      Already have an account? <a href="login.html">Login now</a>
+    </div>
+  </div>  <script>
+    const toggleIcon = document.getElementById("togglePass");
+    const passwordField = document.getElementById("password");
+    let showPassword = false;
 
-  <!-- Firebase SDK (modular) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-      authDomain: "trustvest-a1bd9.firebaseapp.com",
-      databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
-      projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
-      messagingSenderId: "676220073092",
-      appId: "1:676220073092:web:b358f8821ac33da9babed1"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const signupForm = document.getElementById("signupForm");
-
-    signupForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const username = document.getElementById("username").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-
-      if (!username || !email || !password || !confirmPassword) {
-        alert("All fields are required.");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert("Passwords do not match.");
-        return;
-      }
-
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        await setDoc(doc(db, "users", user.uid), {
-          username,
-          email,
-          uid: user.uid,
-          walletBalance: 0,
-          earnings: 0,
-          createdAt: new Date().toISOString()
-        });
-
-        alert("Signup successful!");
-        window.location.href = "login.html";
-      } catch (error) {
-        if (error.code === "auth/email-already-in-use") {
-          alert("Email already in use. Try logging in.");
-        } else {
-          alert("Signup error: " + error.message);
-        }
-      }
+    toggleIcon.addEventListener("click", () => {
+      showPassword = !showPassword;
+      passwordField.type = showPassword ? "text" : "password";
+      toggleIcon.innerHTML = showPassword
+        ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.057 10.057 0 011.697-2.882M15 12a3 3 0 00-3-3m3 3a3 3 0 01-3 3m0 0a3 3 0 003-3m-3 3a3 3 0 01-3-3m0 0a3 3 0 013-3" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />`
+        : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
     });
-
-    // Toggle show/hide password
-    window.togglePassword = function (fieldId) {
-      const input = document.getElementById(fieldId);
-      input.type = input.type === "password" ? "text" : "password";
-    };
-  </script>
-</body>
+  </script></body>
 </html>
