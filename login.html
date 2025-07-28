@@ -5,104 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest Login</title>
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", sans-serif;
-    }
     body {
-      background-color: #000;
-      color: #fff;
-      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
+
     .container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
       width: 90%;
       max-width: 400px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     }
-    .logo {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .logo img {
-      width: 100px;
-      height: auto;
-    }
+
     h2 {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
-    .inputBox {
+
+    input {
+      width: 100%;
+      padding: 12px;
       margin-bottom: 20px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 16px;
+    }
+
+    .input-group {
       position: relative;
     }
-    .inputBox input {
-      width: 100%;
-      padding: 12px 40px 12px 12px;
-      border: none;
-      border-radius: 8px;
-      background-color: #111;
-      color: #fff;
-      font-size: 14px;
-    }
-    .inputBox .togglePassword {
+
+    .input-group i {
       position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
+      right: 15px;
+      top: 13px;
       cursor: pointer;
-      color: #ccc;
     }
-    .loginBtn {
+
+    button {
       width: 100%;
-      background-color: #00a86b;
-      color: #fff;
       padding: 12px;
-      font-weight: bold;
       border: none;
-      border-radius: 8px;
+      background: #00e1ff;
+      color: #000;
+      font-weight: bold;
+      border-radius: 10px;
       cursor: pointer;
-      transition: 0.3s;
+      font-size: 16px;
     }
-    .loginBtn:disabled {
-      background-color: #555;
+
+    button:hover {
+      background: #00c3e3;
     }
-    .status {
+
+    .link {
       text-align: center;
-      margin-top: 10px;
-      font-size: 14px;
-      color: #ff4444;
+      margin-top: 15px;
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+  <div class="container fade-in">
+    <h2>Login to TrustVest</h2>
+    <div class="input-group">
+      <input type="email" id="email" placeholder="Email" required />
     </div>
-    <h2>Welcome Back</h2>
-    <div class="inputBox">
-      <input type="text" id="username" placeholder="Username" required />
-    </div>
-    <div class="inputBox">
+    <div class="input-group">
       <input type="password" id="password" placeholder="Password" required />
-      <span class="togglePassword" id="togglePass">&#128065;</span>
+      <i id="togglePassword" class="eye-icon">👁️</i>
     </div>
-    <button class="loginBtn" id="loginBtn">Log In</button>
-    <div class="status" id="statusMsg"></div>
+    <button onclick="login()">Login</button>
+    <div class="link">
+      <a href="signup.html" style="color:#00e1ff;">New here? Sign up</a>
+    </div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -112,54 +113,33 @@
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    const loginBtn = document.getElementById("loginBtn");
-    const togglePass = document.getElementById("togglePass");
-    const passInput = document.getElementById("password");
-    const statusMsg = document.getElementById("statusMsg");
+    window.login = function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-    let showPassword = false;
-    togglePass.addEventListener("click", () => {
-      showPassword = !showPassword;
-      passInput.type = showPassword ? "text" : "password";
-      togglePass.textContent = showPassword ? "🙈" : "👁️";
-    });
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          document.body.classList.add("fade-in");
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 700);
+        })
+        .catch((error) => {
+          alert("Login failed: " + error.message);
+        });
+    };
 
-    loginBtn.addEventListener("click", async () => {
-      const username = document.getElementById("username").value.trim();
-      const password = passInput.value.trim();
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+    let visible = false;
 
-      if (!username || !password) {
-        statusMsg.textContent = "Please fill in all fields.";
-        return;
-      }
-
-      loginBtn.disabled = true;
-      statusMsg.textContent = "Logging in...";
-
-      try {
-        // Step 1: Get user by username from Firestore
-        const querySnapshot = await db.collection("Users").where("username", "==", username).get();
-        if (querySnapshot.empty) {
-          statusMsg.textContent = "Username not found.";
-          loginBtn.disabled = false;
-          return;
-        }
-
-        const userDoc = querySnapshot.docs[0];
-        const email = userDoc.data().email;
-
-        // Step 2: Login with email
-        await auth.signInWithEmailAndPassword(email, password);
-        statusMsg.textContent = "Login successful!";
-        window.location.href = "home.html";
-      } catch (error) {
-        statusMsg.textContent = error.message;
-        loginBtn.disabled = false;
-      }
+    togglePassword.addEventListener("click", () => {
+      visible = !visible;
+      passwordInput.type = visible ? "text" : "password";
+      togglePassword.textContent = visible ? "🙈" : "👁️";
     });
   </script>
 </body>
