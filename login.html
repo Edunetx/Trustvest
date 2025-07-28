@@ -2,123 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustVest Login</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrustVest - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       background-color: #000;
-      color: white;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
     }
 
-    .container {
-      background: #111;
+    .login-container {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
       padding: 2rem;
-      border-radius: 10px;
       width: 90%;
       max-width: 400px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-      position: relative;
-    }
-
-    h2 {
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
       text-align: center;
-      margin-bottom: 1rem;
     }
 
-    .input-group {
-      margin-bottom: 1.2rem;
-      position: relative;
+    .login-container img {
+      max-width: 150px;
+      margin-bottom: 1rem;
     }
 
     input {
       width: 100%;
-      padding: 0.9rem 1rem;
-      padding-right: 40px;
-      font-size: 1rem;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
-      border-radius: 5px;
-      background: #222;
+      border-radius: 8px;
+      background-color: #111;
       color: white;
+      font-size: 14px;
+    }
+
+    .input-group {
+      position: relative;
     }
 
     .toggle-password {
       position: absolute;
-      right: 10px;
+      right: 15px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 1.2rem;
-      color: #ccc;
     }
 
     button {
       width: 100%;
-      padding: 0.9rem;
+      padding: 12px;
+      background: teal;
       border: none;
-      border-radius: 5px;
-      background: linear-gradient(135deg, #00b09b, #96c93d);
+      border-radius: 8px;
       color: white;
-      font-size: 1rem;
+      font-size: 16px;
+      margin-top: 10px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .extra-links {
-      margin-top: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    .extra-links a {
-      color: #00b09b;
+    a {
+      color: teal;
       text-decoration: none;
+      font-size: 14px;
     }
 
-    .logo {
-      width: 100px;
-      display: block;
-      margin: 0 auto 1rem;
+    .links {
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" />
+  <div class="login-container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" />
     <h2>Welcome Back</h2>
-    <div class="input-group">
-      <input type="email" id="email" placeholder="Email" required />
+    <div>
+      <input type="email" id="email" placeholder="Email" />
     </div>
     <div class="input-group">
-      <input type="password" id="password" placeholder="Password" required />
-      <span class="toggle-password" onclick="togglePassword()">👁️</span>
+      <input type="password" id="password" placeholder="Password" />
+      <span class="toggle-password" onclick="togglePassword()">
+        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </span>
     </div>
     <button onclick="login()">Login</button>
-    <div class="extra-links">
-      <a href="#" onclick="resetPassword()">Forgot Password?</a><br><br>
-      Don't have an account? <a href="signup.html">Sign up now</a>
+    <div class="links">
+      <a href="#" onclick="resetPassword()">Forgot password?</a><br />
+      <a href="signup.html">Don't have an account? Sign up</a>
     </div>
   </div>
 
-  <!-- Firebase SDKs -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      sendPasswordResetEmail
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
@@ -132,43 +117,50 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    window.togglePassword = () => {
-      const passwordInput = document.getElementById('password');
-      const toggleIcon = document.querySelector('.toggle-password');
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.textContent = '🙈';
-      } else {
-        passwordInput.type = 'password';
-        toggleIcon.textContent = '👁️';
-      }
-    }
-
-    window.login = () => {
+    window.login = function () {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // ✅ Login successful, redirect
-          window.location.href = "home.html";
+        .then(() => {
+          document.querySelector(".login-container").style.opacity = 0;
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 600);
         })
         .catch((error) => {
           alert("Login failed: " + error.message);
         });
-    }
+    };
 
-    window.resetPassword = () => {
+    window.resetPassword = function () {
       const email = prompt("Enter your email to reset password:");
       if (email) {
         sendPasswordResetEmail(auth, email)
-          .then(() => {
-            alert("Password reset link sent to " + email);
-          })
-          .catch((error) => {
-            alert("Error: " + error.message);
-          });
+          .then(() => alert("Password reset email sent."))
+          .catch((error) => alert("Error: " + error.message));
       }
+    };
+  </script>
+
+  <script>
+    let isHidden = true;
+    function togglePassword() {
+      const passwordField = document.getElementById("password");
+      const icon = document.getElementById("eyeIcon");
+      if (isHidden) {
+        passwordField.type = "text";
+        icon.innerHTML = `
+          <path d="M17.94 17.94a10.94 10.94 0 0 1-15.49 0M1 1l22 22"/>
+        `;
+      } else {
+        passwordField.type = "password";
+        icon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+          <circle cx="12" cy="12" r="3"/>
+        `;
+      }
+      isHidden = !isHidden;
     }
   </script>
 </body>
