@@ -1,165 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TrustVest Signup</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-
+  <title>TrustVest | Sign Up</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #000000, #0a0a0a);
-      color: white;
       font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #000000, #0d0d0d);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       overflow: hidden;
     }
-
-    .glow {
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, #00ffd0 0%, transparent 70%);
-      top: -80px;
-      left: -80px;
-      opacity: 0.06;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(20px); }
-    }
-
-    .form-container {
-      max-width: 350px;
-      margin: 80px auto;
-      background: #141414;
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 0 18px rgba(0, 255, 208, 0.1);
-      position: relative;
-      z-index: 10;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    input {
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      padding: 30px;
+      border-radius: 12px;
       width: 90%;
-      padding: 12px;
-      margin-bottom: 16px;
-      border: none;
-      border-radius: 8px;
-      background: #222;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+    h2 {
       color: white;
-      outline: none;
-      font-size: 15px;
+      margin-bottom: 25px;
     }
-
-    .password-box {
-      position: relative;
-    }
-
-    .toggle-icon {
-      position: absolute;
-      right: 16px;
-      top: 12px;
-      cursor: pointer;
-      color: #aaa;
-    }
-
-    button {
+    input[type="text"], input[type="email"], input[type="password"] {
       width: 100%;
       padding: 12px;
-      background: #00ffd0;
-      color: black;
-      font-weight: bold;
+      margin: 10px 0;
       border: none;
       border-radius: 8px;
+      background: #1a1a1a;
+      color: white;
+    }
+    .input-wrapper {
+      position: relative;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ccc;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background: teal;
+      border: none;
+      border-radius: 8px;
+      color: white;
       font-size: 16px;
       cursor: pointer;
-      transition: transform 0.2s ease;
     }
-
-    button:hover {
-      transform: scale(1.03);
-    }
-
     .spinner {
       display: none;
       margin: 20px auto;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid teal;
+      border-radius: 50%;
       width: 30px;
       height: 30px;
-      border: 3px solid rgba(255,255,255,0.1);
-      border-left-color: #00ffd0;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: spin 1s linear infinite;
     }
-
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .popup {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      color: white;
+      background: crimson;
+      display: none;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" alt="TrustVest Logo">
+    <h2>Create an Account</h2><input type="text" id="fullname" placeholder="Full Name">
+<input type="email" id="email" placeholder="Email">
 
-  <div class="glow"></div>
+<div class="input-wrapper">
+  <input type="password" id="password" placeholder="Password">
+  <i class="fas fa-bars toggle-password" onclick="togglePassword('password')"></i>
+</div>
 
-  <div class="form-container">
-    <h2>Create Account</h2>
-    <input type="email" id="email" placeholder="Email" />
-    
-    <div class="password-box">
-      <input type="password" id="password" placeholder="Password" />
-      <span class="toggle-icon" onclick="togglePassword()">&#9776;</span> <!-- Stroke-like icon -->
-    </div>
-    
-    <button onclick="signup()">Sign Up</button>
-    <div class="spinner" id="spinner"></div>
-  </div>
+<div class="input-wrapper">
+  <input type="password" id="confirmPassword" placeholder="Confirm Password">
+  <i class="fas fa-bars toggle-password" onclick="togglePassword('confirmPassword')"></i>
+</div>
 
-  <script>
+<div class="popup" id="popup"></div>
+<button class="btn" onclick="signup()">Sign Up</button>
+<div class="spinner" id="spinner"></div>
+
+  </div>  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
+      storageBucket: "trustvest-a1bd9.firebasestorage.app",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    function togglePassword() {
-      const passInput = document.getElementById("password");
-      passInput.type = passInput.type === "password" ? "text" : "password";
-    }
+    window.signup = async () => {
+      const fullName = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+      const popup = document.getElementById('popup');
+      const spinner = document.getElementById('spinner');
 
-    function signup() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const spinner = document.getElementById("spinner");
+      if (!fullName || !email || !password || !confirmPassword) {
+        popup.style.display = 'block';
+        popup.innerText = 'Please fill in all fields';
+        return;
+      }
 
+      if (password !== confirmPassword) {
+        popup.style.display = 'block';
+        popup.innerText = 'Passwords do not match';
+        return;
+      }
+
+      popup.style.display = 'none';
       spinner.style.display = 'block';
 
-      auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          spinner.style.display = 'none';
-          alert("Signup successful!");
-          window.location.href = "login.html";
-        })
-        .catch(error => {
-          spinner.style.display = 'none';
-          alert(error.message);
-        });
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCred.user, { displayName: fullName });
+        window.location.href = "home.html";
+      } catch (error) {
+        popup.style.display = 'block';
+        popup.innerText = error.message;
+      } finally {
+        spinner.style.display = 'none';
+      }
     }
-  </script>
-</body>
+  </script>  <script>
+    function togglePassword(id) {
+      const field = document.getElementById(id);
+      field.type = field.type === 'password' ? 'text' : 'password';
+    }
+  </script></body>
 </html>
