@@ -1,175 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrustVest - Sign Up</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrustVest – Sign Up</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #000000, #1f1f1f);
-      color: white;
+    /* 🔥 Opening Animation with Logo */
+    #loader {
+      position: fixed;
+      z-index: 9999;
+      background: #000;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: 1rem;
+      animation: fadeOut 1.5s ease-out 2s forwards;
     }
-    .signup-box {
-      width: 100%;
-      max-width: 400px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      animation: slideUp 0.7s ease-in-out;
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
     }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
     }
-    .icon-stroke {
-      width: 20px;
-      height: 20px;
-      stroke: #aaa;
+
+    #loader img {
+      animation: bounce 1s infinite;
+      width: 120px;
+    }
+
+    /* Hide and Show Icon */
+    .toggle-icon {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #aaa;
     }
   </style>
 </head>
-<body>
+<body class="bg-gradient-to-br from-black to-gray-900 text-white min-h-screen flex items-center justify-center relative">
 
-  <div class="signup-box">
-    <h2 class="text-2xl font-bold mb-6 text-center text-green-400">Create an Account</h2>
-
-    <!-- ✅ Signup Form Starts -->
-    <form id="signup-form" class="space-y-4">
-      
-      <!-- 🧑 Username Field -->
-      <input type="text" id="username" placeholder="Username" required
-        class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none">
-
-      <!-- 📧 Email Field -->
-      <input type="email" id="email" placeholder="Email Address" required
-        class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none">
-
-      <!-- 🔐 Password Field -->
-      <div class="relative">
-        <input type="password" id="password" placeholder="Password" required
-          class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10">
-        <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-3 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            class="icon-stroke">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- 🧪 Password Strength -->
-      <div id="strength-bar" class="h-1 w-full bg-gray-700 rounded overflow-hidden">
-        <div id="strength-fill" class="h-full bg-red-500 w-0 transition-all duration-300 ease-in-out"></div>
-      </div>
-
-      <!-- 🔁 Retype Password Field -->
-      <div class="relative">
-        <input type="password" id="confirmPassword" placeholder="Retype Password" required
-          class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10">
-        <button type="button" onclick="togglePassword('confirmPassword')" class="absolute inset-y-0 right-3 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            class="icon-stroke">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- ✅ Signup Button -->
-      <button type="submit"
-        class="w-full py-2 bg-green-600 hover:bg-green-700 transition duration-300 rounded-lg text-white font-semibold">
-        Sign Up
-      </button>
-
-      <!-- 🔁 Redirect to Login -->
-      <p class="text-center text-sm text-gray-400 mt-2">Already have an account?
-        <a href="login.html" class="text-green-400 hover:underline">Login</a>
-      </p>
-    </form>
-    <!-- ✅ Signup Form Ends -->
+  <!-- 🔄 Logo Animation on Page Load -->
+  <div id="loader">
+    <img src="assets/img/logo.png" alt="TrustVest Logo" />
   </div>
 
-  <!-- 🔐 Firebase + Signup Logic -->
+  <!-- 🧾 Signup Form Card -->
+  <div class="bg-[#111] rounded-2xl p-6 shadow-xl w-full max-w-md mx-auto space-y-6">
+    <div class="text-center">
+      <img src="assets/img/logo.png" alt="Logo" class="w-16 mx-auto mb-2"/>
+      <h2 class="text-2xl font-bold">Create an Account</h2>
+      <p class="text-sm text-gray-400">Join TrustVest securely</p>
+    </div>
+
+    <!-- ✍️ INPUT FIELDS -->
+    <div class="space-y-4">
+      <input type="text" id="username" placeholder="Username" required
+        class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none"/>
+
+      <input type="email" id="email" placeholder="Email Address" required
+        class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none"/>
+
+      <div class="relative">
+        <input type="password" id="password" placeholder="Password" required
+          class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none pr-10"/>
+        <i class="ph-eye-slash toggle-icon" onclick="togglePassword('password', this)"></i>
+      </div>
+
+      <div class="relative">
+        <input type="password" id="retypePassword" placeholder="Retype Password" required
+          class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none pr-10"/>
+        <i class="ph-eye-slash toggle-icon" onclick="togglePassword('retypePassword', this)"></i>
+      </div>
+    </div>
+
+    <!-- ✅ Signup Button -->
+    <button onclick="signUp()" id="signupBtn"
+      class="w-full bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 hover:opacity-90 text-black font-semibold py-2 rounded-lg transition duration-200">
+      Sign Up
+    </button>
+
+    <!-- 🔄 Loading Spinner -->
+    <div id="loadingSpinner" class="hidden flex justify-center mt-4">
+      <img src="assets/img/logo.png" alt="Loading..." class="w-10 animate-bounce">
+    </div>
+
+    <!-- 🔗 Login Redirect -->
+    <p class="text-center text-sm text-gray-400">Already have an account?
+      <a href="login.html" class="text-yellow-400 hover:underline">Login</a>
+    </p>
+  </div>
+
+  <!-- 🚀 JS Section -->
   <script>
-    // 📦 Your Firebase config here
+    // 🔧 Firebase Configuration – Replace with your new config if needed
     const firebaseConfig = {
-      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
-      authDomain: "finsa-connect.firebaseapp.com",
-      projectId: "finsa-connect",
-      storageBucket: "finsa-connect.appspot.com",
-      messagingSenderId: "126845965255",
-      appId: "1:126845965255:web:c82539297a8464873d7fe2"
+      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+      authDomain: "trustvest-a1bd9.firebaseapp.com",
+      databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
+      projectId: "trustvest-a1bd9",
+      storageBucket: "trustvest-a1bd9.appspot.com",
+      messagingSenderId: "676220073092",
+      appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
+
+    // 🔥 Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // 🧠 Password strength logic
-    const passwordInput = document.getElementById('password');
-    const strengthFill = document.getElementById('strength-fill');
-    passwordInput.addEventListener('input', () => {
-      const val = passwordInput.value;
-      let strength = 0;
-      if (val.length > 5) strength += 1;
-      if (/[A-Z]/.test(val)) strength += 1;
-      if (/[0-9]/.test(val)) strength += 1;
-      if (/[^A-Za-z0-9]/.test(val)) strength += 1;
-
-      const percent = (strength / 4) * 100;
-      strengthFill.style.width = percent + '%';
-      strengthFill.style.backgroundColor = percent < 50 ? 'red' : percent < 75 ? 'orange' : 'green';
-    });
-
-    // 👁️ Toggle password visibility
-    function togglePassword(id) {
+    // 👁️ Toggle Password Visibility
+    function togglePassword(id, icon) {
       const input = document.getElementById(id);
-      input.type = input.type === 'password' ? 'text' : 'password';
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.replace("ph-eye-slash", "ph-eye");
+      } else {
+        input.type = "password";
+        icon.classList.replace("ph-eye", "ph-eye-slash");
+      }
     }
 
-    // 🚀 Signup Form Submit Handler
-    document.getElementById('signup-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
+    // 📝 Sign Up Function
+    function signUp() {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const retypePassword = document.getElementById("retypePassword").value.trim();
+      const loadingSpinner = document.getElementById("loadingSpinner");
 
-      if (password !== confirmPassword) {
-        alert("Passwords do not match!");
+      if (!username || !email || !password || !retypePassword) {
+        alert("Please fill in all fields.");
         return;
       }
 
-      try {
-        const cred = await auth.createUserWithEmailAndPassword(email, password);
-        await db.collection("Users").doc(cred.user.uid).set({
-          username,
-          email,
-          role: "user",
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        alert("Signup successful!");
-        window.location.href = "dashboard.html"; // ✅ Redirect after success
-      } catch (error) {
-        alert(error.message);
+      if (password !== retypePassword) {
+        alert("Passwords do not match.");
+        return;
       }
-    });
-  </script>
 
+      loadingSpinner.classList.remove("hidden");
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const uid = userCredential.user.uid;
+          return db.collection("Users").doc(uid).set({
+            username: username,
+            email: email,
+            role: "user",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        })
+        .then(() => {
+          loadingSpinner.classList.add("hidden");
+          alert("Signup successful!");
+          window.location.href = "dashboard.html"; // Change if needed
+        })
+        .catch((error) => {
+          loadingSpinner.classList.add("hidden");
+          alert(error.message);
+        });
+    }
+  </script>
 </body>
 </html>
