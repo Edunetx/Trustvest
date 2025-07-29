@@ -58,6 +58,20 @@
         transform: translateY(-15px);
       }
     }
+    .tagline {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-style: italic;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
     .form-input {
       width: 100%;
       padding: 0.75rem;
@@ -131,10 +145,8 @@
   </div>
 
   <div class="container" style="display:none" id="signupContainer">
-    <img
-      src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png"
-      alt="TrustVest Logo"
-      class="logo-bounce"
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="bouncing-logo">
+<p class="tagline">Building wealth, one plan at a time.</p>
     />
     <h2 style="color:#fff; margin-bottom: 1rem;">Create Account</h2>
     <input type="text" id="username" class="form-input" placeholder="Username" required />
