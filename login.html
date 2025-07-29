@@ -2,146 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
     body {
+      background: #000;
       margin: 0;
       padding: 0;
-      background: #000;
-      font-family: 'Segoe UI', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      color: white;
     }
 
-    .login-container {
-      background: #111;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 2rem;
       width: 90%;
-      max-width: 350px;
+      max-width: 400px;
       text-align: center;
-      animation: fadeIn 1s ease;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
       position: relative;
     }
 
-    .login-container img {
-      width: 100px;
-      margin-bottom: 15px;
+    .logo {
+      width: 80px;
+      margin-bottom: 0.5rem;
+      animation: fadeInDown 1.2s ease-out;
     }
 
-    h2 {
-      color: white;
-      margin-bottom: 20px;
+    .tagline {
+      font-size: 0.9rem;
+      color: #bbb;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+      animation: fadeIn 1.5s ease-in-out;
     }
 
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px auto;
-      border: none;
-      border-radius: 8px;
-      outline: none;
-      background: #222;
-      color: white;
+    .input-group {
+      margin-bottom: 1.2rem;
+      text-align: left;
     }
 
-    .password-wrapper {
-      position: relative;
-      width: 90%;
-      margin: auto;
-    }
-
-    .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 12px;
-      cursor: pointer;
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
       color: #aaa;
     }
 
-    button {
-      width: 90%;
-      padding: 12px;
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      color: white;
-      font-weight: bold;
+    input {
+      width: 100%;
+      padding: 0.7rem;
       border: none;
       border-radius: 8px;
-      cursor: pointer;
-      margin-top: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
     }
 
-    .error-message {
-      color: #ff4f4f;
-      margin-top: 10px;
-      font-size: 14px;
+    input::placeholder {
+      color: #aaa;
+    }
+
+    .login-btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(270deg, #2bc4ad, #00ffc8, #2bc4ad);
+      background-size: 300% 300%;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      animation: movingGradient 4s linear infinite;
+      transition: 0.3s;
+    }
+
+    .login-btn:hover {
+      transform: scale(1.02);
     }
 
     .spinner {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      background: rgba(0, 0, 0, 0.85);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-
-    .spinner div {
-      width: 60px;
-      height: 60px;
-      border: 6px solid #00c6ff;
-      border-top: 6px solid transparent;
+      width: 30px;
+      height: 30px;
+      border: 4px solid transparent;
+      border-top: 4px solid #00ffc8;
       border-radius: 50%;
       animation: spin 1s linear infinite;
+      margin: 0 auto 1.2rem auto;
     }
 
+    .icon-stroke {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 50px;
+      opacity: 0.05;
+    }
+
+    .switch-link {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+
+    .switch-link a {
+      color: #00ffc8;
+      text-decoration: none;
+    }
+
+    /* Animations */
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes movingGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
 <body>
-  <div class="spinner" id="spinner">
-    <div></div>
-  </div>
 
-  <div class="login-container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" />
-    <h2>Welcome Back</h2>
-    <input type="email" id="email" placeholder="Email" />
-    
-    <div class="password-wrapper">
-      <input type="password" id="password" placeholder="Password" />
-      <span class="toggle-password" onclick="togglePassword()">👁️‍🗨️</span>
+  <div class="container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" alt="TrustVest Logo" />
+    <div class="spinner"></div>
+    <p class="tagline">Smart wealth starts here.</p>
+
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" />
     </div>
 
-    <button onclick="login()">Login</button>
-    <div class="error-message" id="error-message"></div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••" />
+    </div>
+
+    <button class="login-btn" onclick="login()">Login</button>
+
+    <p class="switch-link">Don't have an account? <a href="signup.html">Create one</a></p>
+
+    <img src="https://www.svgrepo.com/show/442061/shield-check.svg" class="icon-stroke" />
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -152,44 +179,22 @@
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    window.login = () => {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const errorDiv = document.getElementById('error-message');
-      const spinner = document.getElementById('spinner');
+    function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-      errorDiv.textContent = "";
-
-      if (!email || !password) {
-        errorDiv.textContent = "Please fill in all fields.";
-        return;
-      }
-
-      spinner.style.display = "flex";
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          spinner.style.display = "none";
-          window.location.href = "home.html";
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          alert("Login successful!");
+          window.location.href = "dashboard.html"; // Change this to your dashboard page
         })
-        .catch(error => {
-          spinner.style.display = "none";
-          errorDiv.textContent = "Login failed: " + (error.code.includes("auth") ? error.message.replace("Firebase: ", "") : "Unknown error.");
+        .catch((error) => {
+          alert("Login failed: " + error.message);
         });
-    };
-
-    window.togglePassword = () => {
-      const passwordInput = document.getElementById("password");
-      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
-    };
-
-    // Optional: Redirect if already logged in
-    onAuthStateChanged(auth, user => {
-      if (user) window.location.href = "home.html";
-    });
+    }
   </script>
 </body>
 </html>
