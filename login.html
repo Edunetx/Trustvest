@@ -2,142 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TrustVest Login</title>
   <style>
     body {
-      background-color: #000;
+      margin: 0;
+      padding: 0;
+      background: #000;
       font-family: 'Segoe UI', sans-serif;
-      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      overflow: hidden;
     }
 
-    .container {
+    .login-container {
       background: #111;
       padding: 30px;
-      border-radius: 15px;
-      width: 100%;
-      max-width: 380px;
-      box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+      animation: fadeIn 1s ease;
       position: relative;
     }
 
-    .logo {
-      display: block;
-      width: 150px;
-      margin: 0 auto 20px;
+    .login-container img {
+      width: 100px;
+      margin-bottom: 15px;
     }
 
-    .input-field {
-      position: relative;
+    h2 {
+      color: white;
       margin-bottom: 20px;
     }
 
     input {
-      width: 100%;
-      padding: 12px 40px 12px 12px;
-      background: #1a1a1a;
-      border: 1px solid #333;
+      width: 90%;
+      padding: 10px;
+      margin: 10px auto;
+      border: none;
       border-radius: 8px;
-      color: #fff;
-      font-size: 14px;
+      outline: none;
+      background: #222;
+      color: white;
     }
 
-    .input-field svg {
+    .password-wrapper {
+      position: relative;
+      width: 90%;
+      margin: auto;
+    }
+
+    .toggle-password {
       position: absolute;
       right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 12px;
       cursor: pointer;
       color: #aaa;
     }
 
     button {
-      width: 100%;
+      width: 90%;
       padding: 12px;
-      background: linear-gradient(90deg, #00cba9, #00a57e);
-      border: none;
-      border-radius: 8px;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
       color: white;
       font-weight: bold;
-      font-size: 16px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .error-message {
+      color: #ff4f4f;
       margin-top: 10px;
+      font-size: 14px;
     }
 
     .spinner {
       display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
     }
 
-    .spinner::after {
-      content: "";
-      width: 40px;
-      height: 40px;
-      border: 4px solid #00cba9;
-      border-top-color: transparent;
+    .spinner div {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #00c6ff;
+      border-top: 6px solid transparent;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: spin 1s linear infinite;
     }
 
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      to { transform: rotate(360deg); }
     }
 
-    .error-box {
-      background: #330000;
-      color: #ff7777;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      margin-bottom: 15px;
-      display: none;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
-  <div class="spinner" id="spinner"></div>
+  <div class="spinner" id="spinner">
+    <div></div>
+  </div>
 
-  <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" />
-
-    <div class="error-box" id="errorBox"></div>
-
-    <div class="input-field">
-      <input type="email" id="email" placeholder="Email" required />
-    </div>
-
-    <div class="input-field">
-      <input type="password" id="password" placeholder="Password" required />
-      <svg id="togglePassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
+  <div class="login-container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" />
+    <h2>Welcome Back</h2>
+    <input type="email" id="email" placeholder="Email" />
+    
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="Password" />
+      <span class="toggle-password" onclick="togglePassword()">👁️‍🗨️</span>
     </div>
 
     <button onclick="login()">Login</button>
+    <div class="error-message" id="error-message"></div>
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
@@ -145,41 +155,40 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const spinner = document.getElementById("spinner");
-    const errorBox = document.getElementById("errorBox");
+    window.login = () => {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorDiv = document.getElementById('error-message');
+      const spinner = document.getElementById('spinner');
 
-    window.login = function () {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      errorBox.style.display = "none";
+      errorDiv.textContent = "";
 
       if (!email || !password) {
-        errorBox.innerText = "Please enter both email and password.";
-        errorBox.style.display = "block";
+        errorDiv.textContent = "Please fill in all fields.";
         return;
       }
 
-      spinner.style.display = "block";
+      spinner.style.display = "flex";
 
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
+          spinner.style.display = "none";
           window.location.href = "home.html";
         })
-        .catch((error) => {
+        .catch(error => {
           spinner.style.display = "none";
-          errorBox.innerText = error.code === "auth/user-not-found"
-            ? "User not found."
-            : error.code === "auth/wrong-password"
-            ? "Incorrect password."
-            : "Login failed. Check your credentials.";
-          errorBox.style.display = "block";
+          errorDiv.textContent = "Login failed: " + (error.code.includes("auth") ? error.message.replace("Firebase: ", "") : "Unknown error.");
         });
     };
 
-    // Toggle password visibility
-    document.getElementById("togglePassword").addEventListener("click", () => {
-      const pwField = document.getElementById("password");
-      pwField.type = pwField.type === "password" ? "text" : "password";
+    window.togglePassword = () => {
+      const passwordInput = document.getElementById("password");
+      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+    };
+
+    // Optional: Redirect if already logged in
+    onAuthStateChanged(auth, user => {
+      if (user) window.location.href = "home.html";
     });
   </script>
 </body>
