@@ -3,174 +3,118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest – Sign Up</title>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <style>
-    /* 🔥 Opening Animation with Logo */
-    #loader {
-      position: fixed;
-      z-index: 9999;
-      background: #000;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: fadeOut 1.5s ease-out 2s forwards;
-    }
+  <title>TrustVest Signup</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    #loader img {
-      animation: bounce 1s infinite;
-      width: 120px;
-    }
-
-    /* Hide and Show Icon */
-    .toggle-icon {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: #aaa;
-    }
-  </style>
+  <!-- Firebase App (core SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
-<body class="bg-gradient-to-br from-black to-gray-900 text-white min-h-screen flex items-center justify-center relative">
 
-  <!-- 🔄 Logo Animation on Page Load -->
-  <div id="loader">
-    <img src="assets/img/logo.png" alt="TrustVest Logo" />
+<body class="bg-gray-900 text-white font-sans flex items-center justify-center min-h-screen relative overflow-hidden">
+  <!-- 🔵 BOUNCING LOGO ANIMATION -->
+  <div id="logo-loader" class="absolute inset-0 bg-gray-900 flex items-center justify-center z-50">
+    <img src="logo.png" alt="TrustVest Logo" class="w-20 h-20 animate-bounce"/>
   </div>
 
-  <!-- 🧾 Signup Form Card -->
-  <div class="bg-[#111] rounded-2xl p-6 shadow-xl w-full max-w-md mx-auto space-y-6">
-    <div class="text-center">
-      <img src="assets/img/logo.png" alt="Logo" class="w-16 mx-auto mb-2"/>
-      <h2 class="text-2xl font-bold">Create an Account</h2>
-      <p class="text-sm text-gray-400">Join TrustVest securely</p>
-    </div>
+  <!-- 🔲 SIGNUP CARD -->
+  <div class="w-full max-w-sm p-6 bg-[#1c1c1c] rounded-xl shadow-xl z-10 relative">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gradient">Create TrustVest Account</h2>
 
-    <!-- ✍️ INPUT FIELDS -->
-    <div class="space-y-4">
-      <input type="text" id="username" placeholder="Username" required
-        class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none"/>
+    <!-- 🔧 SIGNUP FORM -->
+    <form id="signup-form" class="space-y-4">
+      <!-- Username -->
+      <input type="text" id="username" placeholder="Username" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none"/>
 
-      <input type="email" id="email" placeholder="Email Address" required
-        class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none"/>
+      <!-- Email -->
+      <input type="email" id="email" placeholder="Email Address" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none"/>
 
+      <!-- Password -->
       <div class="relative">
-        <input type="password" id="password" placeholder="Password" required
-          class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none pr-10"/>
-        <i class="ph-eye-slash toggle-icon" onclick="togglePassword('password', this)"></i>
+        <input type="password" id="password" placeholder="Password" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10"/>
+        <span onclick="toggleVisibility('password')" class="absolute top-3 right-3 cursor-pointer text-gray-400">👁️</span>
       </div>
 
+      <!-- Retype Password -->
       <div class="relative">
-        <input type="password" id="retypePassword" placeholder="Retype Password" required
-          class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none pr-10"/>
-        <i class="ph-eye-slash toggle-icon" onclick="togglePassword('retypePassword', this)"></i>
+        <input type="password" id="retype-password" placeholder="Retype Password" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10"/>
+        <span onclick="toggleVisibility('retype-password')" class="absolute top-3 right-3 cursor-pointer text-gray-400">👁️</span>
       </div>
-    </div>
 
-    <!-- ✅ Signup Button -->
-    <button onclick="signUp()" id="signupBtn"
-      class="w-full bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 hover:opacity-90 text-black font-semibold py-2 rounded-lg transition duration-200">
-      Sign Up
-    </button>
+      <!-- 🔘 SIGNUP BUTTON -->
+      <button type="submit" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:opacity-90 text-black font-bold py-2 rounded-lg">Sign Up</button>
 
-    <!-- 🔄 Loading Spinner -->
-    <div id="loadingSpinner" class="hidden flex justify-center mt-4">
-      <img src="assets/img/logo.png" alt="Loading..." class="w-10 animate-bounce">
-    </div>
-
-    <!-- 🔗 Login Redirect -->
-    <p class="text-center text-sm text-gray-400">Already have an account?
-      <a href="login.html" class="text-yellow-400 hover:underline">Login</a>
-    </p>
+      <!-- Already Have Account -->
+      <p class="text-center text-sm mt-2">Already have an account? <a href="login.html" class="text-yellow-400 underline">Login here</a></p>
+    </form>
   </div>
 
-  <!-- 🚀 JS Section -->
-  <script>
-    // 🔧 Firebase Configuration – Replace with your new config if needed
+  <!-- 🔧 FIREBASE SETUP & HANDLER -->
+  <script type="module">
+    // 🔧 Your Firebase Configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-      authDomain: "trustvest-a1bd9.firebaseapp.com",
-      databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
-      projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
-      messagingSenderId: "676220073092",
-      appId: "1:676220073092:web:b358f8821ac33da9babed1"
+      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+      authDomain: "finsa-connect.firebaseapp.com",
+      projectId: "finsa-connect",
+      storageBucket: "finsa-connect.appspot.com",
+      messagingSenderId: "126845965255",
+      appId: "1:126845965255:web:c82539297a8464873d7fe2"
     };
 
-    // 🔥 Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    // 👁️ Toggle Password Visibility
-    function togglePassword(id, icon) {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // 🔁 Logo Load Animation Fade
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("logo-loader").style.display = "none";
+      }, 1000);
+    });
+
+    // 🔒 Show/Hide Toggle
+    window.toggleVisibility = (id) => {
       const input = document.getElementById(id);
-      if (input.type === "password") {
-        input.type = "text";
-        icon.classList.replace("ph-eye-slash", "ph-eye");
-      } else {
-        input.type = "password";
-        icon.classList.replace("ph-eye", "ph-eye-slash");
-      }
-    }
+      input.type = input.type === "password" ? "text" : "password";
+    };
 
-    // 📝 Sign Up Function
-    function signUp() {
+    // 📝 Signup Handler
+    document.getElementById("signup-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
       const username = document.getElementById("username").value.trim();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
-      const retypePassword = document.getElementById("retypePassword").value.trim();
-      const loadingSpinner = document.getElementById("loadingSpinner");
-
-      if (!username || !email || !password || !retypePassword) {
-        alert("Please fill in all fields.");
-        return;
-      }
+      const retypePassword = document.getElementById("retype-password").value.trim();
 
       if (password !== retypePassword) {
-        alert("Passwords do not match.");
+        alert("Passwords do not match!");
         return;
       }
 
-      loadingSpinner.classList.remove("hidden");
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCred.user.uid;
 
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          const uid = userCredential.user.uid;
-          return db.collection("Users").doc(uid).set({
-            username: username,
-            email: email,
-            role: "user",
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        })
-        .then(() => {
-          loadingSpinner.classList.add("hidden");
-          alert("Signup successful!");
-          window.location.href = "dashboard.html"; // Change if needed
-        })
-        .catch((error) => {
-          loadingSpinner.classList.add("hidden");
-          alert(error.message);
+        // 🔥 Store user in Firestore
+        await setDoc(doc(db, "Users", uid), {
+          username: username,
+          email: email,
+          role: "user", // default role
+          createdAt: new Date().toISOString()
         });
-    }
+
+        alert("Signup successful!");
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    });
   </script>
 </body>
 </html>
