@@ -3,157 +3,136 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest - Login</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+  <title>Login – TrustVest</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #000000, #2c3e50);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 90%;
+      max-width: 400px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: none;
+      background: #00d26a;
+      color: #fff;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00b65a;
+    }
+
+    .error-message {
+      background: #ff4d4d;
+      padding: 0.7rem;
+      text-align: center;
+      border-radius: 0.5rem;
+      display: none;
+      margin-bottom: 1rem;
+    }
+
+    .spinner {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin: 1rem auto;
+      border: 4px solid #fff;
+      border-top: 4px solid #00d26a;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome Back 👋</h2>
+    <div class="error-message" id="errorMsg"></div>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <div class="spinner" id="loginSpinner"></div>
+    <button onclick="loginUser()">Login</button>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-      authDomain: "trustvest-a1bd9.firebaseapp.com",
-      projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
-      messagingSenderId: "676220073092",
-      appId: "1:676220073092:web:b358f8821ac33da9babed1"
+      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+      authDomain: "finsa-connect.firebaseapp.com",
+      projectId: "finsa-connect",
+      storageBucket: "finsa-connect.appspot.com",
+      messagingSenderId: "126845965255",
+      appId: "1:126845965255:web:c82539297a8464873d7fe2"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    window.login = async function () {
+    const spinner = document.getElementById("loginSpinner");
+    const errorMsg = document.getElementById("errorMsg");
+
+    async function loginUser() {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      if (!email || !password) {
-        alert("Please fill in both fields.");
-        return;
-      }
+      errorMsg.style.display = "none";
+      spinner.style.display = "block";
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        document.querySelector(".form-container").style.opacity = 0;
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Redirect without showing .html
         setTimeout(() => {
-          window.location.href = "home.html";
-        }, 500);
+          spinner.style.display = "none";
+          window.location.replace("home"); // assumes URL rewriting or home.html renamed to home
+        }, 1000);
       } catch (error) {
-        alert("Login failed: " + error.message);
+        spinner.style.display = "none";
+        errorMsg.innerText = "Login failed: " + (error.message.includes("auth") ? "Invalid email or password" : error.message);
+        errorMsg.style.display = "block";
       }
     }
-  </script>
-  <style>
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      font-family: 'Montserrat', sans-serif;
-    }
-    body {
-      background-color: #000;
-      color: white;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .form-container {
-      background: rgba(255, 255, 255, 0.06);
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-      width: 90%;
-      max-width: 400px;
-      backdrop-filter: blur(10px);
-      transition: opacity 0.5s ease;
-    }
-    .form-container h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #fff;
-    }
-    .form-group {
-      margin-bottom: 15px;
-      position: relative;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 12px 40px 12px 12px;
-      border: none;
-      border-radius: 10px;
-      background-color: #111;
-      color: white;
-    }
-    .form-group svg {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      stroke: white;
-    }
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      background: linear-gradient(45deg, #00b09b, #96c93d);
-      color: #fff;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-    .btn:hover {
-      opacity: 0.8;
-    }
-    .redirect {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-    }
-    .redirect a {
-      color: #00ffcc;
-      text-decoration: underline;
-    }
-    .logo {
-      width: 80px;
-      display: block;
-      margin: 0 auto 20px;
-    }
-  </style>
-</head>
-<body>
-  <div class="form-container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
-    <h2>Welcome Back</h2>
-    <div class="form-group">
-      <input type="email" id="email" placeholder="Email" />
-    </div>
-    <div class="form-group">
-      <input type="password" id="password" placeholder="Password" />
-      <svg id="toggleLoginPass" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-      </svg>
-    </div>
-    <button class="btn" onclick="login()">Login</button>
-    <div class="redirect">
-      Don't have an account? <a href="signup.html">Sign up</a>
-    </div>
-  </div>
-
-  <script>
-    const toggleLoginIcon = document.getElementById("toggleLoginPass");
-    const loginPasswordField = document.getElementById("password");
-    let loginPassVisible = false;
-
-    toggleLoginIcon.addEventListener("click", () => {
-      loginPassVisible = !loginPassVisible;
-      loginPasswordField.type = loginPassVisible ? "text" : "password";
-      toggleLoginIcon.innerHTML = loginPassVisible
-        ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.057 10.057 0 011.697-2.882M15 12a3 3 0 00-3-3m3 3a3 3 0 01-3 3m0 0a3 3 0 003-3m-3 3a3 3 0 01-3-3m0 0a3 3 0 013-3" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />`
-        : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
-    });
   </script>
 </body>
 </html>
