@@ -1,138 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest | Sign Up</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustVest - Sign Up</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #000000, #1f1f1f);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .signup-box {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: slideUp 0.7s ease-in-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .icon-stroke {
+      width: 20px;
+      height: 20px;
+      stroke: #aaa;
+    }
+  </style>
 </head>
-<body class="bg-black flex items-center justify-center min-h-screen relative overflow-hidden">
+<body>
 
-  <!-- 🔄 Opening Animation -->
-  <div id="opening-animation" class="fixed inset-0 bg-black flex items-center justify-center z-50 transition-opacity duration-700">
-    <div class="animate-pulse text-white text-2xl font-bold text-center">
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="w-20 h-20 mx-auto mb-4">
-      TrustVest
-    </div>
-  </div>
+  <div class="signup-box">
+    <h2 class="text-2xl font-bold mb-6 text-center text-green-400">Create an Account</h2>
 
-  <!-- 🔐 Signup Form Card -->
-  <div class="bg-gradient-to-br from-[#0d0d0d] to-[#1a1a1a] text-white rounded-2xl shadow-lg p-6 w-[90%] max-w-md z-10 relative">
-    <div class="text-center mb-6">
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="w-16 h-16 mx-auto mb-2">
-      <h2 class="text-xl font-semibold">Create a TrustVest Account</h2>
-    </div>
-    
+    <!-- ✅ Signup Form Starts -->
     <form id="signup-form" class="space-y-4">
-      <input type="text" id="username" placeholder="Username" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none">
+      
+      <!-- 🧑 Username Field -->
+      <input type="text" id="username" placeholder="Username" required
+        class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none">
 
-<input type="email" id="email" placeholder="Email Address" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none">
+      <!-- 📧 Email Field -->
+      <input type="email" id="email" placeholder="Email Address" required
+        class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none">
 
-<div class="relative">
-  <input type="password" id="password" placeholder="Password" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10">
-</div>
-
-<div class="relative">
-  <input type="password" id="confirmPassword" placeholder="Retype Password" required class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10">
-</div>
-        <button type="button" id="toggle-password" class="absolute inset-y-0 right-3 flex items-center text-white">
-          &#9776;
+      <!-- 🔐 Password Field -->
+      <div class="relative">
+        <input type="password" id="password" placeholder="Password" required
+          class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10">
+        <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-3 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            class="icon-stroke">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
         </button>
       </div>
 
-      <button type="submit" id="signup-btn" class="w-full bg-gradient-to-r from-green-500 to-teal-400 text-black font-semibold py-2 rounded-lg hover:opacity-90 transition">
+      <!-- 🧪 Password Strength -->
+      <div id="strength-bar" class="h-1 w-full bg-gray-700 rounded overflow-hidden">
+        <div id="strength-fill" class="h-full bg-red-500 w-0 transition-all duration-300 ease-in-out"></div>
+      </div>
+
+      <!-- 🔁 Retype Password Field -->
+      <div class="relative">
+        <input type="password" id="confirmPassword" placeholder="Retype Password" required
+          class="w-full px-4 py-2 rounded-lg bg-[#111] text-white placeholder-gray-400 focus:outline-none pr-10">
+        <button type="button" onclick="togglePassword('confirmPassword')" class="absolute inset-y-0 right-3 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            class="icon-stroke">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- ✅ Signup Button -->
+      <button type="submit"
+        class="w-full py-2 bg-green-600 hover:bg-green-700 transition duration-300 rounded-lg text-white font-semibold">
         Sign Up
       </button>
 
-      <!-- Spinner -->
-      <div id="loading-spinner" class="hidden justify-center mt-3">
-        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-      </div>
+      <!-- 🔁 Redirect to Login -->
+      <p class="text-center text-sm text-gray-400 mt-2">Already have an account?
+        <a href="login.html" class="text-green-400 hover:underline">Login</a>
+      </p>
     </form>
-
-    <p class="text-sm text-center text-gray-400 mt-4">
-      Already have an account?
-      <a href="login.html" class="text-teal-400 hover:underline">Login instead</a>
-    </p>
+    <!-- ✅ Signup Form Ends -->
   </div>
-// Get all form input values
-const username = document.getElementById("username").value.trim();
-const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value;
-const confirmPassword = document.getElementById("confirmPassword").value;
 
-// Validate password match
-if (password !== confirmPassword) {
-  alert("Passwords do not match!");
-  return; // Stop the signup process
-}
-  <!-- ✅ Firebase + JS -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+  <!-- 🔐 Firebase + Signup Logic -->
+  <script>
+    // 📦 Your Firebase config here
     const firebaseConfig = {
-      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-      authDomain: "trustvest-a1bd9.firebaseapp.com",
-      databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
-      projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
-      messagingSenderId: "676220073092",
-      appId: "1:676220073092:web:b358f8821ac33da9babed1"
+      apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
+      authDomain: "finsa-connect.firebaseapp.com",
+      projectId: "finsa-connect",
+      storageBucket: "finsa-connect.appspot.com",
+      messagingSenderId: "126845965255",
+      appId: "1:126845965255:web:c82539297a8464873d7fe2"
     };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    // 🧠 Password strength logic
+    const passwordInput = document.getElementById('password');
+    const strengthFill = document.getElementById('strength-fill');
+    passwordInput.addEventListener('input', () => {
+      const val = passwordInput.value;
+      let strength = 0;
+      if (val.length > 5) strength += 1;
+      if (/[A-Z]/.test(val)) strength += 1;
+      if (/[0-9]/.test(val)) strength += 1;
+      if (/[^A-Za-z0-9]/.test(val)) strength += 1;
 
-    const form = document.getElementById('signup-form');
-    const spinner = document.getElementById('loading-spinner');
-    const signupBtn = document.getElementById('signup-btn');
+      const percent = (strength / 4) * 100;
+      strengthFill.style.width = percent + '%';
+      strengthFill.style.backgroundColor = percent < 50 ? 'red' : percent < 75 ? 'orange' : 'green';
+    });
 
-    form.addEventListener('submit', async (e) => {
+    // 👁️ Toggle password visibility
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // 🚀 Signup Form Submit Handler
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      spinner.classList.remove('hidden');
-      signupBtn.disabled = true;
-
-      const name = document.getElementById('fullname').value.trim();
-      const email = document.getElementById('email').value.trim();
       const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
 
       try {
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCred.user, { displayName: name });
-
-        await setDoc(doc(db, "Users", userCred.user.uid), {
-          name,
-          email,
+        const cred = await auth.createUserWithEmailAndPassword(email, password);
+        await db.collection("Users").doc(cred.user.uid).set({
           username,
-          uid: userCred.user.uid,
-          createdAt: new Date().toISOString()
+          email,
+          role: "user",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-
-        window.location.href = "home.html";
-      } catch (err) {
-        alert(err.message);
-      } finally {
-        spinner.classList.add('hidden');
-        signupBtn.disabled = false;
+        alert("Signup successful!");
+        window.location.href = "dashboard.html"; // ✅ Redirect after success
+      } catch (error) {
+        alert(error.message);
       }
     });
-
-    // Toggle password visibility
-    document.getElementById('toggle-password').addEventListener('click', () => {
-      const passInput = document.getElementById('password');
-      passInput.type = passInput.type === 'password' ? 'text' : 'password';
-    });
-
-    // Opening animation
-    window.addEventListener("load", () => {
-      const animation = document.getElementById("opening-animation");
-      setTimeout(() => animation.classList.add("opacity-0", "pointer-events-none"), 1800);
-      setTimeout(() => animation.style.display = "none", 2000);
-    });
   </script>
+
 </body>
 </html>
