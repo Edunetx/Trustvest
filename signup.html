@@ -1,172 +1,224 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest | Sign Up</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
-      box-sizing: border-box;
-    }
-    body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top, #000000, #0d0d0d);
-      height: 100vh;
+      font-family: "Segoe UI", sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      background-image: linear-gradient(135deg, #000000, #1a1a1a);
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      min-height: 100vh;
     }
+
     .container {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
+      background-color: rgba(255, 255, 255, 0.05);
       padding: 30px;
-      border-radius: 12px;
+      border-radius: 15px;
       width: 90%;
       max-width: 400px;
-      text-align: center;
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-    }
-    .logo {
-      width: 80px;
-      margin-bottom: 15px;
-    }
-    h2 {
-      color: white;
-      margin-bottom: 25px;
-    }
-    input[type="text"], input[type="email"], input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      background: #1a1a1a;
-      color: white;
-    }
-    .input-wrapper {
+      text-align: center;
       position: relative;
     }
-    .toggle-password {
+
+    .container img {
+      width: 120px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #00f7ff;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #222;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .input-group svg {
       position: absolute;
-      right: 15px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      color: #ccc;
+      fill: #888;
     }
-    .btn {
+
+    .login-btn {
       width: 100%;
       padding: 12px;
-      margin-top: 20px;
-      background: teal;
+      background: #00f7ff;
+      color: #000;
       border: none;
       border-radius: 8px;
-      color: white;
-      font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
     }
-    .spinner {
+
+    .login-btn:hover {
+      background: #00d0d0;
+    }
+
+    .loader {
       display: none;
-      margin: 20px auto;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid teal;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .popup {
       margin-top: 15px;
-      padding: 10px;
-      border-radius: 6px;
-      color: white;
-      background: crimson;
-      display: none;
+    }
+
+    .loader.show {
+      display: block;
+    }
+
+    .message {
+      color: #ff4d4d;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .login-link {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .login-link a {
+      color: #00f7ff;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" alt="TrustVest Logo">
-    <h2>Create an Account</h2><input type="text" id="fullname" placeholder="Full Name">
-<input type="email" id="email" placeholder="Email">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" />
+    <h2>Create Account</h2>
+    <form id="signup-form">
+      <div class="input-group">
+        <input type="text" id="fullname" placeholder="Full Name" required />
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" placeholder="Email Address" required />
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required />
+        <svg id="togglePassword" xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24">
+          <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-2.8 0-5-2.2-5-5s2.2-5 5-5
+          5 2.2 5 5-2.2 5-5 5zm0-8.3c-1.8 0-3.3 1.5-3.3 3.3s1.5 3.3 3.3 3.3 3.3-1.5 3.3-3.3-1.5-3.3-3.3-3.3z"/>
+        </svg>
+      </div>
+      <div class="input-group">
+        <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+      </div>
 
-<div class="input-wrapper">
-  <input type="password" id="password" placeholder="Password">
-  <i class="fas fa-bars toggle-password" onclick="togglePassword('password')"></i>
-</div>
+      <button type="submit" class="login-btn">Sign Up</button>
+      <div class="loader" id="loader">⏳ Signing up...</div>
+      <div class="message" id="message"></div>
 
-<div class="input-wrapper">
-  <input type="password" id="confirmPassword" placeholder="Confirm Password">
-  <i class="fas fa-bars toggle-password" onclick="togglePassword('confirmPassword')"></i>
-</div>
+      <p class="login-link">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </p>
+    </form>
+  </div>
 
-<div class="popup" id="popup"></div>
-<button class="btn" onclick="signup()">Sign Up</button>
-<div class="spinner" id="spinner"></div>
-
-  </div>  <script type="module">
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    window.signup = async () => {
-      const fullName = document.getElementById('fullname').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const confirmPassword = document.getElementById('confirmPassword').value.trim();
-      const popup = document.getElementById('popup');
-      const spinner = document.getElementById('spinner');
+    const signupForm = document.getElementById("signup-form");
+    const loader = document.getElementById("loader");
+    const message = document.getElementById("message");
 
-      if (!fullName || !email || !password || !confirmPassword) {
-        popup.style.display = 'block';
-        popup.innerText = 'Please fill in all fields';
-        return;
-      }
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const fullname = document.getElementById("fullname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
 
       if (password !== confirmPassword) {
-        popup.style.display = 'block';
-        popup.innerText = 'Passwords do not match';
+        message.textContent = "Passwords do not match!";
         return;
       }
 
-      popup.style.display = 'none';
-      spinner.style.display = 'block';
+      loader.classList.add("show");
+      message.textContent = "";
 
       try {
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCred.user, { displayName: fullName });
-        window.location.href = "home.html";
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await updateProfile(user, { displayName: fullname });
+
+        await setDoc(doc(db, "Users", user.uid), {
+          name: fullname,
+          email: email,
+          role: "user",
+          createdAt: new Date().toISOString()
+        });
+
+        loader.textContent = "Redirecting...";
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1000);
       } catch (error) {
-        popup.style.display = 'block';
-        popup.innerText = error.message;
-      } finally {
-        spinner.style.display = 'none';
+        message.textContent = error.message.replace("Firebase:", "").split("(")[0];
+        loader.classList.remove("show");
       }
-    }
-  </script>  <script>
-    function togglePassword(id) {
-      const field = document.getElementById(id);
-      field.type = field.type === 'password' ? 'text' : 'password';
-    }
-  </script></body>
+    });
+
+    // Toggle password visibility
+    document.getElementById("togglePassword").addEventListener("click", () => {
+      const passwordInput = document.getElementById("password");
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+    });
+  </script>
+</body>
 </html>
