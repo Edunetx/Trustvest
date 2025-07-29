@@ -4,71 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest - Sign Up</title>
-  <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-black text-white">
+<body class="bg-black text-white min-h-screen flex items-center justify-center relative">
 
-  <!-- 🔵 Spinner Overlay -->
-  <div id="spinner" class="fixed inset-0 bg-black flex items-center justify-center z-50 hidden">
-    <img src="https://raw.githubusercontent.com/ayubaboluwatife246/assets/main/trustvest-logo.png"
-         class="w-20 h-20 animate-bounce" alt="Loading..." />
-  </div>
-
-  <!-- 🔶 Sign Up Container -->
-  <div class="min-h-screen flex items-center justify-center px-4">
-    <div class="bg-[#111] p-6 rounded-2xl shadow-lg w-full max-w-md">
-
-      <!-- 🔶 Logo + Title -->
-      <img src="https://raw.githubusercontent.com/ayubaboluwatife246/assets/main/trustvest-logo.png"
-           class="w-20 h-20 mx-auto mb-4 animate-bounce" alt="TrustVest Logo" />
-      <h2 class="text-center text-xl font-semibold mb-6">Create Your TrustVest Account</h2>
-
-      <!-- 🔶 Signup Form -->
-      <form id="signupForm" class="space-y-4">
-        <input type="text" id="fullname" placeholder="Full Name" required
-               class="w-full px-4 py-2 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none" />
-
-        <input type="email" id="email" placeholder="Email Address" required
-               class="w-full px-4 py-2 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none" />
-
-        <input type="text" id="username" placeholder="Username" required
-               class="w-full px-4 py-2 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none" />
-
-        <!-- 🔐 Password Field with Stroke Icon -->
-        <div class="relative">
-          <input type="password" id="password" placeholder="Password" required
-                 class="w-full px-4 py-2 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none pr-10" />
-          <div onclick="togglePassword('password', this)"
-               class="absolute top-2 right-3 text-gray-400 cursor-pointer">
-            <i data-lucide="eye" class="w-5 h-5"></i>
-          </div>
-        </div>
-
-        <!-- 🔐 Retype Password -->
-        <div class="relative">
-          <input type="password" id="retype" placeholder="Retype Password" required
-                 class="w-full px-4 py-2 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none pr-10" />
-          <div onclick="togglePassword('retype', this)"
-               class="absolute top-2 right-3 text-gray-400 cursor-pointer">
-            <i data-lucide="eye" class="w-5 h-5"></i>
-          </div>
-        </div>
-
-        <!-- 🔶 Sign Up Button -->
-        <button type="submit"
-                class="w-full py-2 rounded-lg bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-semibold hover:opacity-90 transition">
-          Create Account
-        </button>
-      </form>
+  <!-- 🔄 Loading Spinner -->
+  <div id="loading-spinner" class="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black z-50">
+    <div class="relative flex flex-col items-center">
+      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png"
+           alt="TrustVest Logo"
+           class="w-20 mb-6"
+      />
+      <div class="w-10 h-10 border-4 border-teal-400 border-t-transparent rounded-full animate-spin"></div>
     </div>
   </div>
 
-  <!-- 🔧 Firebase Configuration -->
+  <!-- 🔒 Signup Form Container -->
+  <div class="w-full max-w-md p-8 bg-[#111] rounded-xl shadow-md">
+    <!-- 🪪 Logo -->
+    <div class="flex justify-center mb-6">
+      <img
+        id="logo"
+        src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png"
+        alt="TrustVest Logo"
+        class="h-14"
+      />
+    </div>
+
+    <h2 class="text-2xl font-bold text-center mb-4">Create Account</h2>
+
+    <!-- 📝 Signup Fields -->
+    <input type="text" id="fullname" placeholder="Full Name" required class="w-full px-4 py-2 mb-3 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none">
+    <input type="email" id="email" placeholder="Email Address" required class="w-full px-4 py-2 mb-3 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none">
+    <input type="text" id="username" placeholder="Username" required class="w-full px-4 py-2 mb-3 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none">
+
+    <!-- 🔐 Password Field with stroke eye icon -->
+    <div class="relative">
+      <input type="password" id="password" placeholder="Password" required class="w-full px-4 py-2 mb-3 rounded-lg bg-[#222] text-white placeholder-gray-400 focus:outline-none pr-10">
+      <i class="ri-eye-line absolute right-3 top-3 text-gray-400 cursor-pointer" id="togglePassword"></i>
+    </div>
+
+    <!-- 🟩 Gradient Signup Button -->
+    <button
+      id="signup-btn"
+      class="w-full py-2 mt-2 rounded-lg text-white font-semibold transition duration-300"
+      style="background: linear-gradient(to right, #005f73, #94d2bd);"
+    >
+      Create Account
+    </button>
+
+    <!-- 🔗 Login Link -->
+    <p class="text-center text-sm text-gray-400 mt-4">
+      Already have an account?
+      <a href="login.html" class="text-teal-400 hover:underline">Login</a>
+    </p>
+  </div>
+
+  <!-- 🔧 Firebase & Script -->
   <script>
+    // 🔧 FIREBASE CONFIG
     const firebaseConfig = {
       apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
       authDomain: "finsa-connect.firebaseapp.com",
@@ -77,65 +75,58 @@
       messagingSenderId: "126845965255",
       appId: "1:126845965255:web:c82539297a8464873d7fe2"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-  </script>
 
-  <!-- 🧠 Logic for Signup -->
-  <script>
-    lucide.createIcons();
+    // 🌀 Hide Spinner After Load
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading-spinner").style.display = "none";
+      }, 2000);
+    });
 
-    const form = document.getElementById("signupForm");
-    const spinner = document.getElementById("spinner");
+    // 👁 Toggle Password
+    document.getElementById("togglePassword").addEventListener("click", function () {
+      const passInput = document.getElementById("password");
+      const type = passInput.type === "password" ? "text" : "password";
+      passInput.type = type;
+      this.classList.toggle("ri-eye-line");
+      this.classList.toggle("ri-eye-off-line");
+    });
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      spinner.classList.remove("hidden");
-
+    // 🔐 SIGNUP FUNCTION
+    document.getElementById("signup-btn").addEventListener("click", async () => {
       const fullName = document.getElementById("fullname").value.trim();
       const email = document.getElementById("email").value.trim();
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value;
-      const retype = document.getElementById("retype").value;
 
-      if (password !== retype) {
-        alert("Passwords do not match.");
-        spinner.classList.add("hidden");
+      if (!fullName || !email || !username || !password) {
+        alert("Please fill all fields.");
         return;
       }
 
       try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const uid = userCredential.user.uid;
+        const user = userCredential.user;
 
-        await db.collection("Users").doc(uid).set({
+        await db.collection("Users").doc(user.uid).set({
           fullName,
           email,
           username,
-          createdAt: new Date(),
-          role: "user"
+          uid: user.uid,
+          role: "user",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        alert("Account created successfully!");
-        window.location.href = "dashboard.html";
+        alert("Signup successful! Redirecting to login...");
+        window.location.href = "login.html";
       } catch (error) {
-        alert("Error: " + error.message);
+        console.error(error);
+        alert(error.message);
       }
-
-      spinner.classList.add("hidden");
     });
-
-    function togglePassword(fieldId, toggleEl) {
-      const input = document.getElementById(fieldId);
-      const icon = toggleEl.querySelector("i");
-      const isHidden = input.type === "password";
-      input.type = isHidden ? "text" : "password";
-      icon.setAttribute("data-lucide", isHidden ? "eye-off" : "eye");
-      lucide.createIcons();
-    }
   </script>
-
 </body>
 </html>
