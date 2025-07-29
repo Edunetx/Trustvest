@@ -1,101 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login – TrustVest</title>
+  <meta charset="UTF-8">
+  <title>TrustVest Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #000000, #2c3e50);
-      color: #fff;
+      background: linear-gradient(to bottom right, #004d4d, #00cccc);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
 
-    .login-container {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 1rem;
+    .container {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 20px;
+      max-width: 350px;
       width: 90%;
-      max-width: 400px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       position: relative;
     }
 
-    h2 {
+    .container img {
+      display: block;
+      width: 100px;
+      margin: 0 auto 20px;
+    }
+
+    .container h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
+      color: #004d4d;
+      margin-bottom: 20px;
     }
 
     input {
       width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      font-size: 1rem;
+      padding: 10px;
+      margin: 8px 0 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
     }
 
     button {
       width: 100%;
-      padding: 0.8rem;
-      font-size: 1rem;
+      padding: 12px;
+      background: #007878;
+      color: white;
       border: none;
-      background: #00d26a;
-      color: #fff;
-      border-radius: 0.5rem;
+      border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
 
     button:hover {
-      background: #00b65a;
-    }
-
-    .error-message {
-      background: #ff4d4d;
-      padding: 0.7rem;
-      text-align: center;
-      border-radius: 0.5rem;
-      display: none;
-      margin-bottom: 1rem;
+      background: #005e5e;
     }
 
     .spinner {
       display: none;
-      width: 40px;
-      height: 40px;
-      margin: 1rem auto;
-      border: 4px solid #fff;
-      border-top: 4px solid #00d26a;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007878;
       border-radius: 50%;
+      width: 35px;
+      height: 35px;
       animation: spin 1s linear infinite;
+      margin: 10px auto;
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
+
+    .error-message {
+      background: #ffd2d2;
+      color: #a40000;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Welcome Back 👋</h2>
-    <div class="error-message" id="errorMsg"></div>
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <div class="spinner" id="loginSpinner"></div>
-    <button onclick="loginUser()">Login</button>
+
+  <div class="container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+
+    <h2>Welcome Back</h2>
+
+    <div class="error-message" id="errorBox"></div>
+
+    <input type="email" id="email" placeholder="Email address" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <button onclick="login()">Login</button>
+
+    <div class="spinner" id="loader"></div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
 
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCH5H1FWEcHmQiCQhoc6GE8GhizqhTZoQc",
       authDomain: "finsa-connect.firebaseapp.com",
@@ -105,34 +122,35 @@
       appId: "1:126845965255:web:c82539297a8464873d7fe2"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    const spinner = document.getElementById("loginSpinner");
-    const errorMsg = document.getElementById("errorMsg");
-
-    async function loginUser() {
+    function login() {
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
-
-      errorMsg.style.display = "none";
-      spinner.style.display = "block";
-
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Redirect without showing .html
-        setTimeout(() => {
-          spinner.style.display = "none";
-          window.location.replace("home"); // assumes URL rewriting or home.html renamed to home
-        }, 1000);
-      } catch (error) {
-        spinner.style.display = "none";
-        errorMsg.innerText = "Login failed: " + (error.message.includes("auth") ? "Invalid email or password" : error.message);
-        errorMsg.style.display = "block";
-      }
+      const loader = document.getElementById("loader");
+      const errorBox = document.getElementById("errorBox");
+      loader.style.display = "block";
+      errorBox.style.display = "none";
+      
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          loader.style.display = "none";
+          window.location.href = "./home";
+        })
+        .catch((error) => {
+          loader.style.display = "none";
+          errorBox.innerText = error.message.replace("Firebase:", "").split("(")[0];
+          errorBox.style.display = "block";
+        });
     }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        window.location.href = "./home";
+      }
+    });
   </script>
+
 </body>
 </html>
