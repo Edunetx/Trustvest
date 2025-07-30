@@ -37,6 +37,7 @@
       max-width: 350px;
     }
     .input-group {
+      position: relative;
       margin-bottom: 15px;
     }
     .input-group input {
@@ -129,16 +130,16 @@
 
     <form id="signupForm" class="form">
       <div class="input-group">
-        <input type="text" id="signupUsername" placeholder="Username" required />
+        <input type="text" id="username" placeholder="Username" required />
       </div>
       <div class="input-group">
-        <input type="email" id="signupEmail" placeholder="Email" required />
+        <input type="email" id="email" placeholder="Email" required />
       </div>
       <div class="input-group">
-        <input type="password" id="signupPassword" placeholder="Password" required />
+        <input type="password" id="password" placeholder="Password" required />
       </div>
       <div class="input-group">
-        <input type="password" id="signupRetypePassword" placeholder="Retype Password" required />
+        <input type="password" id="confirmPassword" placeholder="Retype Password" required />
       </div>
 
       <button type="submit" class="signup-btn">Sign Up</button>
@@ -184,13 +185,13 @@
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const username = document.getElementById('signupUsername').value.trim();
-      const email = document.getElementById('signupEmail').value.trim();
-      const password = document.getElementById('signupPassword').value;
-      const retypePassword = document.getElementById('signupRetypePassword').value;
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
 
-      if (password !== retypePassword) {
-        showToast('Passwords do not match!');
+      if (password !== confirmPassword) {
+        showToast('Passwords do not match');
         return;
       }
 
@@ -199,19 +200,24 @@
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          return db.collection('Users').doc(user.uid).set({
+          return db.collection('users').doc(user.uid).set({
             username: username,
-            email: email
+            email: email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
           });
         })
         .then(() => {
           showToast('Signup Successful!');
           setTimeout(() => {
             window.location.href = 'login.html';
-          }, 2000);
+          }, 1500);
         })
         .catch((error) => {
-          showToast(error.message);
+          if (error.code === 'auth/email-already-in-use') {
+            showToast('Email Already in Use');
+          } else {
+            showToast(error.message);
+          }
         })
         .finally(() => {
           document.getElementById('loader').style.display = 'none';
