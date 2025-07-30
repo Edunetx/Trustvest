@@ -3,203 +3,187 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest - Sign Up</title>
+  <title>TrustVest | Sign Up</title>
   <style>
     body {
       margin: 0;
-      background-color: #000;
-      color: #fff;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #000000, #101820);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+      color: white;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #333;
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
     }
 
     .logo {
       width: 120px;
+      margin: 0 auto;
+      display: block;
       animation: bounce 2s infinite;
     }
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-8px); }
     }
 
     .skriller {
-      margin: 25px 0;
+      margin: 20px auto;
       display: flex;
       justify-content: center;
-      align-items: center;
+      gap: 8px;
     }
 
     .circle {
-      width: 8px;
-      height: 8px;
-      margin: 6px;
+      width: 12px;
+      height: 12px;
+      border: 3px solid #FFD700;
       border-radius: 50%;
-      background-color: #ccc;
-      animation: spin 1s linear infinite;
+      animation: spin 1.5s linear infinite;
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg) translateX(12px) rotate(0deg); }
-      100% { transform: rotate(360deg) translateX(12px) rotate(-360deg); }
-    }
-
-    .form-box {
-      background: #111;
-      padding: 25px;
-      border-radius: 12px;
-      border: 1px solid #333;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+      0% { transform: rotate(0deg) translateX(15px) rotate(0deg); }
+      100% { transform: rotate(360deg) translateX(15px) rotate(-360deg); }
     }
 
     input {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
+      margin: 8px 0;
       border: none;
-      border-radius: 8px;
-      background: #222;
+      border-radius: 10px;
+      background: #1e1e2f;
       color: white;
-      font-size: 15px;
     }
 
-    .show-pass {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      margin: 5px 0 15px;
-    }
-
-    .show-pass input {
-      width: auto;
+    .password-toggle {
+      float: right;
+      margin-top: -36px;
       margin-right: 10px;
+      cursor: pointer;
+      color: #aaa;
     }
 
-    button {
+    .btn {
       width: 100%;
       padding: 12px;
+      margin-top: 15px;
       border: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg, #00b894, #00cec9, #0984e3);
-      color: white;
+      border-radius: 10px;
+      background: linear-gradient(270deg, #FFD700, #ff9500, #FFD700);
+      background-size: 400% 400%;
+      color: #000;
       font-weight: bold;
-      font-size: 16px;
+      animation: gradientMove 3s ease infinite;
       cursor: pointer;
-      transition: background-position 0.5s ease-in-out;
-      background-size: 200% auto;
     }
 
-    button:hover {
-      background-position: right center;
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .link {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 12px;
       font-size: 14px;
     }
 
     .link a {
-      color: #00cec9;
+      color: #FFD700;
       text-decoration: none;
-    }
-
-    .link a:hover {
-      text-decoration: underline;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-
-  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" alt="TrustVest Logo" />
-  
-  <div class="skriller">
-    <div class="circle" style="animation-delay: 0s;"></div>
-    <div class="circle" style="animation-delay: 0.1s;"></div>
-    <div class="circle" style="animation-delay: 0.2s;"></div>
-    <div class="circle" style="animation-delay: 0.3s;"></div>
-  </div>
-
-  <div class="form-box">
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <input type="password" id="retype" placeholder="Retype Password" required />
+  <div class="container">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" />
     
-    <div class="show-pass">
-      <input type="checkbox" onclick="togglePassword()" />
-      <label>Show Password</label>
+    <div class="skriller">
+      <div class="circle"></div>
     </div>
 
-    <button onclick="signUp()">Create Account</button>
-
-    <div class="link">
-      Already have an account? <a href="login.html">Log in</a>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="email" id="email" placeholder="Email" />
+    
+    <div style="position: relative;">
+      <input type="password" id="password" placeholder="Password" />
+      <span class="password-toggle" onclick="togglePassword('password')">Show</span>
     </div>
+
+    <div style="position: relative;">
+      <input type="password" id="repassword" placeholder="Retype Password" />
+      <span class="password-toggle" onclick="togglePassword('repassword')">Show</span>
+    </div>
+
+    <button class="btn" onclick="signUp()">Sign Up</button>
+
+    <div class="link">Already have an account? <a href="login.html">Login</a></div>
   </div>
 
+  <!-- Firebase SDK -->
   <script type="module">
-    // Firebase config
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+    import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    window.signUp = function () {
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const retype = document.getElementById("retype").value;
+    window.signUp = async function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const repassword = document.getElementById("repassword").value.trim();
+      const username = document.getElementById("username").value.trim();
 
-      if (!username || !email || !password || !retype) {
-        alert("Please fill in all fields.");
-        return;
-      }
+      if (!email || !password || !repassword || !username) return alert("Fill in all fields!");
+      if (password !== repassword) return alert("Passwords do not match!");
 
-      if (password !== retype) {
-        alert("Passwords do not match.");
-        return;
-      }
-
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          return updateProfile(user, {
-            displayName: username
-          });
-        })
-        .then(() => {
-          alert("Signup successful!");
-          window.location.href = "login";
-        })
-        .catch((error) => {
-          alert("Error: " + error.message);
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: username });
+        await setDoc(doc(db, "Users", userCredential.user.uid), {
+          username,
+          email,
+          createdAt: new Date().toISOString()
         });
+
+        alert("Sign up successful!");
+        window.location.href = "login.html";
+      } catch (err) {
+        alert(err.message);
+      }
     };
 
-    window.togglePassword = function () {
-      const pass = document.getElementById("password");
-      const retype = document.getElementById("retype");
-      const type = pass.type === "password" ? "text" : "password";
-      pass.type = type;
-      retype.type = type;
+    window.togglePassword = function (fieldId) {
+      const field = document.getElementById(fieldId);
+      field.type = field.type === "password" ? "text" : "password";
     };
   </script>
 </body>
