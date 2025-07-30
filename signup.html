@@ -137,18 +137,22 @@
 
   <div class="container">
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
-    <h1>Create Your TrustVest Account</h1>
+    <h1>Create Your Account</h1>
 
     <form id="signupForm" class="form">
       <div class="input-group">
-        <input type="text" id="signupName" placeholder="Full Name" required />
+        <input type="text" id="username" placeholder="Username" required />
       </div>
       <div class="input-group">
-        <input type="email" id="signupEmail" placeholder="Email" required />
+        <input type="email" id="email" placeholder="Email" required />
       </div>
       <div class="input-group">
-        <input type="password" id="signupPassword" placeholder="Password" required />
-        <button type="button" class="show-password-btn" onclick="togglePassword('signupPassword')">Show</button>
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="button" class="show-password-btn" onclick="togglePassword('password')">Show</button>
+      </div>
+      <div class="input-group">
+        <input type="password" id="confirmPassword" placeholder="Retype Password" required />
+        <button type="button" class="show-password-btn" onclick="togglePassword('confirmPassword')">Show</button>
       </div>
 
       <button type="submit" class="signup-btn">Sign Up</button>
@@ -167,7 +171,6 @@
 
   <div class="toast" id="toastMsg"></div>
 
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
@@ -197,31 +200,30 @@
 
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const name = document.getElementById('signupName').value.trim();
-      const email = document.getElementById('signupEmail').value.trim();
-      const password = document.getElementById('signupPassword').value;
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        showToast('Passwords do not match');
+        return;
+      }
 
       document.getElementById('loader').style.display = 'flex';
 
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
-          return user.updateProfile({ displayName: name });
+          return userCredential.user.updateProfile({ displayName: username });
         })
         .then(() => {
-          showToast('Signup Successful!');
+          showToast('Account Created Successfully!');
           setTimeout(() => {
-            window.location.href = 'home.html';
+            window.location.href = 'login.html';
           }, 1500);
         })
         .catch((error) => {
-          if (error.code === 'auth/email-already-in-use') {
-            showToast('Email already in use');
-          } else if (error.code === 'auth/weak-password') {
-            showToast('Weak Password');
-          } else {
-            showToast(error.message);
-          }
+          showToast(error.message);
         })
         .finally(() => {
           document.getElementById('loader').style.display = 'none';
