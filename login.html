@@ -139,7 +139,7 @@
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
     <h1>Login to Your Account</h1>
 
-    <form id="loginForm" class="form" onsubmit="return false;">
+    <form id="loginForm" class="form" onsubmit="loginUser(event)">
       <div class="input-group">
         <input type="email" id="loginEmail" placeholder="Email" required />
       </div>
@@ -192,12 +192,13 @@
       setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
 
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    function loginUser(event) {
+      event.preventDefault(); // Prevent form from submitting the default way
+
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
-
-      document.getElementById('loader').style.display = 'flex';
+      const loader = document.getElementById('loader');
+      loader.style.display = 'flex';
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
@@ -216,9 +217,10 @@
           }
         })
         .finally(() => {
-          document.getElementById('loader').style.display = 'none';
+          loader.style.display = 'none';
         });
-    });
+    }
   </script>
+
 </body>
 </html>
