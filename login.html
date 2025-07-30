@@ -3,170 +3,260 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest | Login</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <title>TrustVest Login</title>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #090979, #00d4ff);
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #000;
       color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      height: 100vh;
+      position: relative;
     }
-    .container {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 30px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
-    h2 {
-      margin-bottom: 20px;
-      text-align: center;
-      color: #fff;
-    }
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
-    }
-    input::placeholder {
-      color: #eee;
-    }
-    .remember-forgot {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-    .remember-forgot label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .remember-forgot a {
-      color: #fff;
-      text-decoration: underline;
-    }
-    button {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(270deg, #1e90ff, #00d4ff, #1e90ff);
-      background-size: 600% 600%;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      animation: moveGradient 4s ease infinite;
-    }
-    @keyframes moveGradient {
-      0% { background-position: 0% 50% }
-      50% { background-position: 100% 50% }
-      100% { background-position: 0% 50% }
-    }
-    .logo {
-      animation: bounce 2s infinite;
-      width: 60px;
-      height: 60px;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-    .subtitle {
-      text-align: center;
-      font-size: 14px;
-      margin-bottom: 20px;
-      color: #ddd;
-    }
-    #toast {
+
+    .spinner {
       position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #222;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 8px;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: fadeOut 2s forwards;
+      animation-delay: 2s;
+    }
+    .skriller {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #fff;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    .spinner-text {
+      margin-top: 15px;
       font-size: 14px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 1000;
+      opacity: 0.7;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .logo {
+      width: 70px;
+      animation: bounce 1.5s infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .tagline {
+      font-size: 13px;
+      margin-bottom: 30px;
+      opacity: 0.8;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 350px;
+      background: linear-gradient(135deg, #111, #222);
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 0 12px #111;
+      z-index: 10;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: none;
+      background: #333;
+      color: white;
+      font-size: 14px;
+    }
+
+    .password-box {
+      position: relative;
+    }
+
+    .password-box svg {
+      position: absolute;
+      right: 10px;
+      top: 12px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      background-size: 200% auto;
+      transition: background-position 0.4s;
+    }
+
+    .btn:hover {
+      background-position: right center;
+    }
+
+    .signup-link {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .signup-link a {
+      color: #00c6ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      background: #0f0;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #0f0;
+      display: none;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
-  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
-  <div class="subtitle">Building wealth... the trusted way</div>
+
+  <div class="spinner">
+    <div class="skriller"></div>
+    <div class="spinner-text">Launching TrustVest...</div>
+  </div>
+
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest" class="logo" />
+  <div class="tagline">Building wealth for tomorrow...</div>
 
   <div class="container">
     <h2>Login</h2>
     <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
 
-    <div class="remember-forgot">
-      <label><input type="checkbox" id="rememberMe"> Remember me</label>
-      <a href="#">Forgot password?</a>
+    <div class="password-box">
+      <input type="password" id="password" placeholder="Password" required />
+      <svg id="togglePassword" width="20" height="20" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#eye" /></svg>
     </div>
 
-    <button onclick="login()">Login</button>
+    <button class="btn" id="loginBtn">Login</button>
+
+    <div class="signup-link">
+      Don't have an account? <a href="signup.html">Sign up</a>
+    </div>
   </div>
 
-  <div id="toast"></div>
+  <div class="notification" id="notify">Login successful</div>
 
-  <script>
+  <!-- Lucide Icons -->
+  <svg style="display: none;">
+    <symbol id="eye" viewBox="0 0 24 24">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </symbol>
+    <symbol id="eye-off" viewBox="0 0 24 24">
+      <path d="M17.94 17.94A10.06 10.06 0 0 1 12 20c-7 0-11-8-11-8a17.88 17.88 0 0 1 5.17-5.82"/>
+      <path d="M1 1l22 22"/>
+    </symbol>
+  </svg>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
       databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.firebasestorage.app",
+      storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    function showToast(message, success) {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.style.backgroundColor = success ? "#28a745" : "#dc3545";
-      toast.style.opacity = "1";
-      setTimeout(() => {
-        toast.style.opacity = "0";
-      }, 2000);
-    }
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const notify = document.getElementById("notify");
+    const togglePassword = document.getElementById("togglePassword");
 
-    function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+    togglePassword.addEventListener("click", () => {
+      const type = password.type === "password" ? "text" : "password";
+      password.type = type;
+      togglePassword.innerHTML = type === "password"
+        ? '<use href="#eye" />'
+        : '<use href="#eye-off" />';
+    });
 
-      auth.signInWithEmailAndPassword(email, password)
+    loginBtn.addEventListener("click", () => {
+      const emailVal = email.value.trim();
+      const passVal = password.value.trim();
+
+      if (!emailVal || !passVal) return alert("Please fill all fields");
+
+      signInWithEmailAndPassword(auth, emailVal, passVal)
         .then(() => {
-          showToast("Login successful!", true);
+          notify.style.display = "block";
           setTimeout(() => {
+            notify.style.display = "none";
             window.location.href = "home.html";
           }, 2000);
         })
-        .catch((error) => {
-          showToast("Login failed: " + error.message, false);
-        });
-    }
+        .catch(err => alert("Login failed: " + err.message));
+    });
   </script>
 </body>
 </html>
