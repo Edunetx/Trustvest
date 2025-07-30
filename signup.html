@@ -117,28 +117,38 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0ff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: none;
+      z-index: 10000;
+      font-size: 13px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
-    <h1>Create Account</h1>
+    <h1>Create Your TrustVest Account</h1>
 
     <form id="signupForm" class="form">
       <div class="input-group">
-        <input type="text" id="username" placeholder="Username" required />
+        <input type="text" id="signupName" placeholder="Full Name" required />
       </div>
       <div class="input-group">
-        <input type="email" id="email" placeholder="Email" required />
+        <input type="email" id="signupEmail" placeholder="Email" required />
       </div>
       <div class="input-group">
-        <input type="password" id="password" placeholder="Password" required />
-        <button type="button" class="show-password-btn" onclick="togglePassword('password')">Show</button>
-      </div>
-      <div class="input-group">
-        <input type="password" id="confirmPassword" placeholder="Retype Password" required />
-        <button type="button" class="show-password-btn" onclick="togglePassword('confirmPassword')">Show</button>
+        <input type="password" id="signupPassword" placeholder="Password" required />
+        <button type="button" class="show-password-btn" onclick="togglePassword('signupPassword')">Show</button>
       </div>
 
       <button type="submit" class="signup-btn">Sign Up</button>
@@ -155,10 +165,11 @@
     <div class="skriller-spinner"></div>
   </div>
 
+  <div class="toast" id="toastMsg"></div>
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -171,43 +182,46 @@
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
 
     function togglePassword(id) {
       const field = document.getElementById(id);
       field.type = field.type === "password" ? "text" : "password";
     }
 
+    function showToast(message) {
+      const toast = document.getElementById('toastMsg');
+      toast.innerText = message;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-
-      if (password !== confirmPassword) {
-        alert('Passwords do not match.');
-        return;
-      }
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
 
       document.getElementById('loader').style.display = 'flex';
 
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          return db.collection('Users').doc(user.uid).set({
-            username: username,
-            email: email,
-            role: 'user',
-            createdAt: new Date().toISOString()
-          });
+          return user.updateProfile({ displayName: name });
         })
         .then(() => {
-          alert('Signup successful!');
-          window.location.href = 'login.html';
+          showToast('Signup Successful!');
+          setTimeout(() => {
+            window.location.href = 'home.html';
+          }, 1500);
         })
         .catch((error) => {
-          alert(error.message);
+          if (error.code === 'auth/email-already-in-use') {
+            showToast('Email already in use');
+          } else if (error.code === 'auth/weak-password') {
+            showToast('Weak Password');
+          } else {
+            showToast(error.message);
+          }
         })
         .finally(() => {
           document.getElementById('loader').style.display = 'none';
