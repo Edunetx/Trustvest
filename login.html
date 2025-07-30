@@ -2,128 +2,123 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TrustVest - Login</title>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        background-color: #000;
-        font-family: 'Segoe UI', sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      }
-      .container {
-        width: 100%;
-        max-width: 360px;
-        background: #111;
-        padding: 2rem;
-        border-radius: 1rem;
-        text-align: center;
-      }
-      .logo {
-        width: 80px;
-        margin: 0 auto 1rem;
-      }
-      .form-input {
-        width: 100%;
-        padding: 0.75rem;
-        margin: 0.5rem 0;
-        border-radius: 0.5rem;
-        border: none;
-        background: #222;
-        color: #fff;
-      }
-      .password-wrapper {
-        position: relative;
-      }
-      .eye-icon {
-        position: absolute;
-        top: 35%;
-        right: 10px;
-        cursor: pointer;
-        color: #ccc;
-      }
-      .btn-submit {
-        width: 100%;
-        margin-top: 1rem;
-        padding: 0.75rem;
-        border: none;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        color: white;
-        background: linear-gradient(to right, #6a11cb, #2575fc);
-        cursor: pointer;
-        transition: transform 0.2s;
-      }
-      .btn-submit:hover {
-        transform: scale(1.02);
-      }
-      .link {
-        margin-top: 1rem;
-        font-size: 0.9rem;
-        color: #aaa;
-      }
-      .link a {
-        color: #6aa6ff;
-        text-decoration: none;
-      }
-      .spinner-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.9);
-        z-index: 999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .skriller {
-        width: 50px;
-        height: 50px;
-        border: 5px solid rgba(255, 255, 255, 0.1);
-        border-top: 5px solid #6aa6ff;
-        border-radius: 50%;
-        animation: rotate 1s linear infinite;
-      }
-      @keyframes rotate {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
+    <title>TrustVest - Login</title><!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    background-color: #000;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #333;
+    border-top: 6px solid #00ffd5;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 2rem;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .container {
+    width: 90%;
+    max-width: 360px;
+    background: #111;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+  }
+  .logo {
+    width: 80px;
+    margin-bottom: 1rem;
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border-radius: 0.5rem;
+    border: none;
+    background: #222;
+    color: #fff;
+  }
+  .password-toggle {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  .btn-submit {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(to right, #00ffd5, #006eff);
+    background-size: 200% auto;
+    animation: moveGradient 3s linear infinite;
+    cursor: pointer;
+  }
+  @keyframes moveGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+  .message {
+    margin-top: 1rem;
+    color: lightgreen;
+    display: none;
+  }
+  .link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+  .link a {
+    color: #00ffd5;
+    text-decoration: none;
+  }
+</style>
+
   </head>
   <body>
-    <div class="spinner-overlay" id="spinner">
-      <div class="skriller"></div>
-    </div><div class="container" style="display:none" id="loginContainer">
+    <div class="spinner" id="loader"></div><div class="container" style="display: none" id="loginContainer">
   <img
     src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png"
-    alt="TrustVest Logo"
     class="logo"
+    alt="TrustVest Logo"
   />
-  <input type="email" id="email" class="form-input" placeholder="Email Address" required />
-
-  <div class="password-wrapper">
-    <input type="password" id="password" class="form-input" placeholder="Password" required />
-    <i class="eye-icon" id="togglePassword" data-state="hidden"></i>
-  </div>
-
+  <input type="email" id="email" class="form-input" placeholder="Email" />
+  <input
+    type="password"
+    id="password"
+    class="form-input"
+    placeholder="Password"
+  />
+  <div class="password-toggle" onclick="togglePassword()">Show Password</div>
   <button class="btn-submit" onclick="login()">Login</button>
-
-  <p class="link">Don't have an account? <a href="signup.html">Sign Up</a></p>
+  <div class="message" id="message">Login successful!</div>
+  <p class="link">Don't have an account? <a href="signup.html">Sign up</a></p>
 </div>
 
 <script>
@@ -132,51 +127,46 @@
     authDomain: "trustvest-a1bd9.firebaseapp.com",
     databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
     projectId: "trustvest-a1bd9",
-    storageBucket: "trustvest-a1bd9.appspot.com",
+    storageBucket: "trustvest-a1bd9.firebasestorage.app",
     messagingSenderId: "676220073092",
-    appId: "1:676220073092:web:b358f8821ac33da9babed1"
+    appId: "1:676220073092:web:b358f8821ac33da9babed1",
   };
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
 
   setTimeout(() => {
-    document.getElementById("spinner").style.display = "none";
+    document.getElementById("loader").style.display = "none";
     document.getElementById("loginContainer").style.display = "block";
   }, 2000);
 
-  function toggleEye(inputId, iconId) {
-    const input = document.getElementById(inputId);
-    const icon = document.getElementById(iconId);
-    if (input.type === "password") {
-      input.type = "text";
-      icon.setAttribute("data-state", "visible");
-      lucide.createIcons({ icons: { [iconId]: lucide.EyeOff }, nameAttr: "id" });
+  function togglePassword() {
+    const pass = document.getElementById("password");
+    if (pass.type === "password") {
+      pass.type = "text";
+      event.target.textContent = "Hide Password";
     } else {
-      input.type = "password";
-      icon.setAttribute("data-state", "hidden");
-      lucide.createIcons({ icons: { [iconId]: lucide.Eye }, nameAttr: "id" });
+      pass.type = "password";
+      event.target.textContent = "Show Password";
     }
   }
-
-  document.getElementById("togglePassword").addEventListener("click", () => {
-    toggleEye("password", "togglePassword");
-  });
-
-  lucide.createIcons();
 
   function login() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
     if (!email || !password) {
-      alert("Please enter both email and password");
+      alert("Fill in both fields.");
       return;
     }
 
-    auth.signInWithEmailAndPassword(email, password)
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
-        alert("Login successful!");
-        window.location.href = "home.html"; // redirect to home after login
+        const msg = document.getElementById("message");
+        msg.style.display = "block";
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1000);
       })
       .catch((error) => {
         alert("Login error: " + error.message);
