@@ -2,93 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest | Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustVest - Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #000000, #101820);
+      font-family: 'Poppins', sans-serif;
+      background-color: #000;
+      color: #fff;
       display: flex;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      color: white;
+      align-items: center;
+      height: 100vh;
     }
 
     .container {
-      width: 90%;
-      max-width: 380px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #333;
-      border-radius: 20px;
-      padding: 30px;
-      backdrop-filter: blur(10px);
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      text-align: center;
     }
 
     .logo {
       width: 120px;
-      margin: 0 auto;
-      display: block;
-      animation: bounce 2s infinite;
+      margin-bottom: 20px;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    h1 {
+      margin-bottom: 30px;
+      font-size: 24px;
     }
 
-    .skriller {
-      margin: 20px auto;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
     }
 
-    .circle {
-      width: 12px;
-      height: 12px;
-      border: 3px solid #FFD700;
-      border-radius: 50%;
-      animation: spin 1.5s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg) translateX(15px) rotate(0deg); }
-      100% { transform: rotate(360deg) translateX(15px) rotate(-360deg); }
-    }
-
-    input {
+    .input-group input {
       width: 100%;
-      padding: 12px;
-      margin: 8px 0;
+      padding: 12px 40px 12px 15px;
+      border-radius: 8px;
       border: none;
-      border-radius: 10px;
-      background: #1e1e2f;
-      color: white;
+      outline: none;
+      background: #1a1a1a;
+      color: #fff;
     }
 
-    .password-toggle {
-      float: right;
-      margin-top: -36px;
-      margin-right: 10px;
+    .show-password-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #0ff;
       cursor: pointer;
-      color: #aaa;
+      font-size: 12px;
     }
 
-    .btn {
+    .signup-btn {
       width: 100%;
       padding: 12px;
-      margin-top: 15px;
       border: none;
-      border-radius: 10px;
-      background: linear-gradient(270deg, #FFD700, #ff9500, #FFD700);
+      border-radius: 8px;
+      background: linear-gradient(270deg, #00f5a5, #00c8ff);
       background-size: 400% 400%;
       color: #000;
-      font-weight: bold;
-      animation: gradientMove 3s ease infinite;
+      font-weight: 600;
       cursor: pointer;
+      animation: gradientMove 5s ease infinite;
+      transition: transform 0.2s;
+    }
+
+    .signup-btn:hover {
+      transform: scale(1.03);
     }
 
     @keyframes gradientMove {
@@ -97,94 +86,132 @@
       100% { background-position: 0% 50%; }
     }
 
-    .link {
-      text-align: center;
-      margin-top: 12px;
+    .login-link {
+      margin-top: 15px;
       font-size: 14px;
     }
 
-    .link a {
-      color: #FFD700;
+    .login-link a {
+      color: #0ff;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+    }
+
+    .loader {
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid #0ff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" />
-    
-    <div class="skriller">
-      <div class="circle"></div>
-    </div>
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
+    <h1>Create Account</h1>
 
-    <input type="text" id="username" placeholder="Username" />
-    <input type="email" id="email" placeholder="Email" />
-    
-    <div style="position: relative;">
-      <input type="password" id="password" placeholder="Password" />
-      <span class="password-toggle" onclick="togglePassword('password')">Show</span>
-    </div>
+    <form id="signupForm">
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username" required />
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" placeholder="Email" required />
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="button" class="show-password-btn" onclick="togglePassword('password')">Show</button>
+      </div>
+      <div class="input-group">
+        <input type="password" id="confirmPassword" placeholder="Retype Password" required />
+        <button type="button" class="show-password-btn" onclick="togglePassword('confirmPassword')">Show</button>
+      </div>
 
-    <div style="position: relative;">
-      <input type="password" id="repassword" placeholder="Retype Password" />
-      <span class="password-toggle" onclick="togglePassword('repassword')">Show</span>
-    </div>
+      <button type="submit" class="signup-btn">Sign Up</button>
 
-    <button class="btn" onclick="signUp()">Sign Up</button>
+      <p class="login-link">Already have an account? <a href="login.html">Login</a></p>
+    </form>
 
-    <div class="link">Already have an account? <a href="login.html">Login</a></div>
+    <div id="loader" class="loader hidden"></div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-    import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
+  <script>
+    // Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
-      databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
       projectId: "trustvest-a1bd9",
       storageBucket: "trustvest-a1bd9.appspot.com",
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    window.signUp = async function () {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const repassword = document.getElementById("repassword").value.trim();
-      const username = document.getElementById("username").value.trim();
-
-      if (!email || !password || !repassword || !username) return alert("Fill in all fields!");
-      if (password !== repassword) return alert("Passwords do not match!");
-
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCredential.user, { displayName: username });
-        await setDoc(doc(db, "Users", userCredential.user.uid), {
-          username,
-          email,
-          createdAt: new Date().toISOString()
-        });
-
-        alert("Sign up successful!");
-        window.location.href = "login.html";
-      } catch (err) {
-        alert(err.message);
+    // Toggle Password Visibility
+    function togglePassword(id) {
+      const field = document.getElementById(id);
+      if (field.type === "password") {
+        field.type = "text";
+      } else {
+        field.type = "password";
       }
-    };
+    }
 
-    window.togglePassword = function (fieldId) {
-      const field = document.getElementById(fieldId);
-      field.type = field.type === "password" ? "text" : "password";
-    };
+    // Signup Logic
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+      document.getElementById('loader').classList.remove('hidden');
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          return db.collection('Users').doc(user.uid).set({
+            username: username,
+            email: email,
+            role: 'user',
+            createdAt: new Date().toISOString()
+          });
+        })
+        .then(() => {
+          alert('Signup successful!');
+          window.location.href = 'login.html';
+        })
+        .catch((error) => {
+          alert(error.message);
+        })
+        .finally(() => {
+          document.getElementById('loader').classList.add('hidden');
+        });
+    });
   </script>
 </body>
 </html>
