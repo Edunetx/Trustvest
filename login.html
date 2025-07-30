@@ -139,7 +139,7 @@
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
     <h1>Login to Your Account</h1>
 
-    <form id="loginForm" class="form">
+    <form id="loginForm" class="form" onsubmit="return false;">
       <div class="input-group">
         <input type="email" id="loginEmail" placeholder="Email" required />
       </div>
@@ -154,6 +154,7 @@
       <p class="signup-link"><a href="#">Forgot Password?</a></p>
     </form>
   </div>
+
   <div class="footer">
     &copy; 2025 TrustVest. All Rights Reserved.
   </div>
@@ -164,7 +165,6 @@
 
   <div class="toast" id="toastMsg"></div>
 
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
