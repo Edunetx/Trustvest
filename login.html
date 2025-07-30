@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -133,27 +134,41 @@
   </style>
 </head>
 <body>
+
   <div class="container">
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
     <h1>Login to Your Account</h1>
+
     <form id="loginForm" class="form">
       <div class="input-group">
         <input type="email" id="loginEmail" placeholder="Email" required />
       </div>
       <div class="input-group">
         <input type="password" id="loginPassword" placeholder="Password" required />
-        <button type="button" class="show-password-btn" onclick="togglePassword('loginPassword')">Show</button>
+        <button type="button" class="show-password-btn" onclick="togglePassword('loginPassword', this)">Show</button>
       </div>
+
       <button type="submit" class="login-btn">Login</button>
+
       <p class="signup-link">Don't have an account? <a href="signup.html">Sign Up</a></p>
       <p class="signup-link"><a href="#">Forgot Password?</a></p>
     </form>
   </div>
-  <div class="footer">&copy; 2025 TrustVest. All Rights Reserved.</div>
+  <div class="footer">
+    &copy; 2025 TrustVest. All Rights Reserved.
+  </div>
+
   <div class="loader-overlay" id="loader">
     <div class="skriller-spinner"></div>
   </div>
-  <div class="toast" id="toastMsg"></div>  <!-- Firebase SDKs -->  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>  <script>
+
+  <div class="toast" id="toastMsg"></div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -165,9 +180,15 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    function togglePassword(id) {
+    function togglePassword(id, btn) {
       const field = document.getElementById(id);
-      field.type = field.type === "password" ? "text" : "password";
+      if (field.type === "password") {
+        field.type = "text";
+        btn.innerText = "Hide";
+      } else {
+        field.type = "password";
+        btn.innerText = "Show";
+      }
     }
 
     function showToast(message) {
@@ -181,26 +202,31 @@
       e.preventDefault();
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
-      const loader = document.getElementById('loader');
-      loader.style.display = 'flex';
+
+      document.getElementById('loader').style.display = 'flex';
 
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
           showToast('Login Successful!');
           setTimeout(() => {
             window.location.href = 'home.html';
-          }, 1500);
+          }, 2000);
         })
         .catch((error) => {
-          loader.style.display = 'none';
+          let errorMessage = 'Login Failed';
           if (error.code === 'auth/wrong-password') {
-            showToast('Incorrect Password');
+            errorMessage = 'Incorrect Password';
           } else if (error.code === 'auth/user-not-found') {
-            showToast('User Not Found');
+            errorMessage = 'User Not Found';
           } else {
-            showToast(error.message);
+            errorMessage = error.message;
           }
+          showToast(errorMessage);
+        })
+        .finally(() => {
+          document.getElementById('loader').style.display = 'none';
         });
     });
-  </script></body>
+  </script>
+</body>
 </html>
