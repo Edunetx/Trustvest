@@ -141,11 +141,13 @@
       <div class="input-group">
         <input type="password" id="retypePassword" placeholder="Retype Password" required />
       </div>
+
       <button type="submit" class="signup-btn">Sign Up</button>
 
       <p class="login-link">Already have an account? <a href="login.html">Login</a></p>
     </form>
   </div>
+
   <div class="footer">
     &copy; 2025 TrustVest. All Rights Reserved.
   </div>
@@ -156,10 +158,10 @@
 
   <div class="toast" id="toastMsg"></div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <!-- Firebase SDK v8.10.0 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -183,14 +185,13 @@
 
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-
       const username = document.getElementById('username').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const retypePassword = document.getElementById('retypePassword').value;
 
       if (password !== retypePassword) {
-        showToast('Passwords do not match');
+        showToast("Passwords do not match");
         return;
       }
 
@@ -198,17 +199,17 @@
 
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const userId = userCredential.user.uid;
-          return db.collection('users').doc(userId).set({
+          const uid = userCredential.user.uid;
+          return db.collection("users").doc(uid).set({
             username: username,
             email: email,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
           });
         })
         .then(() => {
-          showToast('Signup Successful!');
+          showToast("Signup Successful!");
           setTimeout(() => {
-            window.location.href = '/login.html';
+            window.location.href = "login.html";
           }, 1500);
         })
         .catch((error) => {
