@@ -1,51 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TrustVest - Signup</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Poppins', sans-serif; background: #000; color: #fff; display: flex; flex-direction: column; min-height: 100vh; }
-    .container { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-    .logo { width: 100px; margin-bottom: 20px; }
-    h1 { font-size: 22px; margin-bottom: 25px; text-align: center; }
-    .form { width: 100%; max-width: 350px; }
-    .input-group { position: relative; margin-bottom: 15px; }
-    .input-group input { width: 100%; padding: 12px 15px; border-radius: 10px; border: none; outline: none; background: #1a1a1a; color: #fff; font-size: 14px; }
-    .signup-btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background: linear-gradient(270deg, #00f5a5, #00c8ff); background-size: 400% 400%; color: #000; font-weight: 600; cursor: pointer; animation: gradientMove 5s ease infinite; }
-    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .login-link { margin-top: 15px; font-size: 13px; text-align: center; }
-    .login-link a { color: #0ff; text-decoration: none; font-weight: 600; }
-    .footer { text-align: center; font-size: 11px; color: #555; padding: 10px 0; }
-    .loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
-    .skriller-spinner { width: 50px; height: 50px; border: 4px solid rgba(0,255,255,0.2); border-top: 4px solid #0ff; border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #0ff; color: #000; padding: 10px 20px; border-radius: 10px; display: none; z-index: 10000; font-size: 13px; font-weight: 600; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .logo {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form {
+      width: 100%;
+      max-width: 360px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 14px;
+    }
+    .signup-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(270deg, #00f5a5, #00c8ff);
+      background-size: 400% 400%;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      animation: gradientMove 5s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .login-link {
+      margin-top: 15px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .login-link a {
+      color: #0ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #555;
+      padding: 10px 0;
+    }
+    .loader-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .skriller-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(0, 255, 255, 0.2);
+      border-top: 4px solid #0ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0ff;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: none;
+      z-index: 10000;
+      font-size: 13px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" class="logo" alt="TrustVest Logo">
     <h1>Create Your Account</h1>
 
     <form id="signupForm" class="form">
-      <div class="input-group"><input type="text" id="username" placeholder="Username" required /></div>
-      <div class="input-group"><input type="email" id="email" placeholder="Email" required /></div>
-      <div class="input-group"><input type="password" id="password" placeholder="Password" required /></div>
-      <div class="input-group"><input type="password" id="retypePassword" placeholder="Retype Password" required /></div>
-
+      <div class="input-group">
+        <input type="text" id="signupUsername" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <input type="email" id="signupEmail" placeholder="Email" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="signupPassword" placeholder="Password" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="signupRetypePassword" placeholder="Retype Password" required>
+      </div>
       <button type="submit" class="signup-btn">Sign Up</button>
 
       <p class="login-link">Already have an account? <a href="login.html">Login</a></p>
     </form>
   </div>
 
-  <div class="footer">&copy; 2025 TrustVest. All Rights Reserved.</div>
+  <div class="footer">
+    &copy; 2025 TrustVest. All Rights Reserved.
+  </div>
 
-  <div class="loader-overlay" id="loader"><div class="skriller-spinner"></div></div>
+  <div class="loader-overlay" id="loader">
+    <div class="skriller-spinner"></div>
+  </div>
+
   <div class="toast" id="toastMsg"></div>
 
   <!-- Firebase SDKs -->
@@ -66,8 +174,10 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    const loader = document.getElementById('loader');
+    const toast = document.getElementById('toastMsg');
+
     function showToast(message) {
-      const toast = document.getElementById('toastMsg');
       toast.innerText = message;
       toast.style.display = 'block';
       setTimeout(() => { toast.style.display = 'none'; }, 3000);
@@ -75,17 +185,17 @@
 
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const retypePassword = document.getElementById('retypePassword').value;
+      const username = document.getElementById('signupUsername').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const retypePassword = document.getElementById('signupRetypePassword').value;
 
       if (password !== retypePassword) {
-        showToast('Passwords do not match!');
+        showToast("Passwords do not match");
         return;
       }
 
-      document.getElementById('loader').style.display = 'flex';
+      loader.style.display = 'flex';
 
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
@@ -97,18 +207,19 @@
           });
         })
         .then(() => {
-          showToast('Signup Successful!');
+          showToast("Signup Successful!");
           setTimeout(() => {
             window.location.href = 'login.html';
-          }, 2000);
+          }, 1500);
         })
         .catch((error) => {
           showToast(error.message);
         })
         .finally(() => {
-          document.getElementById('loader').style.display = 'none';
+          loader.style.display = 'none';
         });
     });
   </script>
+
 </body>
 </html>
