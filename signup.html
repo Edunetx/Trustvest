@@ -7,33 +7,126 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <style>
-    /* Simple Spinner */
-    #spinner {
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+      width: 300px;
+      position: relative;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+    .logo {
+      width: 100px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .toggle-password {
+      cursor: pointer;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #3498db;
+    }
+    .relative {
+      position: relative;
+    }
+    .link {
+      color: #3498db;
+      text-decoration: underline;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .spinner-overlay {
       display: none;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #3498db;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 999;
+    }
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       animation: spin 1s linear infinite;
-      margin: auto;
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
-    .error { color: red; }
-    .success { color: green; }
+    .message { margin-top: 20px; }
+    .copyright {
+      position: absolute;
+      bottom: 10px;
+      font-size: 12px;
+      color: #555;
+      width: 100%;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h2>TrustVest Signup</h2>
-  <form id="signupForm">
-    <input type="text" id="username" placeholder="Username" required /><br>
-    <input type="email" id="email" placeholder="Email" required /><br>
-    <input type="password" id="password" placeholder="Password" required /><br>
-    <input type="password" id="retypePassword" placeholder="Retype Password" required /><br>
-    <button type="submit">Sign Up</button>
-  </form>
-  <div id="spinner"></div>
-  <p id="message"></p>
+  <div class="container">
+    <img src="logo.png" alt="TrustVest Logo" class="logo" />
+    <form id="signupForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <div class="relative">
+        <input type="password" id="password" placeholder="Password" required />
+        <span class="toggle-password" data-target="password">Show</span>
+      </div>
+      <div class="relative">
+        <input type="password" id="retypePassword" placeholder="Retype Password" required />
+        <span class="toggle-password" data-target="retypePassword">Show</span>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="link" onclick="window.location.href='login.html'">Already have an account? Login</div>
+    <div class="copyright">&copy; 2025 TrustVest. All Rights Reserved.</div>
+  </div>
+
+  <div class="spinner-overlay" id="spinnerOverlay">
+    <div class="spinner"></div>
+    <div class="message" id="overlayMessage">Signing Up...</div>
+  </div>
 
   <script>
     const firebaseConfig = {
@@ -49,14 +142,27 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    document.querySelectorAll('.toggle-password').forEach(el => {
+      el.addEventListener('click', () => {
+        const target = document.getElementById(el.dataset.target);
+        if (target.type === 'password') {
+          target.type = 'text';
+          el.textContent = 'Hide';
+        } else {
+          target.type = 'password';
+          el.textContent = 'Show';
+        }
+      });
+    });
+
     const signupForm = document.getElementById('signupForm');
-    const spinner = document.getElementById('spinner');
-    const message = document.getElementById('message');
+    const spinnerOverlay = document.getElementById('spinnerOverlay');
+    const overlayMessage = document.getElementById('overlayMessage');
 
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      spinner.style.display = 'block';
-      message.textContent = '';
+      spinnerOverlay.style.display = 'flex';
+      overlayMessage.textContent = 'Signing Up...';
 
       const username = document.getElementById('username').value.trim();
       const email = document.getElementById('email').value.trim();
@@ -64,9 +170,8 @@
       const retypePassword = document.getElementById('retypePassword').value;
 
       if (password !== retypePassword) {
-        spinner.style.display = 'none';
-        message.textContent = 'Passwords do not match!';
-        message.className = 'error';
+        spinnerOverlay.style.display = 'none';
+        alert('Passwords do not match!');
         return;
       }
 
@@ -81,17 +186,13 @@
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        message.textContent = 'Signup successful! Redirecting...';
-        message.className = 'success';
+        overlayMessage.textContent = 'Signup Successful! Redirecting...';
         setTimeout(() => {
           window.location.href = 'login.html';
         }, 1500);
       } catch (error) {
-        spinner.style.display = 'none';
-        message.textContent = error.message;
-        message.className = 'error';
-      } finally {
-        spinner.style.display = 'none';
+        spinnerOverlay.style.display = 'none';
+        alert(error.message);
       }
     });
   </script>
