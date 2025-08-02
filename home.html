@@ -1,106 +1,267 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustVest - Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>TrustVest Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="https://kit.fontawesome.com/a2d9d5a66a.js" crossorigin="anonymous"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
-      background-color: #000;
+      background: #000;
       color: #fff;
-      min-height: 100vh;
-      display: flex;
+      overflow-x: hidden;
+    }
+    .spinner-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
       flex-direction: column;
     }
-    .header {
-      padding: 20px;
-      text-align: center;
-      background: #0ff;
-      color: #000;
-      font-size: 18px;
-      font-weight: 600;
+    .spinner {
+      border: 4px solid #0f0f0f;
+      border-top: 4px solid teal;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
     }
-    .balance-card {
-      background: #1a1a1a;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
-    }
-    .balance-card h2 {
+    .spinner-text {
+      margin-top: 10px;
+      color: #fff;
       font-size: 16px;
-      color: #888;
-      margin-bottom: 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .balance-card, .plan-card, .referral-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 20px;
+      margin: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+    .balance-card h1 {
+      font-size: 32px;
+      margin: 0;
+      color: #fff;
     }
     .balance-card p {
-      font-size: 24px;
-      font-weight: 600;
-    }
-    .plans-section {
-      padding: 20px;
-    }
-    .plan-card {
-      background: #111;
-      margin-bottom: 15px;
-      padding: 15px;
-      border-radius: 12px;
-      border: 1px solid #0ff;
-    }
-    .plan-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-    .plan-details {
+      color: #ccc;
+      margin: 5px 0 20px 0;
       font-size: 14px;
-      color: #aaa;
-      margin-bottom: 10px;
     }
-    .join-btn {
-      background: #0ff;
-      color: #000;
-      padding: 10px;
-      width: 100%;
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: 30px;
       border: none;
-      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s;
     }
-    .footer {
+    .btn-withdraw {
+      background: teal;
+      color: #fff;
+    }
+    .btn-deposit {
+      background: transparent;
+      color: teal;
+      border: 1px solid teal;
+    }
+    .shortcuts {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px;
+    }
+    .shortcut {
       text-align: center;
-      font-size: 11px;
-      color: #555;
+      font-size: 12px;
+    }
+    .shortcut i {
+      font-size: 24px;
+      margin-bottom: 5px;
+      color: teal;
+    }
+    .plan-card h3 {
+      margin: 0 0 10px 0;
+      color: #fff;
+    }
+    .progress-bar {
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      height: 10px;
+      margin-top: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: teal;
+      transition: width 1s ease-in-out;
+    }
+    .navbar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #111;
+      display: flex;
+      justify-content: space-around;
       padding: 10px 0;
-      margin-top: auto;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.5);
+    }
+    .nav-item {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      transition: color 0.3s;
+    }
+    .nav-item i {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 3px;
+    }
+    .nav-item.active {
+      color: teal;
+    }
+    .support-float {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background: teal;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      cursor: pointer;
+      z-index: 100;
     }
   </style>
 </head>
 <body>
-  <div class="header">Welcome to TrustVest</div>  <div class="balance-card">
-    <h2>Account Balance</h2>
-    <p>N0.00</p>
-  </div>  <div class="plans-section">
-    <div class="plan-card">
-      <div class="plan-title">GRVIP 1</div>
-      <div class="plan-details">Price: N3,000 | Daily: N950 | Total: N5,950</div>
-      <button class="join-btn">Join Plan</button>
-    </div><div class="plan-card">
-  <div class="plan-title">GRVIP 2</div>
-  <div class="plan-details">Price: N5,000 | Daily: N1,200 | Total: N5,950</div>
-  <button class="join-btn">Join Plan</button>
+
+<div class="spinner-overlay" id="spinner">
+  <div class="spinner"></div>
+  <div class="spinner-text">Please wait...</div>
+</div>
+
+<div class="balance-card">
+  <h1 id="user-balance">₦0.00</h1>
+  <p>Total Earnings</p>
+  <div class="btn-group">
+    <button class="btn btn-withdraw">Withdraw</button>
+    <button class="btn btn-deposit">Deposit</button>
+  </div>
+</div>
+
+<div class="shortcuts">
+  <div class="shortcut"><i class="fas fa-headset"></i><div>Support</div></div>
+  <div class="shortcut"><i class="fas fa-bell"></i><div>Messages</div></div>
+  <div class="shortcut"><i class="fas fa-users"></i><div>Referrals</div></div>
+  <div class="shortcut"><i class="fas fa-tasks"></i><div>Tasks</div></div>
 </div>
 
 <div class="plan-card">
-  <div class="plan-title">GRVIP 3</div>
-  <div class="plan-details">Price: N10,000 | Daily: N2,500 | Total: N17,500</div>
-  <button class="join-btn">Join Plan</button>
+  <h3 id="plan-name">Current Plan: --</h3>
+  <p>Daily Income: ₦<span id="daily-income">0</span></p>
+  <p>Total Target: ₦<span id="total-target">0</span></p>
+  <p><span id="days-left">0</span> Days Left</p>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
 </div>
 
-<!-- Add other GRVIP plans similarly -->
+<div class="referral-card">
+  <p>Total Referral Earnings: ₦<span id="referral-earnings">0</span></p>
+  <p>Active Referrals: <span id="referral-count">0</span></p>
+  <button class="btn btn-deposit" style="margin-top:10px;">Copy Referral Link</button>
+</div>
 
-  </div>  <div class="footer">
-    &copy; 2025 TrustVest. All Rights Reserved.
-  </div></body>
+<div class="support-float">
+  <i class="fas fa-headset" style="color:white;"></i>
+</div>
+
+<div class="navbar">
+  <div class="nav-item active" onclick="navigate('home')"><i class="fas fa-home"></i>Home</div>
+  <div class="nav-item" onclick="navigate('plans')"><i class="fas fa-chart-line"></i>Plans</div>
+  <div class="nav-item" onclick="navigate('teams')"><i class="fas fa-users"></i>Teams</div>
+  <div class="nav-item" onclick="navigate('me')"><i class="fas fa-user"></i>Me</div>
+</div>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+    authDomain: "trustvest-a1bd9.firebaseapp.com",
+    databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
+    projectId: "trustvest-a1bd9",
+    storageBucket: "trustvest-a1bd9.appspot.com",
+    messagingSenderId: "676220073092",
+    appId: "1:676220073092:web:b358f8821ac33da9babed1"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = "/login";
+    } else {
+      const doc = await db.collection("users").doc(user.uid).get();
+      if (doc.exists) {
+        const data = doc.data();
+        animateBalance(data.balance);
+        document.getElementById('plan-name').textContent = "Current Plan: " + data.planName;
+        document.getElementById('daily-income').textContent = data.dailyEarning;
+        document.getElementById('total-target').textContent = data.totalTarget;
+        document.getElementById('referral-earnings').textContent = data.referralEarnings;
+        document.getElementById('referral-count').textContent = data.referralCount;
+        document.getElementById('days-left').textContent = data.planProgress + " Days Left";
+        document.getElementById('progress-fill').style.width = data.planProgress + "%";
+      }
+    }
+  });
+
+  function animateBalance(target) {
+    let current = 0;
+    const increment = Math.ceil(target / 100);
+    const interval = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(interval);
+      }
+      document.getElementById('user-balance').textContent = "₦" + current.toLocaleString();
+    }, 20);
+  }
+
+  function navigate(page) {
+    document.getElementById('spinner').style.display = 'flex';
+    setTimeout(() => {
+      window.location.href = '/' + page;
+    }, 1500);
+  }
+</script>
+
+</body>
 </html>
