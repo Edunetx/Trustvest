@@ -5,33 +5,33 @@
   <title>TrustVest Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body { background: #0d0d0d; color: #fff; overflow-x: hidden; }
     .container { padding: 20px; }
 
-    /* Top Header */
+    /* Header */
     .top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
     .branding { display: flex; align-items: center; }
     .branding img { width: 40px; height: auto; margin-right: 10px; }
     .branding span { font-weight: 700; font-size: 1.2rem; color: #00f7c2; }
 
-    .header-icons { display: flex; align-items: center; }
-    .header-icons i { font-size: 20px; margin-left: 15px; cursor: pointer; }
+    .header-icons { display: flex; align-items: center; gap: 20px; }
+    .header-icons .icon { width: 24px; height: 24px; color: #fff; cursor: pointer; }
 
     /* Balance Card */
     .balance-card {
       background: linear-gradient(135deg, #00f7c2, #045f4c);
       border-radius: 20px;
       padding: 20px;
-      color: #000;
       margin-top: 20px;
       box-shadow: 0 4px 15px rgba(0, 247, 194, 0.4);
     }
     .balance-card h3 { font-weight: 600; font-size: 14px; color: #fff; }
     .balance-card .amount { font-size: 1.8rem; font-weight: 700; margin-top: 5px; color: #fff; }
 
-    /* Action Buttons */
+    /* Actions */
     .actions { display: flex; justify-content: space-between; margin: 20px 0; }
     .action-btn {
       flex: 0 0 48%;
@@ -45,7 +45,7 @@
     }
     .action-btn:hover { background: #262626; }
 
-    /* Quick Stats */
+    /* Stats Cards */
     .stats { display: flex; overflow-x: auto; gap: 10px; margin-bottom: 20px; }
     .stat-card {
       min-width: 140px;
@@ -63,11 +63,33 @@
       background: #141414;
       border-radius: 15px;
       padding: 15px;
-      margin-bottom: 80px;
+      margin-bottom: 20px;
     }
     .activity-item { font-size: 14px; margin-bottom: 10px; color: #ccc; }
 
-    /* Floating Support */
+    /* Testimonials */
+    .testimonials {
+      background: #141414;
+      border-radius: 15px;
+      padding: 15px;
+      position: relative;
+      height: 60px;
+      overflow: hidden;
+      margin-bottom: 100px;
+    }
+    .testimonial {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+      color: #aaa;
+    }
+    .testimonial.active {
+      opacity: 1;
+    }
+
+    /* Floating Support Icon */
     .support-icon {
       position: fixed;
       bottom: 80px;
@@ -102,6 +124,7 @@
       color: #777;
       font-size: 12px;
       transition: color 0.3s;
+      cursor: pointer;
     }
     .nav-item.active { color: #00f7c2; }
 
@@ -111,11 +134,10 @@
       top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6);
       backdrop-filter: blur(5px);
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      display: none;
       z-index: 999;
     }
     .spinner { border: 4px solid #1a1a1a; border-top: 4px solid #00f7c2; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
@@ -126,28 +148,32 @@
 </head>
 <body>
 
+  <!-- HEADER -->
   <div class="top-header">
     <div class="branding">
       <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
       <span>TrustVest</span>
     </div>
     <div class="header-icons">
-      <i class="notification-bell">🔔</i>
-      <i class="profile-avatar">👤</i>
+      <div id="bell-icon" class="icon" data-lucide="bell"></div>
+      <div id="profile-icon" class="icon" data-lucide="user-circle"></div>
     </div>
   </div>
 
   <div class="container">
+    <!-- Balance Card -->
     <div class="balance-card">
       <h3>Account Balance</h3>
       <div class="amount" id="user-balance">₦0.00</div>
     </div>
 
+    <!-- Action Buttons -->
     <div class="actions">
-      <div class="action-btn" id="withdraw-btn">🏦 Withdraw</div>
-      <div class="action-btn" id="deposit-btn">➕ Deposit</div>
+      <div class="action-btn" id="withdraw-btn">Withdraw</div>
+      <div class="action-btn" id="deposit-btn">Deposit</div>
     </div>
 
+    <!-- Stats -->
     <div class="stats">
       <div class="stat-card">
         <h4>Total Referrals</h4>
@@ -163,112 +189,173 @@
       </div>
     </div>
 
-    <div class="activity-feed">
-      <div class="activity-item">• You earned ₦500 today.</div>
-      <div class="activity-item">• New referral joined TrustVest.</div>
-      <div class="activity-item">• Withdrawal of ₦2,000 processed.</div>
+    <!-- Activity Feed -->
+    <div class="activity-feed" id="activity-feed">
+      <!-- Firebase Dynamic Activities will load here -->
     </div>
+
+    <!-- Testimonials -->
+    <div class="testimonials" id="testimonials">
+      <!-- Testimonials will rotate here -->
+      <div class="testimonial active">"TrustVest changed my life! - Sarah"</div>
+      <div class="testimonial">"I earn daily without stress! - John"</div>
+      <div class="testimonial">"Best platform for referrals. - Mike"</div>
+      <div class="testimonial">"Smooth withdrawals! - Jane"</div>
+      <div class="testimonial">"Highly recommend TrustVest! - Tunde"</div>
+      <div class="testimonial">"Simple and fast earnings! - Chiamaka"</div>
+      <div class="testimonial">"Made my first ₦10,000 in a week! - Ade"</div>
+      <div class="testimonial">"Super secure and reliable. - Efe"</div>
+      <div class="testimonial">"Customer support is top-notch! - Blessing"</div>
+      <div class="testimonial">"My referrals increased instantly. - Seyi"</div>
+      <div class="testimonial">"No more financial worries. - Aisha"</div>
+      <div class="testimonial">"Easy to use, beginner-friendly. - Kunle"</div>
+      <div class="testimonial">"Payments always on time! - Emeka"</div>
+      <div class="testimonial">"Loving the daily bonuses! - Zainab"</div>
+      <div class="testimonial">"Great passive income source. - Chuka"</div>
+      <div class="testimonial">"TrustVest is the future! - Halima"</div>
+      <div class="testimonial">"Real earnings, no scams. - Bolaji"</div>
+      <div class="testimonial">"I'm hooked on TrustVest! - Tope"</div>
+      <div class="testimonial">"Best earning platform so far. - Uche"</div>
+    </div>
+
   </div>
 
+  <!-- Floating Support Icon -->
   <div class="support-icon" id="support-btn">
-    💬
+    <div data-lucide="messages-square"></div>
   </div>
 
+  <!-- Bottom Navbar -->
   <div class="bottom-nav">
-    <div class="nav-item active" id="nav-home">🏠<span>Home</span></div>
-    <div class="nav-item" id="nav-plans">📈<span>Plans</span></div>
-    <div class="nav-item" id="nav-teams">👥<span>Teams</span></div>
-    <div class="nav-item" id="nav-me">🙋<span>Me</span></div>
+    <div class="nav-item active" id="nav-home"><div data-lucide="home"></div><span>Home</span></div>
+    <div class="nav-item" id="nav-plans"><div data-lucide="bar-chart-2"></div><span>Plans</span></div>
+    <div class="nav-item" id="nav-teams"><div data-lucide="users"></div><span>Teams</span></div>
+    <div class="nav-item" id="nav-me"><div data-lucide="user"></div><span>Me</span></div>
   </div>
 
+  <!-- Spinner Overlay -->
   <div class="spinner-screen" id="spinner-screen">
     <div class="spinner"></div>
     <div class="spinner-text" id="spinner-text">Loading...</div>
   </div>
 
-<!-- CHUNK 2 (Firebase Logic) will be pasted below this -->
-  <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
 
-<script>
+<!-- CHUNK 2 (Firebase Logic) will be pasted BELOW this -->
+  <script type="module">
+  // Firebase SDK Import
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, getDoc, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
   // Firebase Config
   const firebaseConfig = {
     apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
     authDomain: "trustvest-a1bd9.firebaseapp.com",
-    databaseURL: "https://trustvest-a1bd9-default-rtdb.firebaseio.com",
     projectId: "trustvest-a1bd9",
     storageBucket: "trustvest-a1bd9.appspot.com",
     messagingSenderId: "676220073092",
     appId: "1:676220073092:web:b358f8821ac33da9babed1"
   };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
 
-  // Spinner Control
-  function showSpinner(message) {
-    document.getElementById('spinner-text').innerText = message;
-    document.getElementById('spinner-screen').style.display = 'flex';
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const spinnerScreen = document.getElementById("spinner-screen");
+  const spinnerText = document.getElementById("spinner-text");
+
+  function showSpinner(text = 'Loading...') {
+    spinnerText.textContent = text;
+    spinnerScreen.style.display = 'flex';
   }
+
   function hideSpinner() {
-    document.getElementById('spinner-screen').style.display = 'none';
+    spinnerScreen.style.display = 'none';
   }
 
-  // Route Guard
-  auth.onAuthStateChanged(user => {
+  // Secure Route Protection
+  onAuthStateChanged(auth, async (user) => {
     if (!user) {
-      window.location.href = '/login';
+      window.location.href = "/login";
     } else {
-      loadUserData(user.uid);
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        document.getElementById("user-balance").textContent = `₦${parseFloat(userData.balance).toLocaleString()}`;
+        document.getElementById("referral-earnings").textContent = `₦${parseFloat(userData.referralEarnings).toLocaleString()}`;
+        document.getElementById("daily-income").textContent = `₦${parseFloat(userData.dailyIncome).toLocaleString()}`;
+        document.getElementById("total-referrals").textContent = userData.totalReferrals;
+      } else {
+        console.error("User document not found.");
+      }
+
+      // Load Activity Feed in Real-time
+      const activitiesRef = collection(db, "users", user.uid, "activities");
+      const q = query(activitiesRef, orderBy("timestamp", "desc"));
+
+      onSnapshot(q, (snapshot) => {
+        const feed = document.getElementById("activity-feed");
+        feed.innerHTML = "";
+        snapshot.forEach(doc => {
+          const activity = doc.data();
+          const item = document.createElement("div");
+          item.className = "activity-item";
+          item.textContent = activity.message;
+          feed.appendChild(item);
+        });
+      });
     }
   });
 
-  // Load User Data
-  function loadUserData(uid) {
-    showSpinner("Loading...");
-    db.collection('users').doc(uid).get().then(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        document.getElementById('user-balance').innerText = `₦${parseFloat(data.balance || 0).toFixed(2)}`;
-        document.getElementById('total-referrals').innerText = data.referrals || 0;
-        document.getElementById('referral-earnings').innerText = `₦${parseFloat(data.referralEarnings || 0).toFixed(2)}`;
-        document.getElementById('daily-income').innerText = `₦${parseFloat(data.dailyIncome || 0).toFixed(2)}`;
-      }
-      hideSpinner();
-    }).catch(error => {
-      console.error(error);
-      hideSpinner();
-    });
-  }
-
-  // Navigation Spinner Simulation
-  function navigateTo(page) {
-    showSpinner("Please wait...");
+  // Navigation Logic
+  function navigateTo(pageId) {
+    showSpinner();
     setTimeout(() => {
-      window.location.href = `/${page}`;
+      window.location.href = `/${pageId}`;
     }, 1000);
   }
 
-  // NavBar Clicks
-  document.getElementById('nav-home').addEventListener('click', () => navigateTo('home'));
-  document.getElementById('nav-plans').addEventListener('click', () => navigateTo('plans'));
-  document.getElementById('nav-teams').addEventListener('click', () => navigateTo('teams'));
-  document.getElementById('nav-me').addEventListener('click', () => navigateTo('me'));
+  document.getElementById("nav-home").addEventListener("click", () => navigateTo("home"));
+  document.getElementById("nav-plans").addEventListener("click", () => navigateTo("plans"));
+  document.getElementById("nav-teams").addEventListener("click", () => navigateTo("teams"));
+  document.getElementById("nav-me").addEventListener("click", () => navigateTo("me"));
 
-  // Support Button Dummy Action
-  document.getElementById('support-btn').addEventListener('click', () => {
-    alert('Support Chat Coming Soon...');
+  // Withdraw & Deposit Actions (You’ll Wire them to Real Pages Later)
+  document.getElementById("withdraw-btn").addEventListener("click", () => alert("Withdraw Page Coming Soon"));
+  document.getElementById("deposit-btn").addEventListener("click", () => alert("Deposit Page Coming Soon"));
+
+  // Support Icon Redirect
+  document.getElementById("support-btn").addEventListener("click", () => {
+    window.location.href = "/support";
   });
 
-  // Withdraw & Deposit Buttons Dummy
-  document.getElementById('withdraw-btn').addEventListener('click', () => {
-    alert('Withdraw function not yet live.');
+  // Hide Spinner after page loads
+  window.addEventListener("load", () => hideSpinner());
+</script>
+<script>
+// Testimonials Animation Logic
+const testimonials = document.querySelectorAll(".testimonial");
+let currentTestimonial = 0;
+
+function cycleTestimonials() {
+  testimonials.forEach((t, index) => {
+    t.classList.remove("active");
+    if (index === currentTestimonial) {
+      t.classList.add("active");
+    }
   });
-  document.getElementById('deposit-btn').addEventListener('click', () => {
-    alert('Deposit function not yet live.');
-  });
+
+  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+}
+
+setInterval(cycleTestimonials, 3000); // Change testimonial every 3 seconds
 </script>
 </body>
 </html>
