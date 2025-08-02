@@ -1,172 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrustVest - Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .logo {
-      width: 100px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 22px;
-      margin-bottom: 25px;
-      text-align: center;
-    }
-    .form {
-      width: 100%;
-      max-width: 350px;
-    }
-    .input-group {
-      position: relative;
-      margin-bottom: 15px;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 12px 40px 12px 15px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 14px;
-    }
-    .show-password-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #0ff;
-      cursor: pointer;
-      font-size: 11px;
-    }
-    .login-btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(270deg, #00f5a5, #00c8ff);
-      background-size: 400% 400%;
-      color: #000;
-      font-weight: 600;
-      cursor: pointer;
-      animation: gradientMove 5s ease infinite;
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .signup-link {
-      margin-top: 15px;
-      font-size: 13px;
-      text-align: center;
-    }
-    .signup-link a {
-      color: #0ff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .footer {
-      text-align: center;
-      font-size: 11px;
-      color: #555;
-      padding: 10px 0;
-    }
-    .loader-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      display: none;
-    }
-    .skriller-spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid rgba(0, 255, 255, 0.2);
-      border-top: 4px solid #0ff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0ff;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 10px;
-      display: none;
-      z-index: 10000;
-      font-size: 13px;
-      font-weight: 600;
-    }
+    body { margin: 0; background: #000; font-family: 'Poppins', sans-serif; color: #fff; overflow: hidden; }
+    .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 20px; animation: fadeSlideIn 1s ease forwards; }
+    .logo { width: 100px; margin-bottom: 10px; }
+    h2 { margin-bottom: 20px; font-size: 24px; }
+    form { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; backdrop-filter: blur(10px); width: 100%; max-width: 350px; display: flex; flex-direction: column; }
+    .input-group { position: relative; display: flex; align-items: center; width: 100%; }
+    input { flex: 1; padding: 12px; margin: 10px 0; border: none; border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; width: 100%; }
+    .toggle-text { position: absolute; right: 15px; cursor: pointer; font-size: 12px; color: #00c9a7; }
+    .btn { padding: 12px; border: none; border-radius: 8px; background: linear-gradient(270deg, #00c9a7, #00f2fe, #005bea); background-size: 600% 600%; color: #000; font-weight: bold; cursor: pointer; animation: gradientFlow 8s ease infinite; margin-top: 10px; transition: transform 0.2s ease; }
+    .btn:hover { transform: scale(1.05); }
+    .link-text { margin-top: 15px; font-size: 14px; text-align: center; }
+    .link-text a { color: #00c9a7; text-decoration: none; margin-left: 5px; }
+    .notification { margin-top: 10px; text-align: center; font-size: 14px; color: #0f0; display: none; }
+    .spinner-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; flex-direction: column; display: none; z-index: 999; animation: fadeIn 0.5s ease forwards; }
+    .spinner { border: 6px solid rgba(255,255,255,0.1); border-top: 6px solid #00c9a7; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 10px; }
+    footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes gradientFlow { 0% {background-position:0% 50%} 50% {background-position:100% 50%} 100% {background-position:0% 50%} }
+    @keyframes fadeSlideIn { 0% {opacity: 0; transform: translateY(20px);} 100% {opacity: 1; transform: translateY(0);} }
+    @keyframes fadeIn { 0% {opacity: 0;} 100% {opacity: 1;} }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 </head>
 <body>
-
   <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
-    <h1>Login to Your Account</h1>
-
-    <form id="loginForm" class="form">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
+    <h2>Welcome Back</h2>
+    <form id="loginForm">
       <div class="input-group">
-        <input type="email" id="loginEmail" placeholder="Email" required />
+        <input type="email" id="email" placeholder="Email" required>
       </div>
       <div class="input-group">
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <button type="button" class="show-password-btn" onclick="togglePassword('loginPassword', this)">Show</button>
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="toggle-text" onclick="togglePassword('password', this)">Show</span>
       </div>
-
-      <button type="submit" class="login-btn">Login</button>
-
-      <p class="signup-link">Don't have an account? <a href="signup.html">Sign Up</a></p>
-      <p class="signup-link"><a href="#">Forgot Password?</a></p>
+      <button type="submit" class="btn">Login</button>
+      <div class="notification" id="notification"></div>
+      <div class="link-text"><a href="#">Forgot Password?</a></div>
+      <div class="link-text">Don't have an account?<a href="/signup">Sign Up</a></div>
     </form>
   </div>
-  <div class="footer">
+
+  <div class="spinner-overlay" id="spinnerOverlay">
+    <div class="spinner"></div>
+    <p id="spinnerText">Logging in...</p>
+  </div>
+
+  <footer>
     &copy; 2025 TrustVest. All Rights Reserved.
-  </div>
-
-  <div class="loader-overlay" id="loader">
-    <div class="skriller-spinner"></div>
-  </div>
-
-  <div class="toast" id="toastMsg"></div>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  </footer>
 
   <script>
     const firebaseConfig = {
@@ -177,55 +67,47 @@
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
+
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    function togglePassword(id, btn) {
-      const field = document.getElementById(id);
-      if (field.type === "password") {
+    function togglePassword(fieldId, toggleElement) {
+      const field = document.getElementById(fieldId);
+      if(field.type === "password") {
         field.type = "text";
-        btn.innerText = "Hide";
+        toggleElement.innerText = "Hide";
       } else {
         field.type = "password";
-        btn.innerText = "Show";
+        toggleElement.innerText = "Show";
       }
     }
 
-    function showToast(message) {
-      const toast = document.getElementById('toastMsg');
-      toast.innerText = message;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const notification = document.getElementById("notification");
+      const spinnerOverlay = document.getElementById("spinnerOverlay");
+      const spinnerText = document.getElementById("spinnerText");
 
-      document.getElementById('loader').style.display = 'flex';
+      notification.style.display = "none";
+      spinnerOverlay.style.display = "flex";
 
-      auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-          showToast('Login Successful!');
-          setTimeout(() => {
-            window.location.href = 'home.html';
-          }, 2000);
-        })
-        .catch((error) => {
-          let errorMessage = 'Login Failed';
-          if (error.code === 'auth/wrong-password') {
-            errorMessage = 'Incorrect Password';
-          } else if (error.code === 'auth/user-not-found') {
-            errorMessage = 'User Not Found';
-          } else {
-            errorMessage = error.message;
-          }
-          showToast(errorMessage);
-        })
-        .finally(() => {
-          document.getElementById('loader').style.display = 'none';
-        });
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        spinnerText.innerText = "Login Successful!";
+        setTimeout(() => { window.location.href = "/home"; }, 1500);
+      } catch (error) {
+        spinnerOverlay.style.display = "none";
+        let message = "An error occurred.";
+        if (error.code === 'auth/user-not-found') message = "No user found with this email.";
+        else if (error.code === 'auth/wrong-password') message = "Incorrect Password.";
+        else if (error.code === 'auth/invalid-email') message = "Invalid Email Address.";
+        else message = error.message;
+        notification.innerText = message;
+        notification.style.color = "#f00";
+        notification.style.display = "block";
+      }
     });
   </script>
 </body>
