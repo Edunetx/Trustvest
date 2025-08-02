@@ -1,27 +1,28 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrustVest - Signup</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; background: #000; font-family: 'Poppins', sans-serif; color: #fff; overflow-x: hidden; }
-    .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-    .logo { width: 100px; margin-bottom: 20px; animation: fadeInDown 1s ease; }
-    form { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; backdrop-filter: blur(10px); display: flex; flex-direction: column; width: 90%; max-width: 350px; }
-    input { padding: 12px; margin: 10px 0; border: none; border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; }
-    .password-toggle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer; }
-    .btn { padding: 12px; border: none; border-radius: 8px; background: linear-gradient(90deg, #ff512f, #dd2476); color: #fff; cursor: pointer; transition: 0.3s; }
-    .btn:hover { opacity: 0.9; }
-    .link-text { margin-top: 10px; font-size: 14px; }
+    body { margin: 0; background: #000; font-family: 'Poppins', sans-serif; color: #fff; }
+    .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 20px; }
+    .logo { width: 100px; margin-bottom: 10px; }
+    h2 { margin-bottom: 20px; font-size: 24px; }
+    form { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; backdrop-filter: blur(10px); width: 100%; max-width: 350px; display: flex; flex-direction: column; }
+    input { padding: 12px; margin: 10px 0; border: none; border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; width: 100%; }
+    .input-group { position: relative; display: flex; align-items: center; }
+    .toggle-text { position: absolute; right: 15px; cursor: pointer; font-size: 12px; color: #ff512f; }
+    .btn { padding: 12px; border: none; border-radius: 8px; background: linear-gradient(270deg, #ff512f, #dd2476); background-size: 400% 400%; color: #fff; cursor: pointer; animation: gradientMove 5s ease infinite; margin-top: 10px; }
+    .link-text { margin-top: 15px; font-size: 14px; text-align: center; }
     .link-text a { color: #ff512f; text-decoration: none; margin-left: 5px; }
     .notification { margin-top: 10px; text-align: center; font-size: 14px; color: #0f0; display: none; }
     .spinner-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; flex-direction: column; display: none; z-index: 999; }
-    .spinner { border: 6px solid rgba(255,255,255,0.1); border-top: 6px solid #ff512f; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    .spinner { border: 6px solid rgba(255,255,255,0.1); border-top: 6px solid #ff512f; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 10px; }
     footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: rgba(255,255,255,0.3); }
-    .input-group { position: relative; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes gradientMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
   </style>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
@@ -29,28 +30,35 @@
 </head>
 <body>
   <div class="container">
-    <img src="https://raw.githubusercontent.com/OBA-TRUSTVEST/logo/main/trustvest-logo.png" alt="TrustVest Logo" class="logo">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
+    <h2>Create Your Account</h2>
     <form id="signupForm">
       <input type="text" id="username" placeholder="Username" required>
       <input type="email" id="email" placeholder="Email" required>
       <div class="input-group">
         <input type="password" id="password" placeholder="Password" required>
-        <span class="password-toggle" onclick="togglePassword('password')">👁️</span>
+        <span class="toggle-text" onclick="togglePassword('password', this)">Show</span>
       </div>
       <div class="input-group">
         <input type="password" id="retypePassword" placeholder="Retype Password" required>
-        <span class="password-toggle" onclick="togglePassword('retypePassword')">👁️</span>
+        <span class="toggle-text" onclick="togglePassword('retypePassword', this)">Show</span>
       </div>
       <button type="submit" class="btn">Sign Up</button>
       <div class="notification" id="notification"></div>
       <div class="link-text">Already have an account?<a href="/login">Login</a></div>
     </form>
-  </div>  <div class="spinner-overlay" id="spinnerOverlay">
+  </div>
+
+  <div class="spinner-overlay" id="spinnerOverlay">
     <div class="spinner"></div>
     <p id="spinnerText">Signup in Progress...</p>
-  </div>  <footer>
+  </div>
+
+  <footer>
     &copy; 2025 TrustVest. All Rights Reserved.
-  </footer>  <script>
+  </footer>
+
+  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -64,9 +72,15 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    function togglePassword(fieldId) {
+    function togglePassword(fieldId, toggleElement) {
       const field = document.getElementById(fieldId);
-      field.type = field.type === "password" ? "text" : "password";
+      if(field.type === "password") {
+        field.type = "text";
+        toggleElement.innerText = "Hide";
+      } else {
+        field.type = "password";
+        toggleElement.innerText = "Show";
+      }
     }
 
     document.getElementById("signupForm").addEventListener("submit", async (e) => {
@@ -104,16 +118,16 @@
         setTimeout(() => { window.location.href = "/login"; }, 1500);
       } catch (error) {
         spinnerOverlay.style.display = "none";
-        if (error.code === 'auth/email-already-in-use') {
-          notification.innerText = "This user already has an account, please login.";
-          notification.style.color = "#f00";
-          notification.style.display = "block";
-        } else {
-          notification.innerText = error.message;
-          notification.style.color = "#f00";
-          notification.style.display = "block";
-        }
+        let message = "An error occurred.";
+        if (error.code === 'auth/email-already-in-use') message = "User already exists, please login.";
+        else if (error.code === 'auth/invalid-email') message = "Invalid Email Address.";
+        else if (error.code === 'auth/weak-password') message = "Password too weak.";
+        else message = error.message;
+        notification.innerText = message;
+        notification.style.color = "#f00";
+        notification.style.display = "block";
       }
     });
-  </script></body>
+  </script>
+</body>
 </html>
