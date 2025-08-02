@@ -1,173 +1,56 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrustVest - Signup</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .logo {
-      width: 100px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 22px;
-      margin-bottom: 25px;
-      text-align: center;
-    }
-    .form {
-      width: 100%;
-      max-width: 350px;
-    }
-    .input-group {
-      position: relative;
-      margin-bottom: 15px;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 12px 40px 12px 15px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 14px;
-    }
-    .show-password-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #0ff;
-      cursor: pointer;
-      font-size: 11px;
-    }
-    .signup-btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(270deg, #00f5a5, #00c8ff);
-      background-size: 400% 400%;
-      color: #000;
-      font-weight: 600;
-      cursor: pointer;
-      animation: gradientMove 5s ease infinite;
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .login-link {
-      margin-top: 15px;
-      font-size: 13px;
-      text-align: center;
-    }
-    .login-link a {
-      color: #0ff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .footer {
-      text-align: center;
-      font-size: 11px;
-      color: #555;
-      padding: 10px 0;
-    }
-    .loader-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      display: none;
-      flex-direction: column;
-    }
-    .skriller-spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid rgba(0, 255, 255, 0.2);
-      border-top: 4px solid #0ff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    .loader-text {
-      margin-top: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #0ff;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0ff;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 10px;
-      display: none;
-      z-index: 10000;
-      font-size: 13px;
-      font-weight: 600;
-    }
+    body { margin: 0; background: #000; font-family: 'Poppins', sans-serif; color: #fff; overflow-x: hidden; }
+    .container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+    .logo { width: 100px; margin-bottom: 20px; animation: fadeInDown 1s ease; }
+    form { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; backdrop-filter: blur(10px); display: flex; flex-direction: column; width: 90%; max-width: 350px; }
+    input { padding: 12px; margin: 10px 0; border: none; border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; }
+    .password-toggle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer; }
+    .btn { padding: 12px; border: none; border-radius: 8px; background: linear-gradient(90deg, #ff512f, #dd2476); color: #fff; cursor: pointer; transition: 0.3s; }
+    .btn:hover { opacity: 0.9; }
+    .link-text { margin-top: 10px; font-size: 14px; }
+    .link-text a { color: #ff512f; text-decoration: none; margin-left: 5px; }
+    .notification { margin-top: 10px; text-align: center; font-size: 14px; color: #0f0; display: none; }
+    .spinner-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; flex-direction: column; display: none; z-index: 999; }
+    .spinner { border: 6px solid rgba(255,255,255,0.1); border-top: 6px solid #ff512f; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+    .input-group { position: relative; }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <div class="container">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo" />
-    <h1>Create Your Account</h1>
-    <form id="signupForm" class="form">
+    <img src="https://raw.githubusercontent.com/OBA-TRUSTVEST/logo/main/trustvest-logo.png" alt="TrustVest Logo" class="logo">
+    <form id="signupForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Email" required>
       <div class="input-group">
-        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="password-toggle" onclick="togglePassword('password')">👁️</span>
       </div>
       <div class="input-group">
-        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="retypePassword" placeholder="Retype Password" required>
+        <span class="password-toggle" onclick="togglePassword('retypePassword')">👁️</span>
       </div>
-      <div class="input-group">
-        <input type="password" id="password" placeholder="Password" required />
-        <button type="button" class="show-password-btn" onclick="togglePassword('password', this)">Show</button>
-      </div>
-      <div class="input-group">
-        <input type="password" id="retypePassword" placeholder="Retype Password" required />
-        <button type="button" class="show-password-btn" onclick="togglePassword('retypePassword', this)">Show</button>
-      </div>
-      <button type="submit" class="signup-btn">Sign Up</button>
-      <p class="login-link">Already have an account? <a href="login.html">Login</a></p>
+      <button type="submit" class="btn">Sign Up</button>
+      <div class="notification" id="notification"></div>
+      <div class="link-text">Already have an account?<a href="/login">Login</a></div>
     </form>
-  </div>
-  <div class="footer">
+  </div>  <div class="spinner-overlay" id="spinnerOverlay">
+    <div class="spinner"></div>
+    <p id="spinnerText">Signup in Progress...</p>
+  </div>  <footer>
     &copy; 2025 TrustVest. All Rights Reserved.
-  </div>  <div class="loader-overlay" id="loader">
-    <div class="skriller-spinner"></div>
-    <div class="loader-text" id="loaderText">Signup in Progress...</div>
-  </div>  <div class="toast" id="toastMsg"></div>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>  <script>
+  </footer>  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
       authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -176,67 +59,59 @@
       messagingSenderId: "676220073092",
       appId: "1:676220073092:web:b358f8821ac33da9babed1"
     };
+
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    function togglePassword(id, btn) {
-      const field = document.getElementById(id);
-      if (field.type === "password") {
-        field.type = "text";
-        btn.innerText = "Hide";
-      } else {
-        field.type = "password";
-        btn.innerText = "Show";
-      }
+    function togglePassword(fieldId) {
+      const field = document.getElementById(fieldId);
+      field.type = field.type === "password" ? "text" : "password";
     }
 
-    function showToast(message) {
-      const toast = document.getElementById('toastMsg');
-      toast.innerText = message;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
-    }
-
-    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const retypePassword = document.getElementById('retypePassword').value;
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const retypePassword = document.getElementById("retypePassword").value;
+      const notification = document.getElementById("notification");
+      const spinnerOverlay = document.getElementById("spinnerOverlay");
+      const spinnerText = document.getElementById("spinnerText");
 
-      if (password !== retypePassword) {
-        showToast('Passwords do not match!');
+      notification.style.display = "none";
+
+      if(password !== retypePassword) {
+        notification.innerText = "Passwords do not match.";
+        notification.style.color = "#f00";
+        notification.style.display = "block";
         return;
       }
 
-      document.getElementById('loader').style.display = 'flex';
-      document.getElementById('loaderText').innerText = 'Signup in Progress...';
+      spinnerOverlay.style.display = "flex";
 
       try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
 
-        await db.collection('users').doc(user.uid).set({
+        await db.collection("users").doc(user.uid).set({
           username: username,
           email: email,
-          uid: user.uid,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        document.getElementById('loaderText').innerText = 'Signup Successful!';
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 1500);
+        spinnerText.innerText = "Signup Successful!";
+        setTimeout(() => { window.location.href = "/login"; }, 1500);
       } catch (error) {
-        document.getElementById('loader').style.display = 'none';
+        spinnerOverlay.style.display = "none";
         if (error.code === 'auth/email-already-in-use') {
-          showToast('This user already has an account, please login.');
-          setTimeout(() => {
-            window.location.href = 'login.html';
-          }, 1500);
+          notification.innerText = "This user already has an account, please login.";
+          notification.style.color = "#f00";
+          notification.style.display = "block";
         } else {
-          showToast(error.message);
+          notification.innerText = error.message;
+          notification.style.color = "#f00";
+          notification.style.display = "block";
         }
       }
     });
