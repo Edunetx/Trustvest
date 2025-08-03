@@ -1,151 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TrustVest AI Support</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #0d0d0d;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    header {
-      padding: 1rem;
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-align: center;
-      background: #111;
-    }
-    .chat-container {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      scroll-behavior: smooth;
-    }
-    .chat-bubble {
-      padding: 0.75rem 1rem;
-      border-radius: 1rem;
-      max-width: 80%;
-      word-wrap: break-word;
-    }
-    .user {
-      align-self: flex-end;
-      background: #2e2e2e;
-    }
-    .ai {
-      align-self: flex-start;
-      background: #1a1a1a;
-    }
-    .input-container {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      padding: 0.75rem;
-      background: #111;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
-    }
-    .input-container input {
-      flex: 1;
-      padding: 0.75rem;
-      border-radius: 1rem;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-    .input-container button {
-      margin-left: 0.5rem;
-      padding: 0.75rem 1rem;
-      background: linear-gradient(45deg, #00b894, #0984e3);
-      color: white;
-      border: none;
-      border-radius: 1rem;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .typing {
-      font-style: italic;
-      opacity: 0.7;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustVest Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+        }
+        header img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        header h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .support-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+        }
+        .support-container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .support-container p {
+            font-size: 1rem;
+            opacity: 0.8;
+            max-width: 300px;
+        }
+    </style>
+
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';
+      s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+
 </head>
 <body>
+    <header>
+        <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+        <h1>TrustVest Support</h1>
+    </header>
 
-<header>TrustVest AI Support</header>
-
-<div class="chat-container" id="chat-container">
-  <!-- Chat bubbles will appear here -->
-</div>
-
-<div class="input-container">
-  <input type="text" id="user-input" placeholder="Type your message...">
-  <button onclick="sendMessage()">Send</button>
-</div>
-
-<script>
-  const API_URL = 'https://api.braintrust.dev/v1/proxy';
-  const API_KEY = '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';
-
-  function addMessage(message, className) {
-    const chatContainer = document.getElementById('chat-container');
-    const bubble = document.createElement('div');
-    bubble.className = `chat-bubble ${className}`;
-    bubble.innerText = message;
-    chatContainer.appendChild(bubble);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  }
-
-  async function sendMessage() {
-    const inputField = document.getElementById('user-input');
-    const userInput = inputField.value.trim();
-    if (!userInput) return;
-
-    addMessage(userInput, 'user');
-    inputField.value = '';
-
-    const typingBubble = document.createElement('div');
-    typingBubble.className = 'chat-bubble ai typing';
-    typingBubble.innerText = 'TrustVest AI is typing...';
-    document.getElementById('chat-container').appendChild(typingBubble);
-    document.getElementById('chat-container').scrollTop = document.getElementById('chat-container').scrollHeight;
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
-          messages: [{ role: 'user', content: userInput }]
-        })
-      });
-
-      const data = await response.json();
-      typingBubble.classList.remove('typing');
-      typingBubble.innerText = data.choices[0].message.content.trim();
-
-    } catch (error) {
-      typingBubble.classList.remove('typing');
-      typingBubble.innerText = 'An error occurred. Please try again.';
-    }
-  }
-</script>
-
+    <div class="support-container">
+        <h2>We're here to help!</h2>
+        <p>Ask us anything about your account, plans, earnings or referrals. A support agent will assist you shortly.</p>
+    </div>
 </body>
 </html>
