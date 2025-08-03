@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TrustVest - Plans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #121212;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar img {
+      height: 40px;
+    }
+
+    .navbar h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .plans-container {
+      padding: 20px;
+    }
+
+    .plan-card {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .plan-card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+    }
+
+    .plan-card h2 {
+      margin: 15px 0 10px;
+      font-size: 18px;
+    }
+
+    .plan-card p {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .purchase-button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #000;
+      background: linear-gradient(270deg, #00FF94, #00FFD0, #00FF94);
+      background-size: 400% 400%;
+      cursor: pointer;
+      animation: gradientMove 4s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .spinner-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #00FF94;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .spinner-text {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #00FF94;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div style="display: flex; align-items: center;">
+      <img src="https://raw.githubusercontent.com/oba-trustvest/trustvest-assets/main/logo.png" alt="TrustVest Logo">
+      <h1 style="margin-left: 10px;">TrustVest</h1>
+    </div>
+  </div>
+
+  <div class="plans-container">
+    <h2 style="text-align: center; font-size: 20px; margin-bottom: 20px;">Choose Your Plan</h2>
+
+    <!-- Plan Cards Start -->
+    <div class="plan-card">
+      <img src="https://trustvest-plans.s3.amazonaws.com/trustlite-plan.jpg" alt="TrustLite Plan">
+      <h2>TrustLite</h2>
+      <p>₦5,000 - Earn ₦500 daily for 30 days</p>
+      <button class="purchase-button" onclick="purchasePlan('TrustLite', 5000)">Purchase</button>
+    </div>
+
+    <div class="plan-card">
+      <img src="https://trustvest-plans.s3.amazonaws.com/trustpro-plan.jpg" alt="TrustPro Plan">
+      <h2>TrustPro</h2>
+      <p>₦10,000 - Earn ₦1,200 daily for 30 days</p>
+      <button class="purchase-button" onclick="purchasePlan('TrustPro', 10000)">Purchase</button>
+    </div>
+
+    <div class="plan-card">
+      <img src="https://trustvest-plans.s3.amazonaws.com/trustpremium-plan.jpg" alt="TrustPremium Plan">
+      <h2>TrustPremium</h2>
+      <p>₦20,000 - Earn ₦2,500 daily for 30 days</p>
+      <button class="purchase-button" onclick="purchasePlan('TrustPremium', 20000)">Purchase</button>
+    </div>
+    <!-- Plan Cards End -->
+
+  </div>
+
+  <!-- Spinner Loading Overlay -->
+  <div class="spinner-overlay" id="loadingSpinner">
+    <div class="spinner"></div>
+    <div class="spinner-text" id="spinnerCaption">Processing Purchase...</div>
+  </div>
+
+  <script>
+    function purchasePlan(planName, planPrice) {
+      const userBalance = 15000; // Fetch user's real balance from Firebase later
+      if(userBalance >= planPrice) {
+        document.getElementById('loadingSpinner').style.display = 'flex';
+        setTimeout(() => {
+          alert('Plan purchased successfully!');
+          document.getElementById('loadingSpinner').style.display = 'none';
+        }, 2000);
+      } else {
+        window.location.href = 'deposit.html';
+      }
+    }
+  </script>
+  <!-- Bottom Navigation Bar -->
+  <div style="position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #222;">
+    <div onclick="navigateTo('home.html')" style="text-align: center; cursor: pointer;">
+      <img src="https://trustvest-icons.s3.amazonaws.com/home.svg" alt="Home" width="24">
+      <div style="font-size: 12px; color: #fff;">Home</div>
+    </div>
+    <div onclick="navigateTo('plans.html')" style="text-align: center; cursor: pointer;">
+      <img src="https://trustvest-icons.s3.amazonaws.com/plans.svg" alt="Plans" width="24">
+      <div style="font-size: 12px; color: #fff;">Plans</div>
+    </div>
+    <div onclick="navigateTo('referrals.html')" style="text-align: center; cursor: pointer;">
+      <img src="https://trustvest-icons.s3.amazonaws.com/referrals.svg" alt="Referrals" width="24">
+      <div style="font-size: 12px; color: #fff;">Referrals</div>
+    </div>
+    <div onclick="navigateTo('me.html')" style="text-align: center; cursor: pointer;">
+      <img src="https://trustvest-icons.s3.amazonaws.com/me.svg" alt="Me" width="24">
+      <div style="font-size: 12px; color: #fff;">Me</div>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      document.getElementById('loadingSpinner').style.display = 'flex';
+      document.getElementById('spinnerCaption').innerText = 'Please wait...';
+      setTimeout(() => {
+        window.location.href = page;
+      }, 1000);
+    }
+  </script>
+  <!-- Spinner Loading Screen -->
+  <div id="loadingSpinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+    <div class="loader"></div>
+    <div id="spinnerCaption" style="color: white; font-size: 16px; margin-top: 20px;">Loading...</div>
+  </div>
+
+  <!-- Loader CSS -->
+  <style>
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #01ff70;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <!-- Firebase App Config -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+      authDomain: "trustvest-a1bd9.firebaseapp.com",
+      projectId: "trustvest-a1bd9",
+      storageBucket: "trustvest-a1bd9.appspot.com",
+      messagingSenderId: "676220073092",
+      appId: "1:676220073092:web:b358f8821ac33da9babed1"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+  <!-- Purchase Plan Logic -->
+  <script>
+    function purchasePlan(planId, planPrice) {
+      const user = auth.currentUser;
+      if (!user) {
+        window.location.href = 'login';
+        return;
+      }
+
+      document.getElementById('loadingSpinner').style.display = 'flex';
+      db.collection('users').doc(user.uid).get().then(doc => {
+        const data = doc.data();
+        const balance = data.balance || 0;
+
+        if (balance >= planPrice) {
+          db.collection('users').doc(user.uid).update({
+            balance: firebase.firestore.FieldValue.increment(-planPrice),
+            currentPlan: planId
+          }).then(() => {
+            document.getElementById('spinnerCaption').innerText = 'Purchase Successful!';
+            setTimeout(() => window.location.reload(), 1000);
+          });
+        } else {
+          document.getElementById('spinnerCaption').innerText = 'Insufficient Balance...';
+          setTimeout(() => {
+            window.location.href = 'deposit';
+          }, 1500);
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
