@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +35,10 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            scrollbar-width: none;
+        }
+        .chat-container::-webkit-scrollbar {
+            display: none;
         }
         .message {
             display: flex;
@@ -62,6 +65,7 @@
             border-radius: 20px;
             max-width: 70%;
             font-size: 0.95rem;
+            word-wrap: break-word;
         }
         .input-box {
             display: flex;
@@ -75,6 +79,8 @@
             border-radius: 20px;
             margin-right: 10px;
             font-size: 1rem;
+            background: #1e1e1e;
+            color: #fff;
         }
         .input-box button {
             padding: 0 20px;
@@ -87,77 +93,74 @@
         }
     </style>
 </head>
-<body>
+<body><header>
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+    <h1>TrustVest Support</h1>
+</header>
 
-    <header>
-        <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-        <h1>TrustVest Support</h1>
-    </header>
-
-    <div class="chat-container" id="chat">
-        <div class="message ai">
-            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="AI Bot">
-            <div class="bubble">Hello! 👋 I’m your TrustVest Assistant. How can I help you today?</div>
-        </div>
+<div class="chat-container" id="chat">
+    <div class="message ai">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="AI Bot">
+        <div class="bubble">Hello! 👋 I’m your TrustVest Assistant. How can I assist you today?</div>
     </div>
+</div>
 
-    <div class="input-box">
-        <input type="text" id="userInput" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
+<div class="input-box">
+    <input type="text" id="userInput" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+</div>
 
-    <script>
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            if (message === '') return;
+<script>
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const message = input.value.trim();
+        if (message === '') return;
 
-            const chat = document.getElementById('chat');
+        const chat = document.getElementById('chat');
 
-            // User message bubble
-            const userMsg = document.createElement('div');
-            userMsg.classList.add('message', 'user');
-            const userBubble = document.createElement('div');
-            userBubble.classList.add('bubble');
-            userBubble.innerText = message;
-            userMsg.appendChild(userBubble);
-            chat.appendChild(userMsg);
+        const userMsg = document.createElement('div');
+        userMsg.classList.add('message', 'user');
+        const userBubble = document.createElement('div');
+        userBubble.classList.add('bubble');
+        userBubble.innerText = message;
+        userMsg.appendChild(userBubble);
+        chat.appendChild(userMsg);
 
-            input.value = '';
+        input.value = '';
 
-            // Simulated AI reply
-            setTimeout(() => {
-                const aiMsg = document.createElement('div');
-                aiMsg.classList.add('message', 'ai');
-                const aiImg = document.createElement('img');
-                aiImg.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
-                const aiBubble = document.createElement('div');
-                aiBubble.classList.add('bubble');
-                aiBubble.innerText = generateAIReply(message);
-                aiMsg.appendChild(aiImg);
-                aiMsg.appendChild(aiBubble);
-                chat.appendChild(aiMsg);
-
-                chat.scrollTop = chat.scrollHeight;
-            }, 800);
+        setTimeout(() => {
+            const aiMsg = document.createElement('div');
+            aiMsg.classList.add('message', 'ai');
+            const aiImg = document.createElement('img');
+            aiImg.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
+            const aiBubble = document.createElement('div');
+            aiBubble.classList.add('bubble');
+            aiBubble.innerText = generateAIReply(message);
+            aiMsg.appendChild(aiImg);
+            aiMsg.appendChild(aiBubble);
+            chat.appendChild(aiMsg);
 
             chat.scrollTop = chat.scrollHeight;
-        }
+        }, 800);
 
-        function generateAIReply(userMessage) {
-            // Simple mock responses (simulate AI behavior)
-            const lowerMsg = userMessage.toLowerCase();
-            if (lowerMsg.includes('balance')) {
-                return "You can check your current balance in the 'Me' section of your dashboard.";
-            } else if (lowerMsg.includes('withdraw')) {
-                return "Withdrawals are processed within 24 hours. Go to 'Me' > 'Withdraw'.";
-            } else if (lowerMsg.includes('referral')) {
-                return "To refer friends, use your unique referral link in 'Teams'.";
-            } else {
-                return "Thanks for your message! A support agent will be with you shortly.";
-            }
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    function generateAIReply(userMessage) {
+        const lowerMsg = userMessage.toLowerCase();
+        if (lowerMsg.includes('balance')) {
+            return "You can check your balance in the 'Me' section.";
+        } else if (lowerMsg.includes('withdraw')) {
+            return "Withdrawals are processed within 24hrs. Navigate to 'Me' > 'Withdraw'.";
+        } else if (lowerMsg.includes('referral')) {
+            return "Check your referral link in 'Teams' to refer and earn.";
+        } else if (lowerMsg.includes('earnings')) {
+            return "Your earnings update in real-time on your Home Dashboard.";
+        } else {
+            return "Thanks for your message! A support agent will assist you shortly.";
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
