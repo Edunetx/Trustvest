@@ -1,63 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TrustVest Support</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #000; /* Black Background */
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      color: #fff;
-      overflow: hidden;
-    }
-    .logo {
-      width: 150px;
-      margin-top: 20px;
-    }
-    .chat-container {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-  </style>
-
-  <!-- Smartsupp Live Chat script -->
-  <script type="text/javascript">
-  var _smartsupp = _smartsupp || {};
-  _smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
-  window.smartsupp||(function(d) {
-    var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-    s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-    c.type='text/javascript';c.charset='utf-8';c.async=true;
-    c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-  })(document);
-  </script>
-
-  <script>
-    // Auto Open Chatbox on Load
-    window.smartsupp||[];
-    window.smartsupp('on', 'ready', function() {
-        window.smartsupp('chatbox.show');
-        window.smartsupp('chatbox.open');
-    });
-  </script>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrustVest Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    background: #0d0d0d;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    overflow: hidden;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  .header img {
+    width: 40px;
+    margin-right: 10px;
+  }
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  .chat-container {
+    height: calc(100vh - 80px);
+    padding: 10px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .message {
+    max-width: 75%;
+    padding: 10px;
+    border-radius: 15px;
+    animation: fadeIn 0.3s ease;
+  }
+  .user {
+    background: #00ff99;
+    align-self: flex-end;
+    color: #000;
+  }
+  .bot {
+    background: #1f1f1f;
+    align-self: flex-start;
+  }
+  .input-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #0d0d0d;
+    display: flex;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+  }
+  .input-area input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    margin-right: 10px;
+  }
+  .input-area button {
+    background: linear-gradient(45deg, #00ff99, #00b386);
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .spinner-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  .spinner {
+    border: 5px solid #333;
+    border-top: 5px solid #00ff99;
+    border-radius: 50%;
+    width: 50px; height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+  @keyframes fadeIn {
+    from { opacity: 0;}
+    to { opacity: 1;}
+  }
+</style>
 </head>
 <body>
-  <img src="https://raw.githubusercontent.com/oba-trustvest/logo/main/trustvest-logo.png" alt="TrustVest Logo" class="logo">
-  
-  <div class="chat-container">
-    <!-- Smartsupp Chat will auto-load here -->
-  </div>
 
-<noscript> Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+<div class="header">
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+  <h1>TrustVest Support</h1>
+</div>
+
+<div class="chat-container" id="chatContainer"></div>
+
+<div class="input-area">
+  <input type="text" id="userInput" placeholder="Type your message...">
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<div class="spinner-overlay" id="spinner">
+  <div class="spinner"></div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script>
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+  authDomain: "trustvest-a1bd9.firebaseapp.com",
+  projectId: "trustvest-a1bd9",
+  storageBucket: "trustvest-a1bd9.appspot.com",
+  messagingSenderId: "676220073092",
+  appId: "1:676220073092:web:b358f8821ac33da9babed1"
+};
+firebase.initializeApp(firebaseConfig);
+
+// Get Username
+let username = "User";
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    username = user.displayName || "TrustVest User";
+  } else {
+    window.location.href = "/login"; // Redirect if not logged in
+  }
+});
+
+function appendMessage(sender, text) {
+  const chatContainer = document.getElementById('chatContainer');
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `message ${sender}`;
+  msgDiv.innerText = text;
+  chatContainer.appendChild(msgDiv);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById('userInput');
+  const message = input.value.trim();
+  if (message === "") return;
+  
+  appendMessage('user', message);
+  input.value = '';
+  showSpinner();
+
+  // Simulate AI Response Delay
+  setTimeout(() => {
+    appendMessage('bot', `Hi ${username}, we have received your message: "${message}"`);
+    hideSpinner();
+  }, 1500);
+}
+
+function showSpinner() {
+  document.getElementById('spinner').style.display = 'flex';
+}
+
+function hideSpinner() {
+  document.getElementById('spinner').style.display = 'none';
+}
+
+// Smartsupp Live Chat Integration
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+
 </body>
 </html>
