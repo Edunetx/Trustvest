@@ -5,105 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrustVest Support</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #000; /* Black background */
+      background: #000;
       color: white;
-      height: 100vh;
+      font-family: 'Poppins', sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+      height: 100vh;
     }
 
-    .support-header {
+    .header {
       padding: 20px;
       font-size: 1.5rem;
       font-weight: bold;
       text-align: center;
+      background: #111;
     }
 
-    .ai-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      margin-top: 20px;
-      background-image: url('https://www.smartsupp.com/assets/img/ai/mira-avatar.svg');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .chat-container {
+    .chat-embed {
       flex-grow: 1;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding-bottom: 80px; /* Reserve space for input */
+      overflow: hidden;
     }
 
-    .chat-input {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      padding: 10px;
-      background: rgba(0,0,0,0.9);
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
-    }
-
-    .chat-input input {
-      flex: 1;
-      padding: 15px;
-      border-radius: 30px;
+    iframe {
       border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    .chat-input button {
-      background: #00e676;
-      border: none;
-      padding: 0 20px;
-      margin-left: 10px;
-      border-radius: 30px;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1rem;
+      width: 100%;
+      height: 100%;
     }
   </style>
-
-  <!-- Smartsupp Live Chat script -->
-  <script type="text/javascript">
-    var _smartsupp = _smartsupp || {};
-    _smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
-    window.smartsupp||(function(d) {
-      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-      c.type='text/javascript';c.charset='utf-8';c.async=true;
-      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-    })(document);
-  </script>
-
 </head>
 <body>
 
-  <div class="support-header">TrustVest Support</div>
+  <div class="header">TrustVest Support</div>
 
-  <div class="ai-avatar"></div>
-
-  <div class="chat-container">
-    <!-- Smartsupp widget will overlay automatically -->
-  </div>
-
-  <div class="chat-input">
-    <input type="text" placeholder="Type your message...">
-    <button type="button">Send</button>
+  <div class="chat-embed">
+    <iframe src="https://widget-page.smartsupp.com/widget/1c5779e6869ba0a318fa5146acb5eff7e29765f1"></iframe>
   </div>
 
 </body>
