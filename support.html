@@ -1,123 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TrustVest Support</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-<style>
-  body {
-    margin: 0;
-    background: #0d0d0d;
-    font-family: 'Poppins', sans-serif;
-    color: #fff;
-    overflow: hidden;
-  }
-  .header {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-  }
-  .header img {
-    width: 40px;
-    margin-right: 10px;
-  }
-  .header h1 {
-    font-size: 1.2rem;
-  }
-  .chat-container {
-    height: calc(100vh - 80px);
-    padding: 10px 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .message {
-    max-width: 75%;
-    padding: 10px;
-    border-radius: 15px;
-    animation: fadeIn 0.3s ease;
-  }
-  .user {
-    background: #00ff99;
-    align-self: flex-end;
-    color: #000;
-  }
-  .bot {
-    background: #1f1f1f;
-    align-self: flex-start;
-  }
-  .input-area {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #0d0d0d;
-    display: flex;
-    padding: 10px 20px;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
-  }
-  .input-area input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 20px;
-    border: none;
-    margin-right: 10px;
-  }
-  .input-area button {
-    background: linear-gradient(45deg, #00ff99, #00b386);
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .spinner-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  }
-  .spinner {
-    border: 5px solid #333;
-    border-top: 5px solid #00ff99;
-    border-radius: 50%;
-    width: 50px; height: 50px;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
-  }
-  @keyframes fadeIn {
-    from { opacity: 0;}
-    to { opacity: 1;}
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustVest Support</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: #111;
+    }
+    header img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    header h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      position: relative;
+    }
+    .chat-box {
+      padding: 15px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .message {
+      background: #222;
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 15px;
+      max-width: 80%;
+    }
+    .message.user {
+      background: #00f2ff;
+      color: #000;
+      align-self: flex-end;
+    }
+    .input-area {
+      display: flex;
+      padding: 10px;
+      background: #111;
+    }
+    .input-area input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+    .input-area button {
+      background: linear-gradient(90deg, #00f2ff, #0cffe6, #00f2ff);
+      background-size: 200% auto;
+      border: none;
+      padding: 10px 20px;
+      margin-left: 10px;
+      border-radius: 20px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-position 0.5s;
+    }
+    .input-area button:hover {
+      background-position: right center;
+    }
+    .spinner-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      flex-direction: column;
+      display: none;
+    }
+    .spinner {
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top: 5px solid #00f2ff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .spinner-text {
+      color: #fff;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+    <h1>TrustVest Support</h1>
+  </header>
 
-<div class="header">
-  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-  <h1>TrustVest Support</h1>
-</div>
+  <div class="chat-container">
+    <div class="chat-box" id="chat-box">
+      <!-- Dynamic Messages Go Here -->
+    </div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your message...">
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
 
-<div class="chat-container" id="chatContainer"></div>
+  <div class="spinner-overlay" id="spinner">
+    <div class="spinner"></div>
+    <div class="spinner-text">Please wait...</div>
+  </div>
 
-<div class="input-area">
-  <input type="text" id="userInput" placeholder="Type your message...">
-  <button onclick="sendMessage()">Send</button>
-</div>
-
-<div class="spinner-overlay" id="spinner">
-  <div class="spinner"></div>
-</div>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+      authDomain: "trustvest-a1bd9.firebaseapp.com",
+      projectId: "trustvest-a1bd9",
+      storageBucket: "trustvest-a1bd9.appspot.com",
+      messagingSenderId: "676220073092",
+      appId: "1:676220073092:web:b358f8821ac33da9babed1"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 <script>
 // Firebase Config
@@ -184,6 +216,49 @@ window.smartsupp||(function(d) {
   c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
 })(document);
 </script>
+<style>
+  @media (max-width: 768px) {
+    .input-area {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      padding: 10px;
+    }
+    .chat-box {
+      padding-bottom: 70px; /* Give space for input field */
+    }
+    header h1 {
+      font-size: 16px;
+    }
+  }
+  .message.ai::before {
+    content: '';
+    display: inline-block;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4712/4712104.png');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+</style>
 
+<script>
+  // Auto-scroll to bottom whenever new message arrives
+  const observer = new MutationObserver(() => {
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+  observer.observe(chatBox, { childList: true });
+
+  // Enter key submission
+  userInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      sendBtn.click();
+    }
+  });
+</script>
 </body>
 </html>
