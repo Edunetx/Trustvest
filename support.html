@@ -1,57 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TrustVest Support</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: #000;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustVest Support</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000; /* Black Background */
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+      overflow: hidden;
+    }
+    .logo {
+      width: 150px;
+      margin-top: 20px;
+    }
+    .chat-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+  </style>
+
+  <!-- Smartsupp Live Chat script -->
+  <script type="text/javascript">
+  var _smartsupp = _smartsupp || {};
+  _smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
+  window.smartsupp||(function(d) {
+    var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+    s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+    c.type='text/javascript';c.charset='utf-8';c.async=true;
+    c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+  })(document);
+  </script>
+
+  <script>
+    // Auto Open Chatbox on Load
+    window.smartsupp||[];
+    window.smartsupp('on', 'ready', function() {
+        window.smartsupp('chatbox.show');
+        window.smartsupp('chatbox.open');
+    });
+  </script>
+
 </head>
 <body>
+  <img src="https://raw.githubusercontent.com/oba-trustvest/logo/main/trustvest-logo.png" alt="TrustVest Logo" class="logo">
+  
+  <div class="chat-container">
+    <!-- Smartsupp Chat will auto-load here -->
+  </div>
 
-<h1>Welcome to TrustVest Support</h1>
-
-<!-- Smartsupp Live Chat script -->
-<script type="text/javascript">
-var _smartsupp = _smartsupp || {};
-_smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
-window.smartsupp||(function(d) {
-  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-  c.type='text/javascript';c.charset='utf-8';c.async=true;
-  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
-</script>
-
-<style>
-/* Force Widget Visibility on Mobile */
-@media only screen and (max-width: 768px) {
-    #smartsupp-widget-container {
-        position: fixed !important;
-        bottom: 20px !important;
-        right: 20px !important;
-        z-index: 999999 !important;
-        transform: scale(1.0) !important;
-        visibility: visible !important;
-        display: block !important;
-    }
-}
-</style>
-
+<noscript> Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
 </body>
 </html>
