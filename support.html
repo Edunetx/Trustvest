@@ -9,256 +9,155 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #000;
+      background-color: #000;
       color: #fff;
       display: flex;
       flex-direction: column;
       height: 100vh;
+      overflow: hidden;
     }
-    header {
+    .header {
       display: flex;
       align-items: center;
-      padding: 10px 20px;
-      background: #111;
+      padding: 15px;
+      background-color: #0a0a0a;
     }
-    header img {
+    .header img {
       width: 40px;
       height: 40px;
       margin-right: 10px;
     }
-    header h1 {
-      font-size: 20px;
+    .header h1 {
+      font-size: 18px;
       margin: 0;
     }
     .chat-container {
       flex: 1;
+      overflow-y: auto;
+      padding: 15px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      overflow: hidden;
-      position: relative;
-    }
-    .chat-box {
-      padding: 15px;
-      overflow-y: auto;
-      flex: 1;
+      gap: 10px;
     }
     .message {
-      background: #222;
-      margin-bottom: 10px;
+      max-width: 70%;
       padding: 10px 15px;
       border-radius: 15px;
-      max-width: 80%;
+      word-wrap: break-word;
     }
-    .message.user {
-      background: #00f2ff;
-      color: #000;
+    .bot-message {
+      background: #1e1e1e;
+      align-self: flex-start;
+    }
+    .user-message {
+      background: #4CAF50;
       align-self: flex-end;
     }
-    .input-area {
+    .chat-input-area {
       display: flex;
       padding: 10px;
-      background: #111;
+      background: #0a0a0a;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
-    .input-area input {
+    .chat-input-area input {
       flex: 1;
       padding: 10px;
       border-radius: 20px;
       border: none;
       outline: none;
+      background: #1e1e1e;
+      color: #fff;
       font-size: 14px;
     }
-    .input-area button {
-      background: linear-gradient(90deg, #00f2ff, #0cffe6, #00f2ff);
-      background-size: 200% auto;
-      border: none;
-      padding: 10px 20px;
+    .chat-input-area button {
       margin-left: 10px;
+      padding: 10px 20px;
       border-radius: 20px;
-      color: #000;
+      border: none;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: white;
       font-weight: bold;
       cursor: pointer;
-      transition: background-position 0.5s;
-    }
-    .input-area button:hover {
-      background-position: right center;
-    }
-    .spinner-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      flex-direction: column;
-      display: none;
-    }
-    .spinner {
-      border: 5px solid rgba(255, 255, 255, 0.3);
-      border-top: 5px solid #00f2ff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .spinner-text {
-      color: #fff;
-      margin-top: 15px;
-      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <header>
+  <div class="header">
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
     <h1>TrustVest Support</h1>
-  </header>
-
-  <div class="chat-container">
-    <div class="chat-box" id="chat-box">
-      <!-- Dynamic Messages Go Here -->
-    </div>
-    <div class="input-area">
-      <input type="text" id="userInput" placeholder="Type your message...">
-      <button id="sendBtn">Send</button>
-    </div>
   </div>
 
-  <div class="spinner-overlay" id="spinner">
-    <div class="spinner"></div>
-    <div class="spinner-text">Please wait...</div>
+  <div class="chat-container" id="chatContainer">
+    <div class="message bot-message">Hi! Welcome to TrustVest Support. How can I assist you today?</div>
   </div>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <div class="chat-input-area">
+    <input type="text" id="userInput" placeholder="Type your message...">
+    <button id="sendBtn">Send</button>
+  </div>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-      authDomain: "trustvest-a1bd9.firebaseapp.com",
-      projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
-      messagingSenderId: "676220073092",
-      appId: "1:676220073092:web:b358f8821ac33da9babed1"
-    };
-    firebase.initializeApp(firebaseConfig);
-  </script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
-<script>
-// Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-  authDomain: "trustvest-a1bd9.firebaseapp.com",
-  projectId: "trustvest-a1bd9",
-  storageBucket: "trustvest-a1bd9.appspot.com",
-  messagingSenderId: "676220073092",
-  appId: "1:676220073092:web:b358f8821ac33da9babed1"
-};
-firebase.initializeApp(firebaseConfig);
-
-// Get Username
-let username = "User";
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    username = user.displayName || "TrustVest User";
-  } else {
-    window.location.href = "/login"; // Redirect if not logged in
-  }
-});
-
-function appendMessage(sender, text) {
+  const sendBtn = document.getElementById('sendBtn');
+  const userInput = document.getElementById('userInput');
   const chatContainer = document.getElementById('chatContainer');
-  const msgDiv = document.createElement('div');
-  msgDiv.className = `message ${sender}`;
-  msgDiv.innerText = text;
-  chatContainer.appendChild(msgDiv);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
 
-function sendMessage() {
-  const input = document.getElementById('userInput');
-  const message = input.value.trim();
-  if (message === "") return;
-  
-  appendMessage('user', message);
-  input.value = '';
-  showSpinner();
-
-  // Simulate AI Response Delay
-  setTimeout(() => {
-    appendMessage('bot', `Hi ${username}, we have received your message: "${message}"`);
-    hideSpinner();
-  }, 1500);
-}
-
-function showSpinner() {
-  document.getElementById('spinner').style.display = 'flex';
-}
-
-function hideSpinner() {
-  document.getElementById('spinner').style.display = 'none';
-}
-
-// Smartsupp Live Chat Integration
-var _smartsupp = _smartsupp || {};
-_smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
-window.smartsupp||(function(d) {
-  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-  c.type='text/javascript';c.charset='utf-8';c.async=true;
-  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
-</script>
-<style>
-  @media (max-width: 768px) {
-    .input-area {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #111;
-      padding: 10px;
-    }
-    .chat-box {
-      padding-bottom: 70px; /* Give space for input field */
-    }
-    header h1 {
-      font-size: 16px;
-    }
-  }
-  .message.ai::before {
-    content: '';
-    display: inline-block;
-    background-image: url('https://cdn-icons-png.flaticon.com/512/4712/4712104.png');
-    background-size: cover;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 10px;
-    vertical-align: middle;
-  }
-</style>
-
-<script>
-  // Auto-scroll to bottom whenever new message arrives
-  const observer = new MutationObserver(() => {
-    chatBox.scrollTop = chatBox.scrollHeight;
+  sendBtn.addEventListener('click', sendMessage);
+  userInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendMessage();
   });
-  observer.observe(chatBox, { childList: true });
 
-  // Enter key submission
-  userInput.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-      sendBtn.click();
-    }
-  });
+  function sendMessage() {
+    const userMessage = userInput.value.trim();
+    if (userMessage === '') return;
+
+    // Append User Message
+    appendMessage(userMessage, 'user-message');
+    userInput.value = '';
+
+    // Append Loading Spinner
+    const spinner = document.createElement('div');
+    spinner.className = 'message bot-message';
+    spinner.innerText = 'Typing...';
+    chatContainer.appendChild(spinner);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    // Simulate AI Reply (Future: Replace with real AI call)
+    setTimeout(() => {
+      spinner.remove();
+      const botReply = generateBotReply(userMessage);
+      appendMessage(botReply, 'bot-message');
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }, 2000);
+  }
+
+  function appendMessage(text, className) {
+    const msg = document.createElement('div');
+    msg.className = `message ${className}`;
+    msg.innerText = text;
+    chatContainer.appendChild(msg);
+  }
+
+  function generateBotReply(userMsg) {
+    // Future AI API response will come here.
+    return "Thank you for contacting TrustVest Support. We'll get back to you shortly.";
+  }
 </script>
+
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+  var _smartsupp = _smartsupp || {};
+  _smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
+  window.smartsupp||(function(d) {
+    var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+    s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+    c.type='text/javascript';c.charset='utf-8';c.async=true;
+    c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+  })(document);
+</script>
+</div> <!-- Close chat-container -->
+
+</div> <!-- Close support-wrapper -->
+
 </body>
 </html>
