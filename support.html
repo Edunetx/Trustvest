@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +11,9 @@
             font-family: 'Poppins', sans-serif;
             background-color: #000;
             color: #fff;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            height: 100vh;
         }
         header {
             display: flex;
@@ -29,21 +30,17 @@
             font-weight: 600;
             margin: 0;
         }
-        .chat-container {
+        .chat-area {
             flex: 1;
-            padding: 1rem;
             overflow-y: auto;
+            padding: 1rem;
             display: flex;
             flex-direction: column;
-            scrollbar-width: none;
-        }
-        .chat-container::-webkit-scrollbar {
-            display: none;
+            gap: 1rem;
         }
         .message {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 1rem;
         }
         .message.ai img {
             width: 40px;
@@ -54,113 +51,104 @@
         .message.user {
             justify-content: flex-end;
         }
-        .message.user .bubble {
-            background: linear-gradient(45deg, #0be881, #00d8d6);
-            color: #000;
-            align-self: flex-end;
-        }
         .bubble {
-            background-color: #1e1e1e;
+            background: #1e1e1e;
             padding: 0.8rem 1rem;
             border-radius: 20px;
             max-width: 70%;
             font-size: 0.95rem;
             word-wrap: break-word;
         }
-        .input-box {
-            display: flex;
-            padding: 0.5rem;
-            background-color: #0f0f0f;
-        }
-        .input-box input {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 20px;
-            margin-right: 10px;
-            font-size: 1rem;
-            background: #1e1e1e;
-            color: #fff;
-        }
-        .input-box button {
-            padding: 0 20px;
-            border: none;
-            border-radius: 20px;
+        .message.user .bubble {
             background: linear-gradient(45deg, #0be881, #00d8d6);
             color: #000;
-            font-weight: 600;
+        }
+        .input-area {
+            display: flex;
+            padding: 0.5rem 1rem;
+            background-color: #0f0f0f;
+            align-items: center;
+            gap: 0.5rem;
+            position: sticky;
+            bottom: 0;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+        }
+        .input-area button {
+            padding: 0.7rem 1.2rem;
+            border-radius: 20px;
+            border: none;
+            background: linear-gradient(45deg, #0be881, #00d8d6);
+            color: #000;
+            font-weight: bold;
             cursor: pointer;
         }
     </style>
 </head>
-<body><header>
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <h1>TrustVest Support</h1>
-</header>
+<body>
+    <header>
+        <img src="https://github.com/Edunetx/Trustvest/blob/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png?raw=true" alt="TrustVest Logo">
+        <h1>TrustVest Support</h1>
+    </header>
 
-<div class="chat-container" id="chat">
-    <div class="message ai">
-        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="AI Bot">
-        <div class="bubble">Hello! 👋 I’m your TrustVest Assistant. How can I assist you today?</div>
+    <div class="chat-area" id="chatArea">
+        <div class="message ai">
+            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="AI Bot">
+            <div class="bubble">Hello! Welcome to TrustVest Support. How can I assist you today?</div>
+        </div>
     </div>
-</div>
 
-<div class="input-box">
-    <input type="text" id="userInput" placeholder="Type your message...">
-    <button onclick="sendMessage()">Send</button>
-</div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (message === '') return;
 
-<script>
-    function sendMessage() {
-        const input = document.getElementById('userInput');
-        const message = input.value.trim();
-        if (message === '') return;
+            const chatArea = document.getElementById('chatArea');
 
-        const chat = document.getElementById('chat');
+            // User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.innerHTML = `<div class="bubble">${message}</div>`;
+            chatArea.appendChild(userMsg);
 
-        const userMsg = document.createElement('div');
-        userMsg.classList.add('message', 'user');
-        const userBubble = document.createElement('div');
-        userBubble.classList.add('bubble');
-        userBubble.innerText = message;
-        userMsg.appendChild(userBubble);
-        chat.appendChild(userMsg);
+            input.value = '';
+            chatArea.scrollTop = chatArea.scrollHeight;
 
-        input.value = '';
-
-        setTimeout(() => {
-            const aiMsg = document.createElement('div');
-            aiMsg.classList.add('message', 'ai');
-            const aiImg = document.createElement('img');
-            aiImg.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
-            const aiBubble = document.createElement('div');
-            aiBubble.classList.add('bubble');
-            aiBubble.innerText = generateAIReply(message);
-            aiMsg.appendChild(aiImg);
-            aiMsg.appendChild(aiBubble);
-            chat.appendChild(aiMsg);
-
-            chat.scrollTop = chat.scrollHeight;
-        }, 800);
-
-        chat.scrollTop = chat.scrollHeight;
-    }
-
-    function generateAIReply(userMessage) {
-        const lowerMsg = userMessage.toLowerCase();
-        if (lowerMsg.includes('balance')) {
-            return "You can check your balance in the 'Me' section.";
-        } else if (lowerMsg.includes('withdraw')) {
-            return "Withdrawals are processed within 24hrs. Navigate to 'Me' > 'Withdraw'.";
-        } else if (lowerMsg.includes('referral')) {
-            return "Check your referral link in 'Teams' to refer and earn.";
-        } else if (lowerMsg.includes('earnings')) {
-            return "Your earnings update in real-time on your Home Dashboard.";
-        } else {
-            return "Thanks for your message! A support agent will assist you shortly.";
+            // Simulate AI Reply after 1s
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai';
+                aiMsg.innerHTML = `
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="AI Bot">
+                    <div class="bubble">Thanks for your message! Our support team will get back to you shortly.</div>`;
+                chatArea.appendChild(aiMsg);
+                chatArea.scrollTop = chatArea.scrollHeight;
+            }, 1000);
         }
-    }
-</script>
+    </script>
+
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+        var _smartsupp = _smartsupp || {};
+        _smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
+        window.smartsupp||(function(d) {
+            var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+            s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+            c.type='text/javascript';c.charset='utf-8';c.async=true;
+            c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+        })(document);
+    </script>
 
 </body>
 </html>
