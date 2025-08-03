@@ -8,156 +8,53 @@
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Poppins', sans-serif;
       background-color: #000;
       color: #fff;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       height: 100vh;
       overflow: hidden;
     }
-    .header {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      background-color: #0a0a0a;
+    .logo {
+      width: 120px;
+      margin-top: 30px;
     }
-    .header img {
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
-    }
-    .header h1 {
-      font-size: 18px;
-      margin: 0;
+    .header-text {
+      margin-top: 10px;
+      font-size: 1.5rem;
+      font-weight: 600;
     }
     .chat-container {
       flex: 1;
-      overflow-y: auto;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .message {
-      max-width: 70%;
-      padding: 10px 15px;
-      border-radius: 15px;
-      word-wrap: break-word;
-    }
-    .bot-message {
-      background: #1e1e1e;
-      align-self: flex-start;
-    }
-    .user-message {
-      background: #4CAF50;
-      align-self: flex-end;
-    }
-    .chat-input-area {
-      display: flex;
-      padding: 10px;
-      background: #0a0a0a;
-      position: fixed;
-      bottom: 0;
       width: 100%;
-    }
-    .chat-input-area input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 20px;
-      border: none;
-      outline: none;
-      background: #1e1e1e;
-      color: #fff;
-      font-size: 14px;
-    }
-    .chat-input-area button {
-      margin-left: 10px;
-      padding: 10px 20px;
-      border-radius: 20px;
-      border: none;
-      background: linear-gradient(45deg, #00c6ff, #0072ff);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
   </style>
-</head>
-<body>
-  <div class="header">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <h1>TrustVest Support</h1>
-  </div>
-
-  <div class="chat-container" id="chatContainer">
-    <div class="message bot-message">Hi! Welcome to TrustVest Support. How can I assist you today?</div>
-  </div>
-
-  <div class="chat-input-area">
-    <input type="text" id="userInput" placeholder="Type your message...">
-    <button id="sendBtn">Send</button>
-  </div>
-  <script>
-  const sendBtn = document.getElementById('sendBtn');
-  const userInput = document.getElementById('userInput');
-  const chatContainer = document.getElementById('chatContainer');
-
-  sendBtn.addEventListener('click', sendMessage);
-  userInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') sendMessage();
-  });
-
-  function sendMessage() {
-    const userMessage = userInput.value.trim();
-    if (userMessage === '') return;
-
-    // Append User Message
-    appendMessage(userMessage, 'user-message');
-    userInput.value = '';
-
-    // Append Loading Spinner
-    const spinner = document.createElement('div');
-    spinner.className = 'message bot-message';
-    spinner.innerText = 'Typing...';
-    chatContainer.appendChild(spinner);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-    // Simulate AI Reply (Future: Replace with real AI call)
-    setTimeout(() => {
-      spinner.remove();
-      const botReply = generateBotReply(userMessage);
-      appendMessage(botReply, 'bot-message');
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }, 2000);
-  }
-
-  function appendMessage(text, className) {
-    const msg = document.createElement('div');
-    msg.className = `message ${className}`;
-    msg.innerText = text;
-    chatContainer.appendChild(msg);
-  }
-
-  function generateBotReply(userMsg) {
-    // Future AI API response will come here.
-    return "Thank you for contacting TrustVest Support. We'll get back to you shortly.";
-  }
-</script>
-
-<!-- Smartsupp Live Chat script -->
-<script type="text/javascript">
+  <!-- Smartsupp Live Chat script -->
+  <script type="text/javascript">
   var _smartsupp = _smartsupp || {};
-  _smartsupp.key = '1c5779e6869ba0a318fa5146acb5eff7e29765f1';
+  _smartsupp.key = '9f3971db026162b72d59c9905c8fc3b7a804e59d';
   window.smartsupp||(function(d) {
     var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-    s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+    s = d.getElementsByTagName('script')[0];c = d.createElement('script');
     c.type='text/javascript';c.charset='utf-8';c.async=true;
     c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
   })(document);
-</script>
-</div> <!-- Close chat-container -->
-
-</div> <!-- Close support-wrapper -->
-
+  </script>
+</head>
+<body>
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
+  <div class="header-text">TrustVest Support</div>
+  <div class="chat-container">
+    <!-- Mira AI Chat will automatically render here -->
+  </div>
 </body>
 </html>
