@@ -4,200 +4,221 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest - Your Future, Your Investment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #000000, #1a1a1a);
-      color: gold;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
       overflow-x: hidden;
     }
-    header, section {
-      padding: 50px 20px;
+    .header {
       text-align: center;
+      padding: 60px 20px 30px;
     }
-    h1 {
-      font-size: 3rem;
+    .header img {
+      width: 120px;
+      height: auto;
       margin-bottom: 20px;
     }
-    h2 {
-      font-size: 2rem;
+    .header h1 {
+      font-size: 2.5rem;
+      color: #00bfa6; /* Teal from logo */
       margin-bottom: 10px;
     }
-    p {
+    .header p {
       font-size: 1.1rem;
-      max-width: 700px;
-      margin: 0 auto 20px;
+      color: #ccc;
     }
     .button-group {
-      margin-top: 30px;
+      text-align: center;
+      margin: 40px 0;
     }
     .button-group a {
       display: inline-block;
       margin: 10px;
       padding: 12px 30px;
-      background: gold;
-      color: black;
-      border-radius: 6px;
+      background: linear-gradient(45deg, #00bfa6, #00d1b2);
+      color: #000;
+      border-radius: 8px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      transition: transform 0.3s ease;
     }
-    .steps, .values {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 40px auto;
-    }
-    .card {
-      background-color: rgba(0,0,0,0.6);
-      padding: 20px;
-      border: 1px solid gold;
-      border-radius: 12px;
-    }
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 1.5rem;
-      color: gold;
-    }
-    .card p {
-      font-size: 1rem;
-      color: #ccc;
+    .button-group a:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
-<header>
+<div class="header">
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
   <h1>TrustVest</h1>
   <p>Your Future, Your Investment. Safe, Secure & Designed for Growth.</p>
-  <div class="button-group">
-    <a href="login.html">Login</a>
-    <a href="signup.html">Sign Up</a>
-  </div>
-</header>
+</div>
 
+<div class="button-group">
+  <a href="login.html">Login</a>
+  <a href="signup.html">Sign Up</a>
+</div>
 <section>
-  <h2>How TrustVest Works</h2>
-  <div class="steps">
-    <div class="card">
-      <h3>1️⃣ Choose a Plan</h3>
-      <p>Select from flexible investment plans starting as low as ₦3,000.</p>
+  <h2 style="text-align: center; color: #00bfa6; font-size: 2rem;">How TrustVest Works</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 30px auto; padding: 0 20px;">
+    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid #00bfa6;">
+      <h3 style="color: #00d1b2;">1️⃣ Choose a Plan</h3>
+      <p>Select from flexible investment packages starting from as low as ₦3,000.</p>
     </div>
-    <div class="card">
-      <h3>2️⃣ Fund Your Wallet</h3>
-      <p>Make deposits safely using trusted payment channels.</p>
+    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid #00bfa6;">
+      <h3 style="color: #00d1b2;">2️⃣ Fund Your Wallet</h3>
+      <p>Deposit funds securely using trusted payment methods.</p>
     </div>
-    <div class="card">
-      <h3>3️⃣ Watch Your Earnings Grow</h3>
-      <p>Relax and earn automatically while we do the work for you.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Our Core Values</h2>
-  <div class="values">
-    <div class="card">
-      <h3>🔒 Security</h3>
-      <p>Your funds and data are protected with modern encryption.</p>
-    </div>
-    <div class="card">
-      <h3>📈 Growth</h3>
-      <p>We prioritize steady, realistic financial returns for all our users.</p>
-    </div>
-    <div class="card">
-      <h3>🔍 Transparency</h3>
-      <p>No hidden tricks — just open, honest, reliable finance tools.</p>
-    </div>
-    <div class="card">
-      <h3>🤝 Community</h3>
-      <p>Join thousands of smart individuals building wealth together.</p>
-    </div>
-  </div>
-</section>
-<section>
-  <h2>Our Investment Plans</h2>
-  <p>Whether you're starting small or aiming big, TrustVest has a plan tailored for you.</p>
-  <div class="values">
-    <div class="card"><h3>₦3,000 Plan</h3><p>Perfect for starters.</p></div>
-    <div class="card"><h3>₦6,000 Plan</h3><p>Double your growth power.</p></div>
-    <div class="card"><h3>₦12,000 Plan</h3><p>Step up your investments.</p></div>
-    <div class="card"><h3>₦30,000 Plan</h3><p>Serious commitment, serious returns.</p></div>
-    <div class="card"><h3>₦60,000 Plan</h3><p>Optimized for steady growth.</p></div>
-    <div class="card"><h3>₦100,000 Plan</h3><p>Top-tier earnings potential.</p></div>
-    <div class="card"><h3>₦150,000 Plan</h3><p>Advanced investor's choice.</p></div>
-    <div class="card"><h3>₦200,000 Plan</h3><p>Building wealth, securely.</p></div>
-    <div class="card"><h3>₦500,000 Plan</h3><p>Elite investor level.</p></div>
-    <div class="card"><h3>₦1,000,000 Plan</h3><p>Ultimate wealth builder.</p></div>
-  </div>
-</section>
-
-<section>
-  <h2>Why Choose TrustVest?</h2>
-  <div class="values">
-    <div class="card">
-      <h3>✔ Trusted by Many</h3>
-      <p>Hundreds of users trust us to secure their future every day.</p>
-    </div>
-    <div class="card">
-      <h3>✔ Zero Stress</h3>
-      <p>Automatic earnings without lifting a finger.</p>
-    </div>
-    <div class="card">
-      <h3>✔ Transparent Process</h3>
-      <p>No hidden policies. Everything is clear from day one.</p>
-    </div>
-    <div class="card">
-      <h3>✔ Fast & Reliable</h3>
-      <p>Your growth is our priority. We deliver on time, every time.</p>
+    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid #00bfa6;">
+      <h3 style="color: #00d1b2;">3️⃣ Watch Earnings Grow</h3>
+      <p>Your daily earnings grow automatically while you relax.</p>
     </div>
   </div>
 </section>
 
 <section>
-  <h2>What Our Users Say</h2>
-  <div class="values">
-    <div class="card">
-      <p>“TrustVest helped me turn my ₦6,000 into real profits. It's legit!”</p>
-      <p>- Ayomide, Student</p>
+  <h2 style="text-align: center; color: #00bfa6; font-size: 2rem;">Our Investment Packages</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: 30px auto; padding: 0 20px;">
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustLite Plan</h3><p>₦3,000</p>
     </div>
-    <div class="card">
-      <p>“Finally a platform that keeps it simple and does what it says.”</p>
-      <p>- Tunde, Small Business Owner</p>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustBoost Plan</h3><p>₦6,000</p>
     </div>
-    <div class="card">
-      <p>“No stress, no wahala, just watch your wallet grow daily.”</p>
-      <p>- Aisha, Freelancer</p>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustMax Plan</h3><p>₦12,000</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustPro Plan</h3><p>₦30,000</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustElite Plan</h3><p>₦60,000</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustPrime Plan</h3><p>₦100,000</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustAdvanced Plan</h3><p>₦150,000</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustProPlus Plan</h3><p>₦200,000</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustVault Plan</h3><p>₦500,000</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid #00bfa6; text-align: center;">
+      <h3>TrustLegacy Plan</h3><p>₦1,000,000</p>
     </div>
   </div>
 </section>
 <section>
-  <h2>About TrustVest 💡</h2>
-  <p>TrustVest is more than just a platform — it’s a movement towards smarter financial freedom.  
-  We believe anyone can build wealth with the right tools, and we provide those tools with simplicity, transparency, and integrity.</p>
-
-  <h3>🚀 Our Vision</h3>
-  <p>To empower individuals with easy access to trusted investment opportunities and financial literacy that lead to long-term prosperity.</p>
-
-  <h3>🎯 Our Mission</h3>
-  <p>To simplify investment for everyday people while promoting trust, transparency, and steady growth through accessible technology.</p>
-</section>
-
-<section>
-  <h2>Ready to Grow Your Wealth?</h2>
-  <p>Get started with TrustVest today and join the future of smart finance.</p>
-  <div class="button-group">
-    <a href="login.html">Login</a>
-    <a href="signup.html">Sign Up</a>
+  <h2 style="text-align: center; color: #00bfa6; font-size: 2rem;">What Our Users Say</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 30px auto; padding: 0 20px;">
+    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid #00bfa6;">
+      <p style="color: #ccc;">“TrustVest helped me turn my ₦6,000 into real profits. It's legit!”</p>
+      <p style="color: #00bfa6; font-weight: bold;">— Ayomide, Student</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid #00bfa6;">
+      <p style="color: #ccc;">“Finally a platform that keeps it simple and does what it says.”</p>
+      <p style="color: #00bfa6; font-weight: bold;">— Tunde, Business Owner</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid #00bfa6;">
+      <p style="color: #ccc;">“No stress, no wahala, just watch your wallet grow daily.”</p>
+      <p style="color: #00bfa6; font-weight: bold;">— Aisha, Freelancer</p>
+    </div>
   </div>
 </section>
 
-<footer style="background-color: #111; padding: 30px 20px; color: #666; text-align: center;">
+<section>
+  <h2 style="text-align: center; color: #00bfa6; font-size: 2rem;">About TrustVest 💡</h2>
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 20px; color: #ccc; text-align: center;">
+    <p>TrustVest is more than just a platform — it’s a movement towards smarter financial freedom.  
+    We believe anyone can build wealth with the right tools, and we provide those tools with simplicity, transparency, and integrity.</p>
+
+    <h3 style="color: #00d1b2; margin-top: 30px;">🚀 Our Vision</h3>
+    <p>To empower individuals with easy access to trusted investment opportunities and financial literacy that lead to long-term prosperity.</p>
+
+    <h3 style="color: #00d1b2; margin-top: 30px;">🎯 Our Mission</h3>
+    <p>To simplify investment for everyday people while promoting trust, transparency, and steady growth through accessible technology.</p>
+  </div>
+</section>
+
+<section>
+  <h2 style="text-align: center; color: #00bfa6; font-size: 2rem;">Need Assistance?</h2>
+  <p style="text-align: center; color: #ccc;">Click the <strong>AI Support Button</strong> at the bottom right corner to chat with an agent 24/7.</p>
+</section>
+
+<footer style="background-color: #0f0f0f; padding: 30px 20px; color: #666; text-align: center;">
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" style="width: 100px; margin-bottom: 15px;">
+  <h3 style="color: #00bfa6; margin-bottom: 10px;">TrustVest</h3>
   <p>&copy; 2025 TrustVest. All Rights Reserved.</p>
   <p>Grow Smart. Earn Smart. Live Free.</p>
 </footer>
+<!-- Spinner Loading Screen -->
+<div id="spinner" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s;">
+  <div style="text-align: center; color: #00bfa6;">
+    <div class="loader" style="border: 6px solid #222; border-top: 6px solid #00bfa6; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite;"></div>
+    <p style="margin-top: 15px;">Loading TrustVest...</p>
+  </div>
+</div>
 
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById('spinner').style.opacity = '0';
+    setTimeout(() => {
+      document.getElementById('spinner').style.display = 'none';
+    }, 500);
+  });
+</script>
+
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<!-- Smooth Entry Animation -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.style.opacity = "0";
+    document.body.style.transition = "opacity 1s ease-in-out";
+    setTimeout(() => {
+      document.body.style.opacity = "1";
+    }, 100);
+  });
+</script>
+
+<!-- Tawk.to Live Chat Script (Apollo AI Support) -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!-- End of Tawk.to Script -->
+
+<!-- Optional: Scroll to Top Smoothly when navigating links -->
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
 </body>
 </html>
