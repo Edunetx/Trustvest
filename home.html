@@ -1,257 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>TrustVest Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustVest - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body { background: #0d0d0d; color: #fff; overflow-x: hidden; }
-    .container { padding: 20px; }
-
-    /* Header */
-    .top-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
-    .branding { display: flex; align-items: center; }
-    .branding img { width: 40px; height: auto; margin-right: 10px; }
-    .branding span { font-weight: 700; font-size: 1.2rem; color: #00f7c2; }
-
-    .header-icons { display: flex; align-items: center; gap: 20px; }
-    .header-icons .icon { width: 24px; height: 24px; color: #fff; cursor: pointer; }
-
-    /* Balance Card */
+    body { margin: 0; font-family: 'Poppins', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+    .container { padding: 20px; max-width: 500px; margin: auto; display: flex; flex-direction: column; align-items: center; }
+    .logo { width: 100px; margin-top: 20px; }
+    h2 { margin: 20px 0; color: #00bfa6; }
     .balance-card {
-      background: linear-gradient(135deg, #00f7c2, #045f4c);
+      background: linear-gradient(135deg, #00bfa6, #00d1b2);
+      width: 100%;
       border-radius: 20px;
       padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 4px 15px rgba(0, 247, 194, 0.4);
-    }
-    .balance-card h3 { font-weight: 600; font-size: 14px; color: #fff; }
-    .balance-card .amount { font-size: 1.8rem; font-weight: 700; margin-top: 5px; color: #fff; }
-
-    /* Actions */
-    .actions { display: flex; justify-content: space-between; margin: 20px 0; }
-    .action-btn {
-      flex: 0 0 48%;
-      background: #1a1a1a;
-      border-radius: 15px;
-      padding: 15px 0;
-      text-align: center;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .action-btn:hover { background: #262626; }
-
-    /* Stats Cards */
-    .stats { display: flex; overflow-x: auto; gap: 10px; margin-bottom: 20px; }
-    .stat-card {
-      min-width: 140px;
-      background: #141414;
-      border-radius: 15px;
-      padding: 15px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .stat-card h4 { font-size: 14px; margin-bottom: 5px; color: #00f7c2; }
-    .stat-card span { font-size: 18px; font-weight: 700; }
-
-    /* Activity Feed */
-    .activity-feed {
-      background: #141414;
-      border-radius: 15px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    .activity-item { font-size: 14px; margin-bottom: 10px; color: #ccc; }
-
-    /* Testimonials */
-    .testimonials {
-      background: #141414;
-      border-radius: 15px;
-      padding: 15px;
+      color: #000;
       position: relative;
-      height: 60px;
       overflow: hidden;
-      margin-bottom: 100px;
-    }
-    .testimonial {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 1s ease;
-      color: #aaa;
-    }
-    .testimonial.active {
-      opacity: 1;
-    }
-
-    /* Floating Support Icon */
-    .support-icon {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: #00f7c2;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 247, 194, 0.4);
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 30px;
     }
-
-    /* Bottom Navbar */
-    .bottom-nav {
+    .balance-card h3 { margin: 0; font-size: 18px; }
+    .balance-amount { font-size: 28px; font-weight: bold; margin: 10px 0; }
+    .refresh-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .refresh-icon:hover { transform: rotate(90deg); }
+    .nav {
       position: fixed;
       bottom: 0;
-      left: 0;
       width: 100%;
-      background: #1a1a1a;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
-      border-top: 1px solid #333;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      color: #777;
+      color: #fff;
       font-size: 12px;
-      transition: color 0.3s;
-      cursor: pointer;
     }
-    .nav-item.active { color: #00f7c2; }
-
-    /* Spinner Screen */
-    .spinner-screen {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(5px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 999;
+    .nav-item svg { margin-bottom: 5px; fill: #00bfa6; width: 24px; height: 24px; }
+    #spinner-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+      display: flex; justify-content: center; align-items: center; flex-direction: column;
+      z-index: 9999; display: none;
     }
-    .spinner { border: 4px solid #1a1a1a; border-top: 4px solid #00f7c2; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .spinner-text { margin-top: 10px; color: #fff; font-weight: 600; }
-
+    .spinner {
+      border: 6px solid rgba(255,255,255,0.2);
+      border-top: 6px solid #00bfa6;
+      border-radius: 50%;
+      width: 50px; height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    .spinner-text { margin-top: 10px; }
+    @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
   </style>
 </head>
 <body>
+<div class="container">
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
+  <h2>Welcome to TrustVest</h2>
 
-  <!-- HEADER -->
-  <div class="top-header">
-    <div class="branding">
-      <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-      <span>TrustVest</span>
-    </div>
-    <div class="header-icons">
-      <div id="bell-icon" class="icon" data-lucide="bell"></div>
-      <div id="profile-icon" class="icon" data-lucide="user-circle"></div>
+  <div class="balance-card">
+    <h3>Account Balance</h3>
+    <div class="balance-amount" id="balanceAmount">₦0.00</div>
+    <div class="refresh-icon" id="refreshBalance">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.3-.41 2.5-1.11 3.47l1.46 1.46C19.07 15.57 20 13.88 20 12c0-4.42-3.58-8-8-8zm-6.88 2.53L3.66 7.94C2.93 9.04 2.5 10.47 2.5 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6 0-1.3.41-2.5 1.12-3.47z"/></svg>
     </div>
   </div>
 
-  <div class="container">
-    <!-- Balance Card -->
-    <div class="balance-card">
-      <h3>Account Balance</h3>
-      <div class="amount" id="user-balance">₦0.00</div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="actions">
-      <div class="action-btn" id="withdraw-btn">Withdraw</div>
-      <div class="action-btn" id="deposit-btn">Deposit</div>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats">
-      <div class="stat-card">
-        <h4>Total Referrals</h4>
-        <span id="total-referrals">0</span>
-      </div>
-      <div class="stat-card">
-        <h4>Referral Earnings</h4>
-        <span id="referral-earnings">₦0.00</span>
-      </div>
-      <div class="stat-card">
-        <h4>Daily Income</h4>
-        <span id="daily-income">₦0.00</span>
-      </div>
-    </div>
-
-    <!-- Activity Feed -->
-    <div class="activity-feed" id="activity-feed">
-      <!-- Firebase Dynamic Activities will load here -->
-    </div>
-
-    <!-- Testimonials -->
-    <div class="testimonials" id="testimonials">
-      <!-- Testimonials will rotate here -->
-      <div class="testimonial active">"TrustVest changed my life! - Sarah"</div>
-      <div class="testimonial">"I earn daily without stress! - John"</div>
-      <div class="testimonial">"Best platform for referrals. - Mike"</div>
-      <div class="testimonial">"Smooth withdrawals! - Jane"</div>
-      <div class="testimonial">"Highly recommend TrustVest! - Tunde"</div>
-      <div class="testimonial">"Simple and fast earnings! - Chiamaka"</div>
-      <div class="testimonial">"Made my first ₦10,000 in a week! - Ade"</div>
-      <div class="testimonial">"Super secure and reliable. - Efe"</div>
-      <div class="testimonial">"Customer support is top-notch! - Blessing"</div>
-      <div class="testimonial">"My referrals increased instantly. - Seyi"</div>
-      <div class="testimonial">"No more financial worries. - Aisha"</div>
-      <div class="testimonial">"Easy to use, beginner-friendly. - Kunle"</div>
-      <div class="testimonial">"Payments always on time! - Emeka"</div>
-      <div class="testimonial">"Loving the daily bonuses! - Zainab"</div>
-      <div class="testimonial">"Great passive income source. - Chuka"</div>
-      <div class="testimonial">"TrustVest is the future! - Halima"</div>
-      <div class="testimonial">"Real earnings, no scams. - Bolaji"</div>
-      <div class="testimonial">"I'm hooked on TrustVest! - Tope"</div>
-      <div class="testimonial">"Best earning platform so far. - Uche"</div>
-    </div>
-
-  </div>
-
-  <!-- Floating Support Icon -->
-  <div class="support-icon" id="support-btn">
-    <div data-lucide="messages-square"></div>
-  </div>
-
-  <!-- Bottom Navbar -->
-  <div class="bottom-nav">
-    <div class="nav-item active" id="nav-home"><div data-lucide="home"></div><span>Home</span></div>
-    <div class="nav-item" id="nav-plans"><div data-lucide="bar-chart-2"></div><span>Plans</span></div>
-    <div class="nav-item" id="nav-teams"><div data-lucide="users"></div><span>Teams</span></div>
-    <div class="nav-item" id="nav-me"><div data-lucide="user"></div><span>Me</span></div>
-  </div>
-
-  <!-- Spinner Overlay -->
-  <div class="spinner-screen" id="spinner-screen">
+  <div id="spinner-screen">
     <div class="spinner"></div>
     <div class="spinner-text" id="spinner-text">Loading...</div>
   </div>
+</div>
 
-  <!-- Initialize Lucide Icons -->
-  <script>
-    lucide.createIcons();
-  </script>
+<div class="nav">
+  <div class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
+  </div>
+  <div class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+    Plans
+  </div>
+  <div class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C17 14.17 12.33 13 10 13zm8 0c-.29 0-.62.02-.97.05C17.13 14.17 20 15.17 20 16.5V19h3v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    Teams
+  </div>
+  <div class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    Me
+  </div>
+</div>
 
-<!-- CHUNK 2 (Firebase Logic) will be pasted BELOW this -->
-  <script type="module">
-  // Firebase SDK Import
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, doc, getDoc, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  // Firebase Config
+<!-- Firebase & Logic -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
     authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -260,102 +124,59 @@
     messagingSenderId: "676220073092",
     appId: "1:676220073092:web:b358f8821ac33da9babed1"
   };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  const spinnerScreen = document.getElementById("spinner-screen");
-  const spinnerText = document.getElementById("spinner-text");
-
-  function showSpinner(text = 'Loading...') {
-    spinnerText.textContent = text;
-    spinnerScreen.style.display = 'flex';
-  }
-
-  function hideSpinner() {
-    spinnerScreen.style.display = 'none';
-  }
-
-  // Secure Route Protection
-  onAuthStateChanged(auth, async (user) => {
+  auth.onAuthStateChanged(user => {
     if (!user) {
-      window.location.href = "/login";
+      window.location.href = "login.html";
     } else {
-      const userDocRef = doc(db, "users", user.uid);
-      const userDocSnap = await getDoc(userDocRef);
-
-      if (userDocSnap.exists()) {
-        const userData = userDocSnap.data();
-        document.getElementById("user-balance").textContent = `₦${parseFloat(userData.balance).toLocaleString()}`;
-        document.getElementById("referral-earnings").textContent = `₦${parseFloat(userData.referralEarnings).toLocaleString()}`;
-        document.getElementById("daily-income").textContent = `₦${parseFloat(userData.dailyIncome).toLocaleString()}`;
-        document.getElementById("total-referrals").textContent = userData.totalReferrals;
-      } else {
-        console.error("User document not found.");
-      }
-
-      // Load Activity Feed in Real-time
-      const activitiesRef = collection(db, "users", user.uid, "activities");
-      const q = query(activitiesRef, orderBy("timestamp", "desc"));
-
-      onSnapshot(q, (snapshot) => {
-        const feed = document.getElementById("activity-feed");
-        feed.innerHTML = "";
-        snapshot.forEach(doc => {
-          const activity = doc.data();
-          const item = document.createElement("div");
-          item.className = "activity-item";
-          item.textContent = activity.message;
-          feed.appendChild(item);
-        });
-      });
+      loadBalance(user.uid);
     }
   });
 
-  // Navigation Logic
-  function navigateTo(pageId) {
-    showSpinner();
-    setTimeout(() => {
-      window.location.href = `/${pageId}`;
-    }, 1000);
+  function loadBalance(uid) {
+    document.getElementById('spinner-screen').style.display = 'flex';
+    db.collection("users").doc(uid).get().then(doc => {
+      if (doc.exists) {
+        const balance = doc.data().balance || 0;
+        animateBalance(balance);
+      }
+      document.getElementById('spinner-screen').style.display = 'none';
+    }).catch(() => {
+      document.getElementById('spinner-screen').style.display = 'none';
+    });
   }
 
-  document.getElementById("nav-home").addEventListener("click", () => navigateTo("home"));
-  document.getElementById("nav-plans").addEventListener("click", () => navigateTo("plans"));
-  document.getElementById("nav-teams").addEventListener("click", () => navigateTo("teams"));
-  document.getElementById("nav-me").addEventListener("click", () => navigateTo("me"));
+  function animateBalance(target) {
+    let current = 0;
+    const element = document.getElementById('balanceAmount');
+    const interval = setInterval(() => {
+      current += Math.ceil((target - current) / 10);
+      element.textContent = `₦${current.toLocaleString()}.00`;
+      if (current >= target) clearInterval(interval);
+    }, 50);
+  }
 
-  // Withdraw & Deposit Actions (You’ll Wire them to Real Pages Later)
-  document.getElementById("withdraw-btn").addEventListener("click", () => alert("Withdraw Page Coming Soon"));
-  document.getElementById("deposit-btn").addEventListener("click", () => alert("Deposit Page Coming Soon"));
-
-  // Support Icon Redirect
-  document.getElementById("support-btn").addEventListener("click", () => {
-    window.location.href = "/support";
+  document.getElementById('refreshBalance').addEventListener('click', () => {
+    const user = auth.currentUser;
+    if (user) loadBalance(user.uid);
   });
-
-  // Hide Spinner after page loads
-  window.addEventListener("load", () => hideSpinner());
 </script>
-<script>
-// Testimonials Animation Logic
-const testimonials = document.querySelectorAll(".testimonial");
-let currentTestimonial = 0;
 
-function cycleTestimonials() {
-  testimonials.forEach((t, index) => {
-    t.classList.remove("active");
-    if (index === currentTestimonial) {
-      t.classList.add("active");
-    }
-  });
-
-  currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-}
-
-setInterval(cycleTestimonials, 3000); // Change testimonial every 3 seconds
+<!-- Tawk.to AI Support -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
+
 </body>
 </html>
