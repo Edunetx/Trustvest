@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>TrustVest - Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -13,227 +13,241 @@
       color: #fff;
       overflow-x: hidden;
     }
-    .container {
-      padding: 20px;
-    }
     .header {
       text-align: center;
-      margin-bottom: 20px;
+      padding: 20px;
     }
     .header img {
       width: 80px;
-      margin-bottom: 10px;
     }
     .header h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #00bfa6;
-      text-shadow: 0 0 5px rgba(0,191,166,0.5);
-    }
-    .header p {
-      color: #aaa;
-      font-size: 1rem;
-      margin-top: -10px;
+      font-size: 22px;
+      margin: 10px 0;
+      font-weight: bold;
+      color: #00ffc8;
     }
     .balance-card {
-      background: linear-gradient(135deg, #00bfa6, #00d1b2);
+      background: linear-gradient(135deg, #00c9a7, #005bea);
       border-radius: 20px;
+      margin: 20px auto;
       padding: 20px;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 0 20px rgba(0,255,200,0.3);
       color: #000;
       position: relative;
-      margin-bottom: 25px;
-      max-width: 90%;
-      margin-inline: auto;
     }
-    .balance-header {
+    .balance-card h3 {
+      margin: 0;
+      font-size: 16px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
     }
     .refresh-icon {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
+      margin-left: 8px;
       cursor: pointer;
-      transition: transform 0.5s ease;
+      transition: transform 0.3s ease;
+    }
+    .refresh-icon:hover {
+      transform: rotate(180deg);
     }
     .balance-amount {
-      font-size: 2rem;
+      font-size: 28px;
       font-weight: bold;
-      margin-top: 15px;
+      margin-top: 10px;
+      text-align: center;
     }
-    .section {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid #00bfa6;
-      border-radius: 15px;
-      padding: 15px;
-      margin: 10px 20px;
+    .spinner-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      z-index: 999;
+      display: none;
+      flex-direction: column;
     }
-    .section h3 {
-      margin-bottom: 10px;
-      color: #00d1b2;
+    .spinner {
+      border: 6px solid rgba(255,255,255,0.2);
+      border-top: 6px solid #00ffc8;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
+    .spinner-text {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #fff;
     }
     .nav-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: #0a0a0a;
       display: flex;
       justify-content: space-around;
-      align-items: center;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
       padding: 10px 0;
-      border-top: 1px solid #222;
-      z-index: 999;
+      z-index: 998;
     }
     .nav-item {
-      text-align: center;
-      color: #888;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+      text-decoration: none;
       font-size: 12px;
       cursor: pointer;
     }
     .nav-item svg {
       width: 24px;
       height: 24px;
-      margin-bottom: 5px;
-      fill: #00bfa6;
+      margin-bottom: 4px;
     }
-    .nav-item.active {
-      color: #00bfa6;
-      font-weight: bold;
-    }
-    #support-bubble {
+    .draggable-bubble {
       position: fixed;
       bottom: 80px;
       right: 20px;
-      background: #00bfa6;
       width: 50px;
       height: 50px;
       border-radius: 50%;
+      background: #00c9a7;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: grab;
-      z-index: 1000;
+      z-index: 999;
     }
-    #support-bubble img {
-      width: 28px;
-      height: 28px;
+    .draggable-bubble img {
+      width: 30px;
+      height: 30px;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <h1>Welcome to TrustVest</h1>
-    <p>Your Earnings Dashboard</p>
-  </div>
+<div class="header">
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png">
+  <h1>Welcome to TrustVest</h1>
+</div>
 
-  <div class="balance-card">
-    <div class="balance-header">
-      <span>Available Balance</span>
-      <svg class="refresh-icon" id="refreshIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"/></svg>
-    </div>
-    <div class="balance-amount">₦0.00</div>
-  </div>
+<div class="balance-card">
+  <h3>Available Balance 
+    <img src="https://www.svgrepo.com/show/514220/refresh.svg" class="refresh-icon" id="refreshBtn">
+  </h3>
+  <div class="balance-amount" id="balanceAmount">₦0.00</div>
+</div>
 
-  <div class="section">
-    <h3>Earnings Overview</h3>
-    <p>Daily Earnings: ₦0.00</p>
-    <p>Weekly Earnings: ₦0.00</p>
-  </div>
-
-  <div class="section">
-    <h3>Active Plan</h3>
-    <p>No active plan yet. Choose a plan to start earning.</p>
-  </div>
-
-  <div class="section">
-    <h3>Teams / Referrals</h3>
-    <p>Total Referrals: 0</p>
-    <p>Referral Earnings: ₦0.00</p>
-  </div>
+<div class="spinner-overlay" id="spinnerOverlay">
+  <div class="spinner"></div>
+  <div class="spinner-text" id="spinnerText">Loading...</div>
 </div>
 
 <div class="nav-bar">
-  <div class="nav-item active" onclick="navigateTo('home.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+  <div class="nav-item" onclick="navigateTo('/home')">
+    <svg fill="white" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
     Home
   </div>
-  <div class="nav-item" onclick="navigateTo('plans.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+  <div class="nav-item" onclick="navigateTo('/plans')">
+    <svg fill="white" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm4 0h14v-2H7v2zM3 17h2v-2H3v2zm4 0h14v-2H7v2z"/></svg>
     Plans
   </div>
-  <div class="nav-item" onclick="navigateTo('teams.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+  <div class="nav-item" onclick="navigateTo('/teams')">
+    <svg fill="white" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 2.08 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
     Teams
   </div>
-  <div class="nav-item" onclick="navigateTo('me.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+  <div class="nav-item" onclick="navigateTo('/me')">
+    <svg fill="white" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
     Me
   </div>
 </div>
 
-<div id="support-bubble">
-  <img src="https://cdn-icons-png.flaticon.com/512/2950/2950666.png" alt="Support">
+<div class="draggable-bubble" id="aiBubble">
+  <img src="https://www.svgrepo.com/show/475715/chat-bubble.svg" alt="AI Support">
 </div>
 
-<script>
-  // Route Protection
-  if (!localStorage.getItem("trustvestUser")) {
-    window.location.href = "login.html";
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+    authDomain: "trustvest-a1bd9.firebaseapp.com",
+    projectId: "trustvest-a1bd9",
+    storageBucket: "trustvest-a1bd9.appspot.com",
+    messagingSenderId: "676220073092",
+    appId: "1:676220073092:web:b358f8821ac33da9babed1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const spinnerOverlay = document.getElementById('spinnerOverlay');
+  const spinnerText = document.getElementById('spinnerText');
+  const balanceAmount = document.getElementById('balanceAmount');
+  const refreshBtn = document.getElementById('refreshBtn');
+
+  function navigateTo(path) {
+    window.location.href = path;
   }
 
-  function navigateTo(page) {
-    window.location.href = page;
+  function fetchBalance(uid) {
+    spinnerOverlay.style.display = 'flex';
+    spinnerText.textContent = 'Fetching Balance...';
+    getDoc(doc(db, 'users', uid)).then(docSnap => {
+      if (docSnap.exists()) {
+        const balance = docSnap.data().balance || 0;
+        balanceAmount.textContent = `₦${balance.toFixed(2)}`;
+      } else {
+        balanceAmount.textContent = '₦0.00';
+      }
+      spinnerOverlay.style.display = 'none';
+    });
   }
 
-  // Refresh Recoil Animation
-  const refreshIcon = document.getElementById("refreshIcon");
-  refreshIcon.addEventListener("click", () => {
-    refreshIcon.style.transform = "rotate(360deg)";
-    setTimeout(() => {
-      refreshIcon.style.transform = "rotate(0deg)";
-    }, 500);
-    // You can trigger balance refresh logic here
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      fetchBalance(user.uid);
+    } else {
+      window.location.href = "/login";
+    }
   });
 
-  // Draggable Support Bubble
-  const bubble = document.getElementById('support-bubble');
-  let isDragging = false, offsetX, offsetY;
+  refreshBtn.addEventListener('click', () => {
+    const user = auth.currentUser;
+    if (user) {
+      fetchBalance(user.uid);
+    }
+  });
 
-  bubble.addEventListener('mousedown', (e) => {
+  const aiBubble = document.getElementById('aiBubble');
+  let isDragging = false;
+
+  aiBubble.addEventListener('mousedown', (e) => {
     isDragging = true;
-    offsetX = e.clientX - bubble.offsetLeft;
-    offsetY = e.clientY - bubble.offsetTop;
-    bubble.style.cursor = 'grabbing';
   });
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-    bubble.style.cursor = 'grab';
-  });
+
   document.addEventListener('mousemove', (e) => {
     if (isDragging) {
-      bubble.style.left = (e.clientX - offsetX) + 'px';
-      bubble.style.top = (e.clientY - offsetY) + 'px';
+      aiBubble.style.left = e.clientX - 25 + 'px';
+      aiBubble.style.top = e.clientY - 25 + 'px';
     }
   });
 
-  // Mobile Touch Drag
-  bubble.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    offsetX = e.touches[0].clientX - bubble.offsetLeft;
-    offsetY = e.touches[0].clientY - bubble.offsetTop;
-  });
-  document.addEventListener('touchend', () => {
+  document.addEventListener('mouseup', () => {
     isDragging = false;
-  });
-  document.addEventListener('touchmove', (e) => {
-    if (isDragging) {
-      bubble.style.left = (e.touches[0].clientX - offsetX) + 'px';
-      bubble.style.top = (e.touches[0].clientY - offsetY) + 'px';
-    }
   });
 </script>
 
