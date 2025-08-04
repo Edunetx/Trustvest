@@ -12,11 +12,11 @@
       background: #000;
       color: #fff;
       overflow-x: hidden;
-      user-select: none;
+      user-select: none; /* Prevent Text Copy */
     }
     .container {
       padding: 20px;
-      padding-bottom: 80px;
+      padding-bottom: 80px; /* Leave space for navbar */
     }
     .header {
       text-align: center;
@@ -32,131 +32,169 @@
       color: #00bfa6;
       text-shadow: 0 0 5px rgba(0,191,166,0.7);
     }
-    .plans-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
     .plan-card {
       background: rgba(255,255,255,0.05);
       border: 1px solid #00bfa6;
       border-radius: 15px;
       padding: 20px;
-      transition: transform 0.3s ease;
-      cursor: pointer;
+      margin: 15px 0;
+      position: relative;
+      overflow: hidden;
     }
-    .plan-card:hover {
-      transform: scale(1.03);
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: url('https://cdn-icons-png.flaticon.com/512/1828/1828817.png') no-repeat center/contain;
+      opacity: 0.1;
     }
-    .plan-title {
-      font-size: 1.3rem;
+    .plan-name {
+      font-size: 1.2rem;
+      font-weight: bold;
       color: #00d1b2;
-      margin-bottom: 10px;
     }
     .plan-details {
-      font-size: 0.9rem;
-      color: #ccc;
+      margin-top: 10px;
+      color: #aaa;
     }
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #0a0a0a;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 10px 0;
-      border-top: 1px solid #222;
-      z-index: 999;
-    }
-    .nav-item {
-      text-align: center;
-      color: #888;
-      font-size: 12px;
+    .buy-button {
+      background: #00bfa6;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .nav-item svg {
-      width: 24px;
-      height: 24px;
-      margin-bottom: 5px;
-      fill: #00bfa6;
-      transition: transform 0.3s ease;
-    }
-    .nav-item:hover svg {
-      transform: scale(1.2);
-    }
-    .nav-item.active {
-      color: #00bfa6;
+      margin-top: 15px;
       font-weight: bold;
+      transition: background 0.3s ease;
     }
-  </style>
+    .buy-button:hover {
+      background: #00d1b2;
+    }
+    </style>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <h1>Available Plans</h1>
+    <h1>Our Investment Plans</h1>
   </div>
 
-  <div class="plans-list" id="plansList">
-    <!-- Dynamic Plans will be inserted here -->
-    <div class="plan-card">
-      <div class="plan-title">TrustLite</div>
-      <div class="plan-details">
-        ₦5,000 - Earn ₦500 Daily<br>
-        Duration: 15 Days
-      </div>
-    </div>
-    <div class="plan-card">
-      <div class="plan-title">TrustPro</div>
-      <div class="plan-details">
-        ₦10,000 - Earn ₦1,200 Daily<br>
-        Duration: 15 Days
-      </div>
-    </div>
-    <div class="plan-card">
-      <div class="plan-title">TrustElite</div>
-      <div class="plan-details">
-        ₦20,000 - Earn ₦2,600 Daily<br>
-        Duration: 15 Days
-      </div>
-    </div>
+  <div id="plansContainer">
+    <!-- Plans will be dynamically loaded here from Firestore -->
   </div>
 </div>
 
 <div class="nav-bar">
-  <div class="nav-item" data-page="home.html">
+  <div class="nav-item" onclick="navigateTo('home.html')">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
     Home
   </div>
-  <div class="nav-item active" data-page="plans.html">
+  <div class="nav-item active">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
     Plans
   </div>
-  <div class="nav-item" data-page="teams.html">
+  <div class="nav-item" onclick="navigateTo('teams.html')">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
     Teams
   </div>
-  <div class="nav-item" data-page="me.html">
+  <div class="nav-item" onclick="navigateTo('me.html')">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
     Me
   </div>
 </div>
 
-<!-- Navigation Script -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
 <script>
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function() {
-      const page = this.getAttribute('data-page');
-      window.location.href = page;
+  const firebaseConfig = {
+    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+    authDomain: "trustvest-a1bd9.firebaseapp.com",
+    projectId: "trustvest-a1bd9",
+    storageBucket: "trustvest-a1bd9.appspot.com",
+    messagingSenderId: "676220073092",
+    appId: "1:676220073092:web:b358f8821ac33da9babed1"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<script>
+  // Route Protection
+  if (!localStorage.getItem("trustvestUser")) {
+    window.location.href = "login.html";
+  }
+
+  function navigateTo(page) {
+    window.location.href = page;
+  }
+
+  // Load Plans from Firestore
+  const plansContainer = document.getElementById('plansContainer');
+
+  function loadPlans() {
+    db.collection('plans').get().then(snapshot => {
+      if (snapshot.empty) {
+        // Auto create sample plans if none exist
+        const defaultPlans = [
+          { name: 'TrustLite', price: 5000, returns: '₦500 Daily', bg: 'rgba(0, 191, 166, 0.1)' },
+          { name: 'TrustPro', price: 10000, returns: '₦1,200 Daily', bg: 'rgba(0, 209, 178, 0.1)' },
+          { name: 'TrustElite', price: 20000, returns: '₦2,500 Daily', bg: 'rgba(0, 191, 166, 0.1)' },
+          { name: 'TrustMega', price: 50000, returns: '₦6,000 Daily', bg: 'rgba(0, 209, 178, 0.1)' },
+          { name: 'TrustPremium', price: 100000, returns: '₦12,500 Daily', bg: 'rgba(0, 191, 166, 0.1)' }
+        ];
+        defaultPlans.forEach(plan => {
+          db.collection('plans').add(plan);
+        });
+        setTimeout(loadPlans, 1000);
+        return;
+      }
+
+      plansContainer.innerHTML = '';
+      snapshot.forEach(doc => {
+        const plan = doc.data();
+        const planCard = document.createElement('div');
+        planCard.style.background = plan.bg;
+        planCard.style.border = '1px solid #00bfa6';
+        planCard.style.borderRadius = '15px';
+        planCard.style.padding = '20px';
+        planCard.style.margin = '10px 20px';
+        planCard.style.position = 'relative';
+        planCard.innerHTML = `
+          <h3 style="color: #00d1b2;">${plan.name}</h3>
+          <p>Price: ₦${plan.price.toLocaleString()}</p>
+          <p>Returns: ${plan.returns}</p>
+          <button style="padding: 10px 20px; background: #00bfa6; color: #000; border: none; border-radius: 10px; cursor: pointer;" onclick="purchasePlan('${doc.id}', ${plan.price})">Purchase</button>
+        `;
+        plansContainer.appendChild(planCard);
+      });
     });
-  });
+  }
+
+  loadPlans();
+
+  function purchasePlan(planId, price) {
+    const userBalance = parseInt(localStorage.getItem('userBalance')) || 0;
+    if (userBalance >= price) {
+      db.collection('purchases').add({
+        user: localStorage.getItem('trustvestUser'),
+        planId: planId,
+        purchasedAt: new Date()
+      }).then(() => {
+        alert('Plan Purchased Successfully!');
+        localStorage.setItem('userBalance', userBalance - price);
+      });
+    } else {
+      localStorage.setItem('depositAmount', price);
+      window.location.href = 'deposit.html';
+    }
+  }
 </script>
 
-<!-- Tawk.to AI Chat -->
+<!-- Tawk.to Apollo AI Chat -->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -170,7 +208,7 @@ s0.parentNode.insertBefore(s1,s0);
 Tawk_API.onLoad = function() {
   const tawkBubble = document.querySelector('iframe[title="chat widget"]');
   if (tawkBubble) {
-    tawkBubble.style.bottom = '70px';
+    tawkBubble.style.bottom = '70px'; // Adjust for navbar
     tawkBubble.style.right = '20px';
   }
 };
