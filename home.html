@@ -1,186 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TrustVest - Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
+      margin: 0; padding: 0;
       font-family: 'Poppins', sans-serif;
       background: #000;
       color: #fff;
       overflow-x: hidden;
+      transition: opacity 1s ease-in;
     }
     .header {
       text-align: center;
-      padding: 20px;
+      padding: 20px 0;
     }
     .header img {
-      width: 80px;
+      width: 100px;
+      filter: drop-shadow(0 0 5px #00bfa6);
     }
     .header h1 {
-      font-size: 22px;
-      margin: 10px 0;
-      font-weight: bold;
-      color: #00ffc8;
+      font-size: 1.8rem;
+      color: #00bfa6;
+      text-shadow: 0 0 10px #00bfa6;
     }
     .balance-card {
-      background: linear-gradient(135deg, #00c9a7, #005bea);
+      background: linear-gradient(135deg, #00bfa6, #00d1b2);
       border-radius: 20px;
-      margin: 20px auto;
       padding: 20px;
-      width: 90%;
-      max-width: 350px;
-      box-shadow: 0 0 20px rgba(0,255,200,0.3);
-      color: #000;
-      position: relative;
-    }
-    .balance-card h3 {
-      margin: 0;
-      font-size: 16px;
+      margin: 20px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
+      color: #000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .balance-info h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .balance-amount {
+      font-size: 1.5rem;
+      font-weight: bold;
     }
     .refresh-icon {
-      width: 16px;
-      height: 16px;
-      margin-left: 8px;
       cursor: pointer;
+      width: 24px;
+      height: 24px;
+      margin-left: 10px;
       transition: transform 0.3s ease;
     }
     .refresh-icon:hover {
-      transform: rotate(180deg);
+      transform: rotate(90deg);
     }
-    .balance-amount {
-      font-size: 28px;
-      font-weight: bold;
-      margin-top: 10px;
-      text-align: center;
+    .section {
+      background: rgba(255,255,255,0.05);
+      margin: 15px;
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid #00bfa6;
     }
-    .spinner-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(10px);
-      z-index: 999;
-      display: none;
-      flex-direction: column;
-    }
-    .spinner {
-      border: 6px solid rgba(255,255,255,0.2);
-      border-top: 6px solid #00ffc8;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
-    .spinner-text {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #fff;
+    .section h3 {
+      margin-top: 0;
+      color: #00d1b2;
     }
     .nav-bar {
       position: fixed;
-      bottom: 0;
-      left: 0;
+      bottom: 0; left: 0;
       width: 100%;
-      display: flex;
-      justify-content: space-around;
       background: rgba(255,255,255,0.05);
       backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-around;
       padding: 10px 0;
-      z-index: 998;
+      border-top: 1px solid #00bfa6;
     }
     .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #fff;
-      text-decoration: none;
+      text-align: center;
+      color: #00bfa6;
       font-size: 12px;
       cursor: pointer;
+      transition: transform 0.3s;
     }
     .nav-item svg {
       width: 24px;
       height: 24px;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
-    .draggable-bubble {
+    .nav-item:hover {
+      transform: scale(1.2);
+    }
+    .support-bubble {
       position: fixed;
       bottom: 80px;
       right: 20px;
-      width: 50px;
-      height: 50px;
+      background: #00bfa6;
+      width: 50px; height: 50px;
       border-radius: 50%;
-      background: #00c9a7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: flex; align-items: center; justify-content: center;
       cursor: grab;
-      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
-    .draggable-bubble img {
-      width: 30px;
-      height: 30px;
+    .support-bubble svg {
+      width: 24px; height: 24px;
+      color: #000;
     }
   </style>
 </head>
 <body>
 
 <div class="header">
-  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png">
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
   <h1>Welcome to TrustVest</h1>
 </div>
 
 <div class="balance-card">
-  <h3>Available Balance 
-    <img src="https://www.svgrepo.com/show/514220/refresh.svg" class="refresh-icon" id="refreshBtn">
-  </h3>
-  <div class="balance-amount" id="balanceAmount">₦0.00</div>
+  <div class="balance-info">
+    <h2>Available Balance</h2>
+    <div class="balance-amount" id="balanceAmount">₦0.00</div>
+  </div>
+  <svg class="refresh-icon" id="refreshBalance" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M9 20l-5-5 5-5M15 4l5 5-5 5" />
+  </svg>
 </div>
 
-<div class="spinner-overlay" id="spinnerOverlay">
-  <div class="spinner"></div>
-  <div class="spinner-text" id="spinnerText">Loading...</div>
+<div class="section">
+  <h3>Earnings Structure</h3>
+  <p>Track your daily earnings and growth from all active plans.</p>
+</div>
+
+<div class="section">
+  <h3>Active Plans</h3>
+  <p>View and manage your subscribed TrustVest plans.</p>
+</div>
+
+<div class="section">
+  <h3>Your Team</h3>
+  <p>Check your referrals, team structure and bonuses.</p>
 </div>
 
 <div class="nav-bar">
-  <div class="nav-item" onclick="navigateTo('/home')">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    Home
+  <div class="nav-item" onclick="navigateTo('/home.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 4l9 5.75M12 4v16" />
+    </svg>
+    <div>Home</div>
   </div>
-  <div class="nav-item" onclick="navigateTo('/plans')">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm4 0h14v-2H7v2zM3 17h2v-2H3v2zm4 0h14v-2H7v2z"/></svg>
-    Plans
+  <div class="nav-item" onclick="navigateTo('/plans.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+    <div>Plans</div>
   </div>
-  <div class="nav-item" onclick="navigateTo('/teams')">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 2.08 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    Teams
+  <div class="nav-item" onclick="navigateTo('/teams.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M16 11a4 4 0 10-8 0 4 4 0 008 0z" />
+    </svg>
+    <div>Teams</div>
   </div>
-  <div class="nav-item" onclick="navigateTo('/me')">
-    <svg fill="white" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    Me
+  <div class="nav-item" onclick="navigateTo('/me.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.21 0 4.264.674 5.879 1.804M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+    <div>Me</div>
   </div>
 </div>
 
-<div class="draggable-bubble" id="aiBubble">
-  <img src="https://www.svgrepo.com/show/475715/chat-bubble.svg" alt="AI Support">
+<div class="support-bubble" id="supportBubble">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2h-2M7 8H5a2 2 0 00-2 2v8a2 2 0 002 2h2M12 5v6m0 0l3-3m-3 3l-3-3" />
+  </svg>
 </div>
 
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
     authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -189,65 +187,64 @@
     messagingSenderId: "676220073092",
     appId: "1:676220073092:web:b358f8821ac33da9babed1"
   };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = '/login.html';
+    } else {
+      loadBalance(user.uid);
+    }
+  });
 
-  const spinnerOverlay = document.getElementById('spinnerOverlay');
-  const spinnerText = document.getElementById('spinnerText');
-  const balanceAmount = document.getElementById('balanceAmount');
-  const refreshBtn = document.getElementById('refreshBtn');
-
-  function navigateTo(path) {
-    window.location.href = path;
-  }
-
-  function fetchBalance(uid) {
-    spinnerOverlay.style.display = 'flex';
-    spinnerText.textContent = 'Fetching Balance...';
-    getDoc(doc(db, 'users', uid)).then(docSnap => {
-      if (docSnap.exists()) {
-        const balance = docSnap.data().balance || 0;
-        balanceAmount.textContent = `₦${balance.toFixed(2)}`;
-      } else {
-        balanceAmount.textContent = '₦0.00';
+  function loadBalance(uid) {
+    const balanceAmount = document.getElementById('balanceAmount');
+    db.collection('users').doc(uid).get().then(doc => {
+      if (doc.exists) {
+        const balance = doc.data().balance || 0;
+        balanceAmount.textContent = `₦${balance.toLocaleString()}`;
       }
-      spinnerOverlay.style.display = 'none';
     });
   }
 
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      fetchBalance(user.uid);
-    } else {
-      window.location.href = "/login";
-    }
-  });
-
-  refreshBtn.addEventListener('click', () => {
+  document.getElementById('refreshBalance').addEventListener('click', () => {
     const user = auth.currentUser;
-    if (user) {
-      fetchBalance(user.uid);
-    }
+    if (user) loadBalance(user.uid);
   });
 
-  const aiBubble = document.getElementById('aiBubble');
-  let isDragging = false;
+  function navigateTo(url) {
+    window.location.href = url;
+  }
 
-  aiBubble.addEventListener('mousedown', (e) => {
+  const bubble = document.getElementById('supportBubble');
+  let offsetX, offsetY, isDragging = false;
+
+  bubble.addEventListener('mousedown', (e) => {
     isDragging = true;
+    offsetX = e.clientX - bubble.getBoundingClientRect().left;
+    offsetY = e.clientY - bubble.getBoundingClientRect().top;
+    bubble.style.cursor = 'grabbing';
   });
 
   document.addEventListener('mousemove', (e) => {
     if (isDragging) {
-      aiBubble.style.left = e.clientX - 25 + 'px';
-      aiBubble.style.top = e.clientY - 25 + 'px';
+      bubble.style.left = `${e.clientX - offsetX}px`;
+      bubble.style.top = `${e.clientY - offsetY}px`;
     }
   });
 
   document.addEventListener('mouseup', () => {
     isDragging = false;
+    bubble.style.cursor = 'grab';
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+      document.body.style.opacity = '1';
+    }, 100);
   });
 </script>
 
