@@ -6,34 +6,31 @@
   <title>TrustVest - Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
       background: #000;
       color: #fff;
       overflow-x: hidden;
-      user-select: none;
+      user-select: none; /* Prevent Text Copy */
     }
     .container {
       padding: 20px;
-      padding-bottom: 100px;
-      min-height: 100vh;
+      padding-bottom: 80px; /* To prevent navbar from covering content */
     }
     .header {
       text-align: center;
       margin-bottom: 20px;
     }
     .header img {
-      width: 100px;
+      width: 80px;
       margin-bottom: 10px;
     }
     .header h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: #00bfa6;
-      text-shadow: 0 0 10px rgba(0,191,166,0.7);
+      text-shadow: 0 0 5px rgba(0,191,166,0.7);
     }
     .header p {
       color: #aaa;
@@ -72,19 +69,10 @@
       border-radius: 15px;
       padding: 15px;
       margin: 10px 20px;
-      cursor: pointer;
     }
     .section h3 {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      margin-bottom: 10px;
       color: #00d1b2;
-    }
-    .section-content {
-      display: none;
-      margin-top: 10px;
-      color: #ddd;
-      font-size: 14px;
     }
     .nav-bar {
       position: fixed;
@@ -104,48 +92,25 @@
       color: #888;
       font-size: 12px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: all 0.3s ease;
     }
     .nav-item svg {
       width: 24px;
       height: 24px;
       margin-bottom: 5px;
       fill: #00bfa6;
+      transition: transform 0.3s ease;
+    }
+    .nav-item:hover svg {
+      transform: scale(1.2);
     }
     .nav-item.active {
       color: #00bfa6;
       font-weight: bold;
     }
-    .nav-item:active {
-      transform: scale(1.2);
-    }
-    #support-bubble {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: #00bfa6;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: grab;
-      z-index: 1000;
-    }
-    #support-bubble img {
-      width: 28px;
-      height: 28px;
-    }
-    footer {
-      text-align: center;
-      padding: 10px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.3);
-    }
   </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
 
 <div class="container">
   <div class="header">
@@ -162,27 +127,21 @@
     <div class="balance-amount">₦0.00</div>
   </div>
 
-  <div class="section" onclick="toggleSection(this)">
-    <h3>Earnings Overview <span>+</span></h3>
-    <div class="section-content">
-      <p>Daily Earnings: ₦0.00</p>
-      <p>Weekly Earnings: ₦0.00</p>
-    </div>
+  <div class="section">
+    <h3>Earnings Overview</h3>
+    <p>Daily Earnings: ₦0.00</p>
+    <p>Weekly Earnings: ₦0.00</p>
   </div>
 
-  <div class="section" onclick="toggleSection(this)">
-    <h3>Active Plan <span>+</span></h3>
-    <div class="section-content">
-      <p>No active plan yet. Choose a plan to start earning.</p>
-    </div>
+  <div class="section">
+    <h3>Active Plan</h3>
+    <p>No active plan yet. Choose a plan to start earning.</p>
   </div>
 
-  <div class="section" onclick="toggleSection(this)">
-    <h3>Teams / Referrals <span>+</span></h3>
-    <div class="section-content">
-      <p>Total Referrals: 0</p>
-      <p>Referral Earnings: ₦0.00</p>
-    </div>
+  <div class="section">
+    <h3>Teams / Referrals</h3>
+    <p>Total Referrals: 0</p>
+    <p>Referral Earnings: ₦0.00</p>
   </div>
 </div>
 
@@ -205,13 +164,18 @@
   </div>
 </div>
 
-<div id="support-bubble">
-  <img src="https://cdn-icons-png.flaticon.com/512/2950/2950666.png" alt="Support">
-</div>
-
-<footer>
-  &copy; 2025 TrustVest. All Rights Reserved.
-</footer>
+<!-- Tawk.to Apollo AI Chat -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 
 <script>
   // Route Protection
@@ -230,70 +194,8 @@
     setTimeout(() => {
       refreshIcon.style.transform = "rotate(0deg)";
     }, 500);
+    // You can trigger balance refresh logic here
   });
-
-  // Toggle Sections Expand/Collapse
-  function toggleSection(sectionEl) {
-    const content = sectionEl.querySelector('.section-content');
-    const toggleIcon = sectionEl.querySelector('span');
-    if (content.style.display === "block") {
-      content.style.display = "none";
-      toggleIcon.innerText = "+";
-    } else {
-      content.style.display = "block";
-      toggleIcon.innerText = "-";
-    }
-  }
-
-  // Draggable Support Bubble
-  const bubble = document.getElementById('support-bubble');
-  let isDragging = false, offsetX, offsetY;
-
-  bubble.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    offsetX = e.clientX - bubble.offsetLeft;
-    offsetY = e.clientY - bubble.offsetTop;
-    bubble.style.cursor = 'grabbing';
-  });
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-    bubble.style.cursor = 'grab';
-  });
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      bubble.style.left = (e.clientX - offsetX) + 'px';
-      bubble.style.top = (e.clientY - offsetY) + 'px';
-    }
-  });
-
-  // Mobile Touch Drag
-  bubble.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    offsetX = e.touches[0].clientX - bubble.offsetLeft;
-    offsetY = e.touches[0].clientY - bubble.offsetTop;
-  });
-  document.addEventListener('touchend', () => {
-    isDragging = false;
-  });
-  document.addEventListener('touchmove', (e) => {
-    if (isDragging) {
-      bubble.style.left = (e.touches[0].clientX - offsetX) + 'px';
-      bubble.style.top = (e.touches[0].clientY - offsetY) + 'px';
-    }
-  });
-</script>
-
-<!-- Tawk.to Apollo AI Chat -->
-<script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
 </script>
 
 </body>
