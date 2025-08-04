@@ -1,281 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest - Plans</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #0f0f0f;
+      background: #000;
       color: #fff;
+      overflow-x: hidden;
+      user-select: none;
     }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: #121212;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .navbar img {
-      height: 40px;
-    }
-
-    .navbar h1 {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .plans-container {
+    .container {
       padding: 20px;
+      padding-bottom: 80px;
     }
-
-    .plan-card {
-      background: #1e1e1e;
-      border-radius: 12px;
-      padding: 20px;
+    .header {
+      text-align: center;
       margin-bottom: 20px;
+    }
+    .header img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00bfa6;
+      text-shadow: 0 0 5px rgba(0,191,166,0.7);
+    }
+    .plans-list {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      gap: 20px;
     }
-
-    .plan-card img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
+    .plan-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #00bfa6;
+      border-radius: 15px;
+      padding: 20px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
     }
-
-    .plan-card h2 {
-      margin: 15px 0 10px;
-      font-size: 18px;
+    .plan-card:hover {
+      transform: scale(1.03);
     }
-
-    .plan-card p {
-      font-size: 14px;
+    .plan-title {
+      font-size: 1.3rem;
+      color: #00d1b2;
+      margin-bottom: 10px;
+    }
+    .plan-details {
+      font-size: 0.9rem;
       color: #ccc;
     }
-
-    .purchase-button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: bold;
-      color: #000;
-      background: linear-gradient(270deg, #00FF94, #00FFD0, #00FF94);
-      background-size: 400% 400%;
-      cursor: pointer;
-      animation: gradientMove 4s ease infinite;
-    }
-
-    @keyframes gradientMove {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    .spinner-overlay {
-      display: none;
+    .nav-bar {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(5px);
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #0a0a0a;
+      display: flex;
+      justify-content: space-around;
       align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 9999;
+      padding: 10px 0;
+      border-top: 1px solid #222;
+      z-index: 999;
     }
-
-    .spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #00FF94;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+    .nav-item {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .nav-item svg {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 5px;
+      fill: #00bfa6;
+      transition: transform 0.3s ease;
     }
-
-    .spinner-text {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #00FF94;
+    .nav-item:hover svg {
+      transform: scale(1.2);
+    }
+    .nav-item.active {
+      color: #00bfa6;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <div class="navbar">
-    <div style="display: flex; align-items: center;">
-      <img src="https://raw.githubusercontent.com/oba-trustvest/trustvest-assets/main/logo.png" alt="TrustVest Logo">
-      <h1 style="margin-left: 10px;">TrustVest</h1>
-    </div>
+<div class="container">
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+    <h1>Available Plans</h1>
   </div>
 
-  <div class="plans-container">
-    <h2 style="text-align: center; font-size: 20px; margin-bottom: 20px;">Choose Your Plan</h2>
-
-    <!-- Plan Cards Start -->
+  <div class="plans-list" id="plansList">
+    <!-- Dynamic Plans will be inserted here -->
     <div class="plan-card">
-      <img src="https://trustvest-plans.s3.amazonaws.com/trustlite-plan.jpg" alt="TrustLite Plan">
-      <h2>TrustLite</h2>
-      <p>₦5,000 - Earn ₦500 daily for 30 days</p>
-      <button class="purchase-button" onclick="purchasePlan('TrustLite', 5000)">Purchase</button>
+      <div class="plan-title">TrustLite</div>
+      <div class="plan-details">
+        ₦5,000 - Earn ₦500 Daily<br>
+        Duration: 15 Days
+      </div>
     </div>
-
     <div class="plan-card">
-      <img src="https://trustvest-plans.s3.amazonaws.com/trustpro-plan.jpg" alt="TrustPro Plan">
-      <h2>TrustPro</h2>
-      <p>₦10,000 - Earn ₦1,200 daily for 30 days</p>
-      <button class="purchase-button" onclick="purchasePlan('TrustPro', 10000)">Purchase</button>
+      <div class="plan-title">TrustPro</div>
+      <div class="plan-details">
+        ₦10,000 - Earn ₦1,200 Daily<br>
+        Duration: 15 Days
+      </div>
     </div>
-
     <div class="plan-card">
-      <img src="https://trustvest-plans.s3.amazonaws.com/trustpremium-plan.jpg" alt="TrustPremium Plan">
-      <h2>TrustPremium</h2>
-      <p>₦20,000 - Earn ₦2,500 daily for 30 days</p>
-      <button class="purchase-button" onclick="purchasePlan('TrustPremium', 20000)">Purchase</button>
-    </div>
-    <!-- Plan Cards End -->
-
-  </div>
-
-  <!-- Spinner Loading Overlay -->
-  <div class="spinner-overlay" id="loadingSpinner">
-    <div class="spinner"></div>
-    <div class="spinner-text" id="spinnerCaption">Processing Purchase...</div>
-  </div>
-
-  <script>
-    function purchasePlan(planName, planPrice) {
-      const userBalance = 15000; // Fetch user's real balance from Firebase later
-      if(userBalance >= planPrice) {
-        document.getElementById('loadingSpinner').style.display = 'flex';
-        setTimeout(() => {
-          alert('Plan purchased successfully!');
-          document.getElementById('loadingSpinner').style.display = 'none';
-        }, 2000);
-      } else {
-        window.location.href = 'deposit.html';
-      }
-    }
-  </script>
-  <!-- Bottom Navigation Bar -->
-  <div style="position: fixed; bottom: 0; width: 100%; background: #121212; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #222;">
-    <div onclick="navigateTo('home.html')" style="text-align: center; cursor: pointer;">
-      <img src="https://trustvest-icons.s3.amazonaws.com/home.svg" alt="Home" width="24">
-      <div style="font-size: 12px; color: #fff;">Home</div>
-    </div>
-    <div onclick="navigateTo('plans.html')" style="text-align: center; cursor: pointer;">
-      <img src="https://trustvest-icons.s3.amazonaws.com/plans.svg" alt="Plans" width="24">
-      <div style="font-size: 12px; color: #fff;">Plans</div>
-    </div>
-    <div onclick="navigateTo('referrals.html')" style="text-align: center; cursor: pointer;">
-      <img src="https://trustvest-icons.s3.amazonaws.com/referrals.svg" alt="Referrals" width="24">
-      <div style="font-size: 12px; color: #fff;">Referrals</div>
-    </div>
-    <div onclick="navigateTo('me.html')" style="text-align: center; cursor: pointer;">
-      <img src="https://trustvest-icons.s3.amazonaws.com/me.svg" alt="Me" width="24">
-      <div style="font-size: 12px; color: #fff;">Me</div>
+      <div class="plan-title">TrustElite</div>
+      <div class="plan-details">
+        ₦20,000 - Earn ₦2,600 Daily<br>
+        Duration: 15 Days
+      </div>
     </div>
   </div>
+</div>
 
-  <script>
-    function navigateTo(page) {
-      document.getElementById('loadingSpinner').style.display = 'flex';
-      document.getElementById('spinnerCaption').innerText = 'Please wait...';
-      setTimeout(() => {
-        window.location.href = page;
-      }, 1000);
-    }
-  </script>
-  <!-- Spinner Loading Screen -->
-  <div id="loadingSpinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
-    <div class="loader"></div>
-    <div id="spinnerCaption" style="color: white; font-size: 16px; margin-top: 20px;">Loading...</div>
+<div class="nav-bar">
+  <div class="nav-item" data-page="home.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
   </div>
+  <div class="nav-item active" data-page="plans.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+    Plans
+  </div>
+  <div class="nav-item" data-page="teams.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    Teams
+  </div>
+  <div class="nav-item" data-page="me.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Me
+  </div>
+</div>
 
-  <!-- Loader CSS -->
-  <style>
-    .loader {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #01ff70;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+<!-- Navigation Script -->
+<script>
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const page = this.getAttribute('data-page');
+      window.location.href = page;
+    });
+  });
+</script>
 
-  <!-- Firebase App Config -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-      authDomain: "trustvest-a1bd9.firebaseapp.com",
-      projectId: "trustvest-a1bd9",
-      storageBucket: "trustvest-a1bd9.appspot.com",
-      messagingSenderId: "676220073092",
-      appId: "1:676220073092:web:b358f8821ac33da9babed1"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-  </script>
-
-  <!-- Purchase Plan Logic -->
-  <script>
-    function purchasePlan(planId, planPrice) {
-      const user = auth.currentUser;
-      if (!user) {
-        window.location.href = 'login';
-        return;
-      }
-
-      document.getElementById('loadingSpinner').style.display = 'flex';
-      db.collection('users').doc(user.uid).get().then(doc => {
-        const data = doc.data();
-        const balance = data.balance || 0;
-
-        if (balance >= planPrice) {
-          db.collection('users').doc(user.uid).update({
-            balance: firebase.firestore.FieldValue.increment(-planPrice),
-            currentPlan: planId
-          }).then(() => {
-            document.getElementById('spinnerCaption').innerText = 'Purchase Successful!';
-            setTimeout(() => window.location.reload(), 1000);
-          });
-        } else {
-          document.getElementById('spinnerCaption').innerText = 'Insufficient Balance...';
-          setTimeout(() => {
-            window.location.href = 'deposit';
-          }, 1500);
-        }
-      });
-    }
-  </script>
+<!-- Tawk.to AI Chat -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+Tawk_API.onLoad = function() {
+  const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+  if (tawkBubble) {
+    tawkBubble.style.bottom = '70px';
+    tawkBubble.style.right = '20px';
+  }
+};
+</script>
 
 </body>
 </html>
