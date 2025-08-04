@@ -12,28 +12,25 @@
       background: #000;
       color: #fff;
       overflow-x: hidden;
-      user-select: none;
+      user-select: none; /* Prevent Text Copy */
     }
     .container {
       padding: 20px;
-      padding-bottom: 80px;
-      min-height: 100vh;
-      box-sizing: border-box;
+      padding-bottom: 80px; /* To prevent navbar from covering content */
     }
     .header {
       text-align: center;
       margin-bottom: 20px;
     }
     .header img {
-      width: 90px;
+      width: 80px;
       margin-bottom: 10px;
-      filter: drop-shadow(0 0 10px rgba(0,191,166,0.7));
     }
     .header h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: #00bfa6;
-      text-shadow: 0 0 8px rgba(0,191,166,0.8);
+      text-shadow: 0 0 5px rgba(0,191,166,0.7);
     }
     .header p {
       color: #aaa;
@@ -107,20 +104,9 @@
     .nav-item:hover svg {
       transform: scale(1.2);
     }
-    .nav-item:active {
-      transform: scale(0.95);
-    }
     .nav-item.active {
       color: #00bfa6;
       font-weight: bold;
-    }
-    @media (max-width: 480px) {
-      .nav-bar {
-        padding: 12px 0;
-      }
-      iframe[title="chat widget"] {
-        bottom: 90px !important;
-      }
     }
   </style>
 </head>
@@ -138,24 +124,24 @@
       <span>Available Balance</span>
       <svg class="refresh-icon" id="refreshIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"/></svg>
     </div>
-    <div class="balance-amount">₦0.00</div>
+    <div class="balance-amount" id="balanceAmount">₦0.00</div>
   </div>
 
   <div class="section">
     <h3>Earnings Overview</h3>
-    <p>Daily Earnings: ₦0.00</p>
-    <p>Weekly Earnings: ₦0.00</p>
+    <p>Daily Earnings: <span id="dailyEarnings">₦0.00</span></p>
+    <p>Weekly Earnings: <span id="weeklyEarnings">₦0.00</span></p>
   </div>
 
   <div class="section">
     <h3>Active Plan</h3>
-    <p>No active plan yet. Choose a plan to start earning.</p>
+    <p id="activePlanStatus">No active plan yet. Choose a plan to start earning.</p>
   </div>
 
   <div class="section">
     <h3>Teams / Referrals</h3>
-    <p>Total Referrals: 0</p>
-    <p>Referral Earnings: ₦0.00</p>
+    <p>Total Referrals: <span id="totalReferrals">0</span></p>
+    <p>Referral Earnings: <span id="referralEarnings">₦0.00</span></p>
   </div>
 </div>
 
@@ -189,39 +175,65 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
+Tawk_API.onLoad = function() {
+  const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+  if (tawkBubble) {
+    tawkBubble.style.bottom = '70px';
+    tawkBubble.style.right = '20px';
+  }
+};
 </script>
 
-<script>
-  // Adjust Tawk AI Bubble after load
-  var Tawk_API = Tawk_API || {};
-  Tawk_API.onLoad = function() {
-    setTimeout(() => {
-      const tawkBubble = document.querySelector('iframe[title="chat widget"]');
-      if (tawkBubble) {
-        tawkBubble.style.bottom = '70px';
-        tawkBubble.style.right = '20px';
-      }
-    }, 1000);
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+    authDomain: "trustvest-a1bd9.firebaseapp.com",
+    projectId: "trustvest-a1bd9",
+    storageBucket: "trustvest-a1bd9.appspot.com",
+    messagingSenderId: "676220073092",
+    appId: "1:676220073092:web:b358f8821ac33da9babed1"
   };
 
-  // Route Protection
-  if (!localStorage.getItem("trustvestUser")) {
-    window.location.href = "login.html";
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function fetchUserData() {
+    const userId = localStorage.getItem("trustvestUser");
+    if (!userId) {
+      window.location.href = "login.html";
+      return;
+    }
+    const userDoc = await getDoc(doc(db, "users", userId));
+    if (userDoc.exists()) {
+      const data = userDoc.data();
+      document.getElementById("balanceAmount").textContent = `₦${data.balance || '0.00'}`;
+      document.getElementById("dailyEarnings").textContent = `₦${data.dailyEarnings || '0.00'}`;
+      document.getElementById("weeklyEarnings").textContent = `₦${data.weeklyEarnings || '0.00'}`;
+      document.getElementById("totalReferrals").textContent = data.totalReferrals || '0';
+      document.getElementById("referralEarnings").textContent = `₦${data.referralEarnings || '0.00'}`;
+      document.getElementById("activePlanStatus").textContent = data.activePlan || 'No active plan yet. Choose a plan to start earning.';
+    } else {
+      alert("User data not found.");
+    }
   }
+
+  document.getElementById("refreshIcon").addEventListener("click", () => {
+    document.getElementById("refreshIcon").style.transform = "rotate(360deg)";
+    setTimeout(() => {
+      document.getElementById("refreshIcon").style.transform = "rotate(0deg)";
+    }, 500);
+    fetchUserData();
+  });
+
+  fetchUserData();
 
   function navigateTo(page) {
     window.location.href = page;
   }
-
-  // Refresh Recoil Animation
-  const refreshIcon = document.getElementById("refreshIcon");
-  refreshIcon.addEventListener("click", () => {
-    refreshIcon.style.transform = "rotate(360deg)";
-    setTimeout(() => {
-      refreshIcon.style.transform = "rotate(0deg)";
-    }, 500);
-    // Fetch updated balance logic can go here
-  });
 </script>
 
 </body>
