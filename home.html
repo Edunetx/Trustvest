@@ -2,249 +2,238 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TrustVest - Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0; padding: 0;
+      margin: 0;
       font-family: 'Poppins', sans-serif;
       background: #000;
       color: #fff;
       overflow-x: hidden;
-      transition: opacity 1s ease-in;
+    }
+    .container {
+      padding: 20px;
     }
     .header {
       text-align: center;
-      padding: 20px 0;
+      margin-bottom: 20px;
     }
     .header img {
-      width: 100px;
-      filter: drop-shadow(0 0 5px #00bfa6);
+      width: 80px;
+      margin-bottom: 10px;
     }
     .header h1 {
       font-size: 1.8rem;
+      font-weight: 700;
       color: #00bfa6;
-      text-shadow: 0 0 10px #00bfa6;
+      text-shadow: 0 0 5px rgba(0,191,166,0.5);
+    }
+    .header p {
+      color: #aaa;
+      font-size: 1rem;
+      margin-top: -10px;
     }
     .balance-card {
       background: linear-gradient(135deg, #00bfa6, #00d1b2);
       border-radius: 20px;
       padding: 20px;
-      margin: 20px;
+      color: #000;
+      position: relative;
+      margin-bottom: 25px;
+      max-width: 90%;
+      margin-inline: auto;
+    }
+    .balance-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: #000;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-    .balance-info h2 {
-      margin: 0;
-      font-size: 1rem;
-    }
-    .balance-amount {
-      font-size: 1.5rem;
-      font-weight: bold;
     }
     .refresh-icon {
+      width: 20px;
+      height: 20px;
       cursor: pointer;
-      width: 24px;
-      height: 24px;
-      margin-left: 10px;
-      transition: transform 0.3s ease;
+      transition: transform 0.5s ease;
     }
-    .refresh-icon:hover {
-      transform: rotate(90deg);
+    .balance-amount {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 15px;
     }
     .section {
       background: rgba(255,255,255,0.05);
-      margin: 15px;
-      padding: 15px;
-      border-radius: 15px;
       border: 1px solid #00bfa6;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 10px 20px;
     }
     .section h3 {
-      margin-top: 0;
+      margin-bottom: 10px;
       color: #00d1b2;
     }
     .nav-bar {
       position: fixed;
-      bottom: 0; left: 0;
+      bottom: 0;
+      left: 0;
       width: 100%;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
+      background: #0a0a0a;
       display: flex;
       justify-content: space-around;
+      align-items: center;
       padding: 10px 0;
-      border-top: 1px solid #00bfa6;
+      border-top: 1px solid #222;
+      z-index: 999;
     }
     .nav-item {
       text-align: center;
-      color: #00bfa6;
+      color: #888;
       font-size: 12px;
       cursor: pointer;
-      transition: transform 0.3s;
     }
     .nav-item svg {
       width: 24px;
       height: 24px;
       margin-bottom: 5px;
+      fill: #00bfa6;
     }
-    .nav-item:hover {
-      transform: scale(1.2);
+    .nav-item.active {
+      color: #00bfa6;
+      font-weight: bold;
     }
-    .support-bubble {
+    #support-bubble {
       position: fixed;
       bottom: 80px;
       right: 20px;
       background: #00bfa6;
-      width: 50px; height: 50px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: grab;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      z-index: 1000;
     }
-    .support-bubble svg {
-      width: 24px; height: 24px;
-      color: #000;
+    #support-bubble img {
+      width: 28px;
+      height: 28px;
     }
   </style>
 </head>
 <body>
 
-<div class="header">
-  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-  <h1>Welcome to TrustVest</h1>
-</div>
-
-<div class="balance-card">
-  <div class="balance-info">
-    <h2>Available Balance</h2>
-    <div class="balance-amount" id="balanceAmount">₦0.00</div>
+<div class="container">
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+    <h1>Welcome to TrustVest</h1>
+    <p>Your Earnings Dashboard</p>
   </div>
-  <svg class="refresh-icon" id="refreshBalance" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M9 20l-5-5 5-5M15 4l5 5-5 5" />
-  </svg>
-</div>
 
-<div class="section">
-  <h3>Earnings Structure</h3>
-  <p>Track your daily earnings and growth from all active plans.</p>
-</div>
+  <div class="balance-card">
+    <div class="balance-header">
+      <span>Available Balance</span>
+      <svg class="refresh-icon" id="refreshIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h2.02c.05-.33.06-.66.06-1 0-4.42-3.58-8-8-8zm-6 7c0-.34.03-.67.08-1H4.06c-.05.33-.06.66-.06 1 0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"/></svg>
+    </div>
+    <div class="balance-amount">₦0.00</div>
+  </div>
 
-<div class="section">
-  <h3>Active Plans</h3>
-  <p>View and manage your subscribed TrustVest plans.</p>
-</div>
+  <div class="section">
+    <h3>Earnings Overview</h3>
+    <p>Daily Earnings: ₦0.00</p>
+    <p>Weekly Earnings: ₦0.00</p>
+  </div>
 
-<div class="section">
-  <h3>Your Team</h3>
-  <p>Check your referrals, team structure and bonuses.</p>
+  <div class="section">
+    <h3>Active Plan</h3>
+    <p>No active plan yet. Choose a plan to start earning.</p>
+  </div>
+
+  <div class="section">
+    <h3>Teams / Referrals</h3>
+    <p>Total Referrals: 0</p>
+    <p>Referral Earnings: ₦0.00</p>
+  </div>
 </div>
 
 <div class="nav-bar">
-  <div class="nav-item" onclick="navigateTo('/home.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9.75L12 4l9 5.75M12 4v16" />
-    </svg>
-    <div>Home</div>
+  <div class="nav-item active" onclick="navigateTo('home.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
   </div>
-  <div class="nav-item" onclick="navigateTo('/plans.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-    <div>Plans</div>
+  <div class="nav-item" onclick="navigateTo('plans.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+    Plans
   </div>
-  <div class="nav-item" onclick="navigateTo('/teams.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M16 11a4 4 0 10-8 0 4 4 0 008 0z" />
-    </svg>
-    <div>Teams</div>
+  <div class="nav-item" onclick="navigateTo('teams.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    Teams
   </div>
-  <div class="nav-item" onclick="navigateTo('/me.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15c2.21 0 4.264.674 5.879 1.804M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-    <div>Me</div>
+  <div class="nav-item" onclick="navigateTo('me.html')">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Me
   </div>
 </div>
 
-<div class="support-bubble" id="supportBubble">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2h-2M7 8H5a2 2 0 00-2 2v8a2 2 0 002 2h2M12 5v6m0 0l3-3m-3 3l-3-3" />
-  </svg>
+<div id="support-bubble">
+  <img src="https://cdn-icons-png.flaticon.com/512/2950/2950666.png" alt="Support">
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
-    authDomain: "trustvest-a1bd9.firebaseapp.com",
-    projectId: "trustvest-a1bd9",
-    storageBucket: "trustvest-a1bd9.appspot.com",
-    messagingSenderId: "676220073092",
-    appId: "1:676220073092:web:b358f8821ac33da9babed1"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      window.location.href = '/login.html';
-    } else {
-      loadBalance(user.uid);
-    }
-  });
-
-  function loadBalance(uid) {
-    const balanceAmount = document.getElementById('balanceAmount');
-    db.collection('users').doc(uid).get().then(doc => {
-      if (doc.exists) {
-        const balance = doc.data().balance || 0;
-        balanceAmount.textContent = `₦${balance.toLocaleString()}`;
-      }
-    });
+  // Route Protection
+  if (!localStorage.getItem("trustvestUser")) {
+    window.location.href = "login.html";
   }
 
-  document.getElementById('refreshBalance').addEventListener('click', () => {
-    const user = auth.currentUser;
-    if (user) loadBalance(user.uid);
-  });
-
-  function navigateTo(url) {
-    window.location.href = url;
+  function navigateTo(page) {
+    window.location.href = page;
   }
 
-  const bubble = document.getElementById('supportBubble');
-  let offsetX, offsetY, isDragging = false;
+  // Refresh Recoil Animation
+  const refreshIcon = document.getElementById("refreshIcon");
+  refreshIcon.addEventListener("click", () => {
+    refreshIcon.style.transform = "rotate(360deg)";
+    setTimeout(() => {
+      refreshIcon.style.transform = "rotate(0deg)";
+    }, 500);
+    // You can trigger balance refresh logic here
+  });
+
+  // Draggable Support Bubble
+  const bubble = document.getElementById('support-bubble');
+  let isDragging = false, offsetX, offsetY;
 
   bubble.addEventListener('mousedown', (e) => {
     isDragging = true;
-    offsetX = e.clientX - bubble.getBoundingClientRect().left;
-    offsetY = e.clientY - bubble.getBoundingClientRect().top;
+    offsetX = e.clientX - bubble.offsetLeft;
+    offsetY = e.clientY - bubble.offsetTop;
     bubble.style.cursor = 'grabbing';
   });
-
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      bubble.style.left = `${e.clientX - offsetX}px`;
-      bubble.style.top = `${e.clientY - offsetY}px`;
-    }
-  });
-
   document.addEventListener('mouseup', () => {
     isDragging = false;
     bubble.style.cursor = 'grab';
   });
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      bubble.style.left = (e.clientX - offsetX) + 'px';
+      bubble.style.top = (e.clientY - offsetY) + 'px';
+    }
+  });
 
-  document.addEventListener('DOMContentLoaded', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-      document.body.style.opacity = '1';
-    }, 100);
+  // Mobile Touch Drag
+  bubble.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    offsetX = e.touches[0].clientX - bubble.offsetLeft;
+    offsetY = e.touches[0].clientY - bubble.offsetTop;
+  });
+  document.addEventListener('touchend', () => {
+    isDragging = false;
+  });
+  document.addEventListener('touchmove', (e) => {
+    if (isDragging) {
+      bubble.style.left = (e.touches[0].clientX - offsetX) + 'px';
+      bubble.style.top = (e.touches[0].clientY - offsetY) + 'px';
+    }
   });
 </script>
 
