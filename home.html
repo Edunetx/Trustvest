@@ -12,25 +12,28 @@
       background: #000;
       color: #fff;
       overflow-x: hidden;
-      user-select: none; /* Prevent Text Copy */
+      user-select: none;
     }
     .container {
       padding: 20px;
-      padding-bottom: 80px; /* To prevent navbar from covering content */
+      padding-bottom: 80px;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
     .header {
       text-align: center;
       margin-bottom: 20px;
     }
     .header img {
-      width: 80px;
+      width: 90px;
       margin-bottom: 10px;
+      filter: drop-shadow(0 0 10px rgba(0,191,166,0.7));
     }
     .header h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       color: #00bfa6;
-      text-shadow: 0 0 5px rgba(0,191,166,0.7);
+      text-shadow: 0 0 8px rgba(0,191,166,0.8);
     }
     .header p {
       color: #aaa;
@@ -104,9 +107,20 @@
     .nav-item:hover svg {
       transform: scale(1.2);
     }
+    .nav-item:active {
+      transform: scale(0.95);
+    }
     .nav-item.active {
       color: #00bfa6;
       font-weight: bold;
+    }
+    @media (max-width: 480px) {
+      .nav-bar {
+        padding: 12px 0;
+      }
+      iframe[title="chat widget"] {
+        bottom: 90px !important;
+      }
     }
   </style>
 </head>
@@ -178,6 +192,18 @@ s0.parentNode.insertBefore(s1,s0);
 </script>
 
 <script>
+  // Adjust Tawk AI Bubble after load
+  var Tawk_API = Tawk_API || {};
+  Tawk_API.onLoad = function() {
+    setTimeout(() => {
+      const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+      if (tawkBubble) {
+        tawkBubble.style.bottom = '70px';
+        tawkBubble.style.right = '20px';
+      }
+    }, 1000);
+  };
+
   // Route Protection
   if (!localStorage.getItem("trustvestUser")) {
     window.location.href = "login.html";
@@ -194,7 +220,7 @@ s0.parentNode.insertBefore(s1,s0);
     setTimeout(() => {
       refreshIcon.style.transform = "rotate(0deg)";
     }, 500);
-    // You can trigger balance refresh logic here
+    // Fetch updated balance logic can go here
   });
 </script>
 
