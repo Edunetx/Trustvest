@@ -4,75 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TrustVest - Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     body {
       margin: 0;
       padding: 0;
-      background: #000;
-      color: #fff;
       font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: #fff;
       height: 100vh;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-direction: column;
+      background: linear-gradient(135deg, #003333 0%, #004d4d 50%, #006666 100%);
+      background-attachment: fixed;
+      overflow: hidden;
       text-align: center;
     }
     .logo {
-      width: 120px;
+      width: 140px;
       height: auto;
       margin-bottom: 20px;
-      animation: fadeInDown 1s ease forwards;
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       margin-bottom: 10px;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.5s;
+      font-weight: 600;
     }
     p {
       font-size: 1.2rem;
-      max-width: 600px;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.8s;
-    }
-    .spinner {
-      margin-top: 30px;
-      width: 50px;
-      height: 50px;
-      border: 5px solid rgba(255, 255, 255, 0.2);
-      border-top: 5px solid #00bfa6;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 1.2s;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
     .footer {
       position: absolute;
       bottom: 20px;
       font-size: 0.9rem;
-      color: #888;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-      animation-delay: 1.5s;
+      color: rgba(255,255,255,0.6);
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .overlay-pattern {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('https://www.transparenttextures.com/patterns/connected.png');
+      opacity: 0.05;
+      z-index: 0;
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+    }
   </style>
 </head>
 <body>
-  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
-  <h1>TrustVest</h1>
-  <p>We are building a transparent and sustainable financial empowerment platform for Nigerians. TrustVest is designed to help individuals grow their finances responsibly.</p>
-  <div class="spinner"></div>
-  <div class="footer">© 2025 TrustVest. All Rights Reserved.</div>
+  <div class="overlay-pattern"></div>
+  <div class="content">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo" class="logo">
+    <h1>TrustVest</h1>
+    <p>Empowering Nigerians with a transparent and sustainable digital investment platform. Launching soon with innovation at its core.</p>
+    <div class="footer">© 2025 TrustVest. All Rights Reserved.</div>
+  </div>
 </body>
 </html>
