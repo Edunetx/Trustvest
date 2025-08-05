@@ -12,11 +12,11 @@
       background: #000;
       color: #fff;
       overflow-x: hidden;
-      user-select: none;
+      user-select: none; /* Prevent Text Copy */
     }
     .container {
       padding: 20px;
-      padding-bottom: 80px;
+      padding-bottom: 100px; /* Space for Nav */
     }
     .header {
       text-align: center;
@@ -32,36 +32,50 @@
       color: #00bfa6;
       text-shadow: 0 0 5px rgba(0,191,166,0.7);
     }
+    .progress-bar {
+      width: 90%;
+      margin: 20px auto;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      height: 20px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00bfa6, #00d1b2);
+      width: 0%;
+      transition: width 1s ease;
+    }
+    .plans-section {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
     .plan-card {
-      background: rgba(255,255,255,0.05);
+      position: relative;
       border: 1px solid #00bfa6;
       border-radius: 15px;
       padding: 20px;
-      margin: 10px 20px;
-      position: relative;
+      background: rgba(255,255,255,0.05);
+      overflow: hidden;
     }
     .plan-card::before {
       content: attr(data-icon);
       position: absolute;
       top: 10px;
-      right: 15px;
-      font-size: 3rem;
-      opacity: 0.05;
+      right: 10px;
+      font-size: 4rem;
+      opacity: 0.1;
     }
     .plan-title {
       font-size: 1.2rem;
       color: #00d1b2;
       margin-bottom: 10px;
     }
-    .plan-description {
-      font-size: 0.9rem;
-      color: #ccc;
-      margin-bottom: 10px;
-    }
     .plan-price {
-      font-weight: bold;
       font-size: 1rem;
-      color: #fff;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
     .purchase-btn {
       background: #00bfa6;
@@ -77,6 +91,55 @@
     .purchase-btn:hover {
       transform: scale(1.05);
     }
+    .recent-purchases {
+      margin-top: 30px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #00bfa6;
+      border-radius: 15px;
+      padding: 15px;
+    }
+    .recent-purchases h3 {
+      margin-bottom: 10px;
+      color: #00d1b2;
+    }
+    .recent-item {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #0a0a0a;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid #222;
+      z-index: 999;
+    }
+    .nav-item {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-item svg {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 5px;
+      fill: #00bfa6;
+      transition: transform 0.3s ease;
+    }
+    .nav-item:hover svg {
+      transform: scale(1.2);
+    }
+    .nav-item.active {
+      color: #00bfa6;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -84,17 +147,57 @@
 <div class="container">
   <div class="header">
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <h1>Our Investment Plans</h1>
+    <h1>Investment Plans</h1>
   </div>
-  <div id="plans-container">
-    <!-- Plans will be dynamically populated here -->
+
+  <!-- Expiry Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Plans will populate here -->
+  <div class="plans-section" id="plansSection">
+    <!-- Dynamic Plans Loaded via Firebase -->
+  </div>
+
+  <!-- Recent Purchases -->
+  <div class="recent-purchases">
+    <h3>Recent Purchases</h3>
+    <div id="recentPurchasesList">
+      <!-- Dynamic Recent Purchases -->
+    </div>
   </div>
 </div>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-<script>
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <div class="nav-item" data-page="home.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
+  </div>
+  <div class="nav-item active" data-page="plans.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+    Plans
+  </div>
+  <div class="nav-item" data-page="teams.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    Teams
+  </div>
+  <div class="nav-item" data-page="me.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Me
+  </div>
+</div>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs, addDoc, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
     authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -103,102 +206,164 @@
     messagingSenderId: "676220073092",
     appId: "1:676220073092:web:b358f8821ac33da9babed1"
   };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  const auth = firebase.auth();
 
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // Auto Seed Plans if Empty
   async function seedPlans() {
-    const plansRef = db.collection("plans");
-    const snapshot = await plansRef.get();
+    const plansRef = collection(db, "plans");
+    const snapshot = await getDocs(plansRef);
+
     if (snapshot.empty) {
-      const plans = [
-        { name: "PGVIP 1", price: 3000, income: 750, icon: "💡" },
-        { name: "PGVIP 2", price: 6000, income: 1500, icon: "🪙" },
-        { name: "PGVIP 3", price: 10000, income: 2500, icon: "📈" },
-        { name: "PGVIP 4", price: 20000, income: 5000, icon: "🚀" },
-        { name: "PGVIP 5", price: 30000, income: 7500, icon: "💼" },
-        { name: "PGVIP 6", price: 50000, income: 12500, icon: "👑" },
-        { name: "PGVIP 7", price: 70000, income: 17500, icon: "🔥" },
-        { name: "PGVIP 8", price: 100000, income: 25000, icon: "🌟" },
-        { name: "PGVIP 9", price: 200000, income: 50000, icon: "🏆" },
-        { name: "PGVIP 10", price: 500000, income: 125000, icon: "💎" },
-        { name: "PGVIP 11", price: 1000000, income: 250000, icon: "🐉" }
+      const defaultPlans = [
+        { name: 'TrustLite', price: 3000, icon: '💡' },
+        { name: 'TrustPremium', price: 5000, icon: '🚀' },
+        { name: 'TrustBoosted', price: 10000, icon: '⚡' },
+        { name: 'TrustElite', price: 20000, icon: '🏆' },
+        { name: 'TrustLegend', price: 50000, icon: '👑' }
       ];
-      for (let plan of plans) {
-        await plansRef.add(plan);
+      for (let plan of defaultPlans) {
+        await addDoc(plansRef, plan);
       }
     }
   }
 
-  async function loadPlans() {
-    await seedPlans();
-    const plansRef = db.collection("plans");
-    const snapshot = await plansRef.get();
-    const plansContainer = document.getElementById("plans-container");
-    plansContainer.innerHTML = "";
+  // Load Plans Dynamically
+  async function loadPlans(userData) {
+    const plansRef = collection(db, "plans");
+    const snapshot = await getDocs(plansRef);
+    const plansSection = document.getElementById("plansSection");
+    plansSection.innerHTML = '';
 
-    snapshot.forEach(doc => {
-      const plan = doc.data();
-      const planCard = document.createElement("div");
-      planCard.className = "plan-card";
-      planCard.setAttribute("data-icon", plan.icon);
+    snapshot.forEach(docSnap => {
+      const plan = docSnap.data();
+      const isActive = userData.activePlan === plan.name;
+      const planCard = document.createElement('div');
+      planCard.className = 'plan-card';
+      planCard.setAttribute('data-icon', plan.icon);
       planCard.innerHTML = `
         <div class="plan-title">${plan.name}</div>
-        <div class="plan-description">Earn ₦${plan.income.toLocaleString()} every 20hrs</div>
-        <div class="plan-price">Price: ₦${plan.price.toLocaleString()}</div>
-        <button class="purchase-btn" onclick="purchasePlan('${doc.id}', ${plan.price})">Purchase</button>
+        <div class="plan-price">₦${plan.price.toLocaleString()}</div>
+        <button class="purchase-btn" onclick="confirmPurchase('${docSnap.id}', '${plan.name}', ${plan.price})">Purchase</button>
       `;
-      plansContainer.appendChild(planCard);
+      plansSection.appendChild(planCard);
     });
   }
 
-  async function purchasePlan(planId, planPrice) {
-    const user = auth.currentUser;
-    if (!user) {
-      alert('You must be logged in.');
-      window.location.href = 'login.html';
+  // Load Recent Purchases
+  async function loadRecentPurchases(userId) {
+    const purchasesRef = collection(db, "users", userId, "purchasedPlans");
+    const snapshot = await getDocs(purchasesRef);
+    const recentList = document.getElementById("recentPurchasesList");
+    recentList.innerHTML = '';
+
+    if (snapshot.empty) {
+      recentList.innerHTML = '<div class="recent-item">No purchases yet.</div>';
       return;
     }
-    const userRef = db.collection('users').doc(user.uid);
-    const userDoc = await userRef.get();
-    if (!userDoc.exists) {
-      alert('User data not found.');
-      return;
-    }
-    const balance = userDoc.data().balance || 0;
-    if (balance >= planPrice) {
-      await userRef.update({ balance: balance - planPrice });
-      await userRef.collection('purchasedPlans').add({
-        planId: planId,
-        purchasedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      alert('Plan Purchased Successfully!');
-    } else {
-      window.location.href = `deposit.html?amount=${planPrice}`;
-    }
+
+    snapshot.forEach(docSnap => {
+      const purchase = docSnap.data();
+      const item = document.createElement('div');
+      item.className = 'recent-item';
+      item.textContent = `${purchase.planName} - Purchased on ${purchase.purchasedAt.toDate().toLocaleDateString()}`;
+      recentList.appendChild(item);
+    });
   }
 
-  auth.onAuthStateChanged(user => {
+  // Update Expiry Progress Bar Dummy (50% Static for now)
+  function updateProgressBar() {
+    const progressFill = document.getElementById("progressFill");
+    progressFill.style.width = "50%";
+  }
+
+  // Load User Data & Plans
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
-      loadPlans();
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        await seedPlans();
+        await loadPlans(userData);
+        await loadRecentPurchases(user.uid);
+        updateProgressBar();
+      } else {
+        alert("User data not found.");
+      }
     } else {
       window.location.href = 'login.html';
     }
   });
-</script>
-<div class="nav-bar" style="position:fixed; bottom:0; width:100%; background:#0a0a0a; display:flex; justify-content:space-around; padding:10px 0; border-top:1px solid #222;">
-  <div class="nav-item" onclick="navigateTo('home.html')">🏠<br>Home</div>
-  <div class="nav-item active" onclick="navigateTo('plans.html')">📊<br>Plans</div>
-  <div class="nav-item" onclick="navigateTo('teams.html')">👥<br>Teams</div>
-  <div class="nav-item" onclick="navigateTo('me.html')">👤<br>Me</div>
-</div>
 
-<script>
-function navigateTo(page) {
-  window.location.href = page;
-}
-</script>
+  // Purchase Logic with Confirmation Overlay
+  window.confirmPurchase = function(planId, planName, planPrice) {
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.background = 'rgba(0,0,0,0.8)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '10000';
+    overlay.innerHTML = `
+      <div style="background:#fff; color:#000; padding:20px; border-radius:10px; text-align:center;">
+        <p>Confirm Purchase of ${planName} for ₦${planPrice.toLocaleString()}?</p>
+        <button id="confirmYes" style="margin-right:10px;">Yes</button>
+        <button id="confirmNo">No</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
 
+    document.getElementById('confirmNo').onclick = () => {
+      overlay.remove();
+    };
+
+    document.getElementById('confirmYes').onclick = async () => {
+      overlay.innerHTML = `<p style="color:#fff;">Processing...</p>`;
+      const user = auth.currentUser;
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+        alert("User data not found.");
+        overlay.remove();
+        return;
+      }
+
+      const balance = userDoc.data().balance || 0;
+      if (balance >= planPrice) {
+        await updateDoc(userRef, {
+          balance: balance - planPrice,
+          activePlan: planName
+        });
+        await addDoc(collection(db, "users", user.uid, "purchasedPlans"), {
+          planId: planId,
+          planName: planName,
+          purchasedAt: serverTimestamp()
+        });
+        overlay.innerHTML = `<p style="color:#00bfa6;">Purchase Successful!</p>`;
+        setTimeout(() => window.location.reload(), 1500);
+      } else {
+        alert("Insufficient balance. Redirecting to Deposit...");
+        window.location.href = `deposit.html?amount=${planPrice}`;
+      }
+    };
+  }
+
+  // Navigation Events
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const page = this.getAttribute('data-page');
+      window.location.href = page;
+    });
+  });
+</script>
+<!-- Tawk.to Apollo AI Chat -->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -218,8 +383,140 @@ Tawk_API.onLoad = function() {
 };
 </script>
 
-<footer style="text-align:center; padding:20px; color:#444; font-size:0.8rem;">
+<footer style="text-align:center; color:#555; font-size:12px; margin-top:20px; margin-bottom:80px;">
   &copy; 2025 TrustVest. All Rights Reserved.
+</footer>
+
+<!-- Spinner Overlay -->
+<style>
+  .spinner-overlay {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    display: none;
+  }
+  .spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #00bfa6;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+</style>
+
+<div class="spinner-overlay" id="spinnerOverlay">
+  <div class="spinner"></div>
+</div>
+
+<script>
+  // Attach Loading Spinner to All Buttons
+  document.querySelectorAll('.purchase-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('spinnerOverlay').style.display = 'flex';
+    });
+  });
+
+  // Dynamic Icon Backgrounds on Plan Cards
+  const observer = new MutationObserver(() => {
+    document.querySelectorAll('.plan-card').forEach(card => {
+      const icon = card.getAttribute('data-icon');
+      card.style.setProperty('--icon', `"${icon}"`);
+      card.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" font-size="50"><text y="50%">${icon}</text></svg>')`;
+      card.style.backgroundRepeat = 'no-repeat';
+      card.style.backgroundPosition = 'right 10px top 10px';
+      card.style.backgroundSize = '40px 40px';
+    });
+  });
+
+  observer.observe(document.getElementById("plansSection"), { childList: true, subtree: true });
+</script>
+
+<style>
+  .plan-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #00bfa6;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px 20px;
+    position: relative;
+    background-position: right 10px top 10px;
+    background-size: 40px 40px;
+  }
+  .recent-item {
+    background: rgba(255,255,255,0.05);
+    margin: 10px 20px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  .progress-bar-container {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 15px 20px;
+    height: 10px;
+  }
+  .progress-bar-fill {
+    background: #00bfa6;
+    height: 100%;
+    width: 0%;
+    transition: width 1s ease;
+  }
+</style>
+
+<div class="progress-bar-container">
+  <div class="progress-bar-fill" id="progressFill"></div>
+</div>
+
+<div class="section">
+  <h3>Recent Purchases</h3>
+  <div id="recentPurchasesList">
+    <!-- Recent Purchases Loaded Here -->
+  </div>
+</div>
+<!-- Tawk.to Apollo AI Chat -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+Tawk_API.onLoad = function() {
+  const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+  if (tawkBubble) {
+    tawkBubble.style.bottom = '70px'; // Adjusted to lift above nav bar
+    tawkBubble.style.right = '20px';
+  }
+};
+</script>
+
+<script>
+  // Navigation Functionality (Global)
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const page = this.getAttribute('data-page');
+      window.location.href = page;
+    });
+  });
+</script>
+
+<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0;">
+  &copy; 2025 TrustVest. All rights reserved.
 </footer>
 
 </body>
