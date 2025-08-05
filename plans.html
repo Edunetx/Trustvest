@@ -1,229 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest - Plans</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
-      user-select: none; /* Prevent Copying */
-    }
-    .container {
-      padding: 20px;
-      padding-bottom: 100px; /* For Navbar */
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .header img {
-      width: 80px;
-      margin-bottom: 10px;
-    }
-    .header h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #00bfa6;
-      text-shadow: 0 0 5px rgba(0,191,166,0.7);
-    }
-    .progress-bar {
-      width: 90%;
-      margin: 20px auto;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      overflow: hidden;
-      height: 20px;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #00bfa6, #00d1b2);
-      width: 0%;
-      transition: width 1s ease;
-    }
-    .plans-section {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .plan-card {
-      position: relative;
-      border: 1px solid #00bfa6;
-      border-radius: 15px;
-      padding: 20px;
-      background: rgba(255,255,255,0.05);
-      overflow: hidden;
-      background-repeat: no-repeat;
-      background-position: right 10px top 10px;
-      background-size: 40px 40px;
-    }
-    .plan-title {
-      font-size: 1.2rem;
-      color: #00d1b2;
-      margin-bottom: 10px;
-    }
-    .plan-price {
-      font-size: 1rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .purchase-btn {
-      background: #00bfa6;
-      color: #000;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      float: right;
-      font-weight: bold;
-      transition: 0.3s ease;
-    }
-    .purchase-btn:hover {
-      transform: scale(1.05);
-    }
-    .recent-purchases {
-      margin-top: 30px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid #00bfa6;
-      border-radius: 15px;
-      padding: 15px;
-    }
-    .recent-purchases h3 {
-      margin-bottom: 10px;
-      color: #00d1b2;
-    }
-    .recent-item {
-      font-size: 0.9rem;
-      color: #ccc;
-      background: rgba(255,255,255,0.05);
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 10px;
-    }
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #0a0a0a;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 10px 0;
-      border-top: 1px solid #222;
-      z-index: 999;
-    }
-    .nav-item {
-      text-align: center;
-      color: #888;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .nav-item svg {
-      width: 24px;
-      height: 24px;
-      margin-bottom: 5px;
-      fill: #00bfa6;
-      transition: transform 0.3s ease;
-    }
-    .nav-item:hover svg {
-      transform: scale(1.2);
-    }
-    .nav-item.active {
-      color: #00bfa6;
-      font-weight: bold;
-    }
-
-    .spinner-overlay {
-      position: fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      display: none;
-    }
-    .spinner {
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #00bfa6;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
-    }
-  </style>
-</head>
-<body>
-
-<div class="container">
-  <div class="header">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <h1>Investment Plans</h1>
-  </div>
-
-  <!-- Expiry Progress Bar -->
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
-  </div>
-
-  <!-- Plans Section (Dynamic from Firebase) -->
-  <div class="plans-section" id="plansSection">
-    <!-- Firebase Loaded Plans Will Appear Here -->
-  </div>
-
-  <!-- Recent Purchases Section -->
-  <div class="recent-purchases">
-    <h3>Recent Purchases</h3>
-    <div id="recentPurchasesList">
-      <!-- Dynamic Purchases -->
-    </div>
-  </div>
-</div>
-
-<!-- Navigation Bar -->
-<div class="nav-bar">
-  <div class="nav-item" data-page="home.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    Home
-  </div>
-  <div class="nav-item active" data-page="plans.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
-    Plans
-  </div>
-  <div class="nav-item" data-page="teams.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    Teams
-  </div>
-  <div class="nav-item" data-page="me.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    Me
-  </div>
-</div>
-
-<!-- Spinner Overlay -->
-<div class="spinner-overlay" id="spinnerOverlay">
-  <div class="spinner"></div>
-</div>
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-
+<!-- CHUNK 1 START -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, getDocs, addDoc, doc, getDoc, updateDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, enableIndexedDbPersistence, collection, onSnapshot, doc, getDoc, updateDoc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
@@ -239,309 +17,222 @@
   const db = getFirestore(app);
   const auth = getAuth(app);
 
-  // Auto Seed Plans if Empty
-  async function seedPlans() {
-    const plansRef = collection(db, "plans");
-    const snapshot = await getDocs(plansRef);
+  // Enable Offline Persistence
+  enableIndexedDbPersistence(db).catch((err) => {
+    console.error("Offline Persistence Failed", err);
+  });
 
-    if (snapshot.empty) {
-      const defaultPlans = [
-        { name: 'TrustLite', price: 3000, icon: '💡' },
-        { name: 'TrustPremium', price: 5000, icon: '🚀' },
-        { name: 'TrustBoosted', price: 10000, icon: '⚡' },
-        { name: 'TrustElite', price: 20000, icon: '🏆' },
-        { name: 'TrustLegend', price: 50000, icon: '👑' }
-      ];
-      for (let plan of defaultPlans) {
-        await addDoc(plansRef, plan);
-      }
-    }
-  }
+  let currentUserData = null;
 
-  // Load Plans Dynamically & Sort by Price Ascending
-  async function loadPlans(userData) {
-    const plansRef = collection(db, "plans");
-    const q = query(plansRef, orderBy("price", "asc"));
-    const snapshot = await getDocs(q);
-    const plansSection = document.getElementById("plansSection");
-    plansSection.innerHTML = '';
-
-    snapshot.forEach(docSnap => {
-      const plan = docSnap.data();
-      const planCard = document.createElement('div');
-      planCard.className = 'plan-card';
-      planCard.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" font-size="50"><text y="50%">${plan.icon}</text></svg>')`;
-      planCard.innerHTML = `
-        <div class="plan-title">${plan.name}</div>
-        <div class="plan-price">₦${plan.price.toLocaleString()}</div>
-        <button class="purchase-btn" data-id="${docSnap.id}" data-name="${plan.name}" data-price="${plan.price}">Purchase</button>
-      `;
-      plansSection.appendChild(planCard);
-    });
-
-    attachPurchaseEvents();
-  }
-
-  // Load Recent Purchases
-  async function loadRecentPurchases(userId) {
-    const purchasesRef = collection(db, "users", userId, "purchasedPlans");
-    const q = query(purchasesRef, orderBy("purchasedAt", "desc"));
-    const snapshot = await getDocs(q);
-    const recentList = document.getElementById("recentPurchasesList");
-    recentList.innerHTML = '';
-
-    if (snapshot.empty) {
-      recentList.innerHTML = '<div class="recent-item">No purchases yet.</div>';
-      return;
-    }
-
-    snapshot.forEach(docSnap => {
-      const purchase = docSnap.data();
-      const item = document.createElement('div');
-      item.className = 'recent-item';
-      item.textContent = `${purchase.planName} - ${purchase.purchasedAt.toDate().toLocaleDateString()}`;
-      recentList.appendChild(item);
-    });
-  }
-
-  // Update Progress Bar based on Dummy Expiry (Static 50% for now)
-  function updateProgressBar() {
-    const progressFill = document.getElementById("progressFill");
-    progressFill.style.width = "50%";
-  }
-
-  // Load User Data & Trigger All
+  // Authenticate & Listen to Realtime Plan Updates
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        await seedPlans();
-        await loadPlans(userData);
-        await loadRecentPurchases(user.uid);
-        updateProgressBar();
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        currentUserData = userSnap.data();
+        listenToPlansRealtime();
+        listenToRecentPurchases(user.uid);
+        updateProgressBar(currentUserData.activePlan);
       } else {
-        alert("User data not found.");
+        window.location.href = "login.html";
       }
     } else {
-      window.location.href = 'login';
+      window.location.href = "login.html";
     }
   });
-</script>
-<script>
-  // Spinner Overlay Control
-  function showSpinner() {
-    document.getElementById('spinnerOverlay').style.display = 'flex';
+
+  function listenToPlansRealtime() {
+    const plansRef = collection(db, "plans");
+    onSnapshot(plansRef, (snapshot) => {
+      const plansContainer = document.getElementById("plansSection");
+      plansContainer.innerHTML = "";
+      const plans = [];
+      snapshot.forEach(doc => {
+        plans.push({ id: doc.id, ...doc.data() });
+      });
+
+      // Sort by price ascending
+      plans.sort((a, b) => a.price - b.price);
+
+      plans.forEach(plan => {
+        const planCard = document.createElement("div");
+        planCard.className = "plan-card";
+        planCard.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" font-size="50"><text y="50%">${plan.icon}</text></svg>')`;
+        planCard.innerHTML = `
+          <div class="plan-title">${plan.name}</div>
+          <div class="plan-price">₦${plan.price.toLocaleString()}</div>
+          <button class="purchase-btn" data-plan-id="${plan.id}" data-plan-name="${plan.name}" data-plan-price="${plan.price}">Purchase</button>
+        `;
+        plansContainer.appendChild(planCard);
+      });
+
+      attachPurchaseEvent();
+    });
   }
 
-  function hideSpinner() {
-    document.getElementById('spinnerOverlay').style.display = 'none';
-  }
-
-  // Attach Event Listeners to Purchase Buttons
-  function attachPurchaseEvents() {
-    document.querySelectorAll('.purchase-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const planId = btn.getAttribute('data-id');
-        const planName = btn.getAttribute('data-name');
-        const planPrice = parseInt(btn.getAttribute('data-price'));
+  function attachPurchaseEvent() {
+    document.querySelectorAll('.purchase-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const planId = button.getAttribute('data-plan-id');
+        const planName = button.getAttribute('data-plan-name');
+        const planPrice = parseInt(button.getAttribute('data-plan-price'));
         confirmPurchase(planId, planName, planPrice);
       });
     });
   }
-
-  // Purchase Confirmation Overlay Logic
+</script>
+<!-- CHUNK 1 END -->
+<!-- CHUNK 2 START -->
+<script type="module">
   async function confirmPurchase(planId, planName, planPrice) {
     const overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.background = 'rgba(0,0,0,0.85)';
-    overlay.style.display = 'flex';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.style.zIndex = '10000';
+    overlay.style.cssText = `
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.7);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 10000;
+    `;
     overlay.innerHTML = `
       <div style="background:#fff; color:#000; padding:20px; border-radius:10px; text-align:center;">
-        <p>Confirm Purchase of <strong>${planName}</strong> for <strong>₦${planPrice.toLocaleString()}</strong>?</p>
-        <button id="confirmYes" style="margin-right:10px;">Yes</button>
-        <button id="confirmNo">No</button>
+        <p>Confirm Purchase of <b>${planName}</b> for ₦${planPrice.toLocaleString()}?</p>
+        <button id="confirmYes" style="margin:10px;">Yes</button>
+        <button id="confirmNo" style="margin:10px;">No</button>
       </div>
     `;
     document.body.appendChild(overlay);
 
-    document.getElementById('confirmNo').onclick = () => {
-      overlay.remove();
-    };
+    document.getElementById('confirmNo').onclick = () => overlay.remove();
 
     document.getElementById('confirmYes').onclick = async () => {
-      overlay.innerHTML = `<p style="color:#fff;">Processing Purchase...</p>`;
-      showSpinner();
+      overlay.innerHTML = `<p style="color:#fff;">Processing...</p>`;
+      const user = auth.currentUser;
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
 
-      const user = firebase.auth().currentUser;
-      const userRef = firebase.firestore().doc(`users/${user.uid}`);
-      const userDoc = await userRef.get();
-
-      if (!userDoc.exists) {
-        alert("User data not found.");
-        hideSpinner();
-        overlay.remove();
-        return;
-      }
-
-      let userData = userDoc.data();
-      let balance = userData.balance || 0;
-
-      if (balance >= planPrice) {
-        await userRef.update({
-          balance: balance - planPrice,
-          activePlan: planName
-        });
-
-        await firebase.firestore().collection("users").doc(user.uid).collection("purchasedPlans").add({
-          planId: planId,
-          planName: planName,
-          purchasedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        overlay.innerHTML = `<p style="color:#00bfa6;">Purchase Successful!</p>`;
-        setTimeout(() => window.location.reload(), 1500);
-      } else {
-        hideSpinner();
-        alert(`Insufficient Balance. Redirecting to Deposit...`);
-        window.location.href = `deposit.html?amount=${planPrice}`;
+      if (userDoc.exists()) {
+        let balance = userDoc.data().balance || 0;
+        if (balance >= planPrice) {
+          await updateDoc(userRef, {
+            balance: balance - planPrice,
+            activePlan: planName
+          });
+          await addDoc(collection(db, "users", user.uid, "purchasedPlans"), {
+            planId: planId,
+            planName: planName,
+            purchasedAt: serverTimestamp()
+          });
+          showToast("Purchase Successful!", "success");
+          overlay.remove();
+          updateProgressBar(planName);
+          loadRecentPurchases(user.uid);
+        } else {
+          showToast("Insufficient Balance! Redirecting...", "error");
+          overlay.remove();
+          setTimeout(() => window.location.href = `deposit.html?amount=${planPrice}`, 1000);
+        }
       }
     };
   }
 
-  // Spinner for All Purchases
-  document.querySelectorAll('.purchase-btn').forEach(btn => {
-    btn.addEventListener('click', showSpinner);
-  });
+  function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.innerText = message;
+    toast.style.cssText = `
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+      background: ${type === 'success' ? '#00bfa6' : type === 'error' ? '#ff4c4c' : '#333'};
+      color: #fff; padding: 10px 20px; border-radius: 25px;
+      z-index: 9999; font-weight: bold;
+      animation: fadeToast 3s forwards;
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  function updateProgressBar(activePlanName) {
+    const plans = ["TrustLite", "TrustPremium", "TrustBoosted", "TrustElite", "TrustLegend"];
+    const index = plans.indexOf(activePlanName);
+    const percentage = ((index + 1) / plans.length) * 100;
+    document.getElementById("progressFill").style.width = `${percentage}%`;
+  }
+
+  function listenToRecentPurchases(userId) {
+    const purchasesRef = collection(db, "users", userId, "purchasedPlans");
+    onSnapshot(purchasesRef, (snapshot) => {
+      const recentList = document.getElementById("recentPurchasesList");
+      recentList.innerHTML = "";
+      if (snapshot.empty) {
+        recentList.innerHTML = `<div class="recent-item">No purchases yet.</div>`;
+      } else {
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const item = document.createElement("div");
+          item.className = "recent-item";
+          item.innerText = `${data.planName} - ${data.purchasedAt?.toDate().toLocaleDateString()}`;
+          recentList.appendChild(item);
+        });
+      }
+    });
+  }
 </script>
-
-<!-- Spinner Overlay -->
-<div class="spinner-overlay" id="spinnerOverlay">
-  <div class="spinner"></div>
-</div>
-
 <style>
-  .spinner-overlay {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  }
-  .spinner {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #00bfa6;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
+  @keyframes fadeToast {
+    0% { opacity: 1; bottom: 80px; }
+    80% { opacity: 1; }
+    100% { opacity: 0; bottom: 100px; }
   }
 </style>
-<!-- Bottom Navigation Bar -->
-<div class="nav-bar">
-  <div class="nav-item" data-page="home.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    Home
-  </div>
-  <div class="nav-item active" data-page="plans.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
-    Plans
-  </div>
-  <div class="nav-item" data-page="teams.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    Teams
-  </div>
-  <div class="nav-item" data-page="me.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    Me
-  </div>
+<!-- CHUNK 2 END -->
+<!-- CHUNK 3 START -->
+<!-- Spinner Overlay -->
+<div id="spinnerOverlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;justify-content:center;align-items:center;z-index:9999;">
+  <div style="border:5px solid #f3f3f3;border-top:5px solid #00bfa6;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;"></div>
 </div>
 
-<!-- Navigation Event Script -->
 <script>
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function() {
-      const page = this.getAttribute('data-page');
+  function toggleSpinner(show) {
+    document.getElementById("spinnerOverlay").style.display = show ? 'flex' : 'none';
+  }
+
+  // Navigation Item Click Handler
+  document.querySelectorAll('.nav-item').forEach(nav => {
+    nav.addEventListener('click', () => {
+      const page = nav.getAttribute('data-page');
       window.location.href = page;
     });
   });
 </script>
 
-<!-- Tawk.to Apollo AI Chat Widget -->
-<script type="text/javascript">
-  var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-  (function() {
-    var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-    s1.async = true;
-    s1.src = 'https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
-    s1.charset = 'UTF-8';
-    s1.setAttribute('crossorigin', '*');
-    s0.parentNode.insertBefore(s1, s0);
-  })();
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+</style>
 
+<!-- Tawk.to AI Chat Integration -->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
   Tawk_API.onLoad = function() {
     const tawkBubble = document.querySelector('iframe[title="chat widget"]');
     if (tawkBubble) {
-      tawkBubble.style.bottom = '70px'; // Avoid navbar overlay
+      tawkBubble.style.bottom = '70px'; 
       tawkBubble.style.right = '20px';
     }
   };
 </script>
 
-<!-- Footer -->
 <footer style="text-align:center; color:#555; font-size:12px; margin-top:20px; margin-bottom:80px;">
   &copy; 2025 TrustVest. All Rights Reserved.
 </footer>
-
-<!-- Cleanup Enhancements -->
-<script>
-  // Dynamic Icon Rendering on Plan Cards
-  const planObserver = new MutationObserver(() => {
-    document.querySelectorAll('.plan-card').forEach(card => {
-      const icon = card.getAttribute('data-icon');
-      card.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" font-size="50"><text y="50%">${icon}</text></svg>')`;
-      card.style.backgroundRepeat = 'no-repeat';
-      card.style.backgroundPosition = 'right 10px top 10px';
-      card.style.backgroundSize = '40px 40px';
-    });
-  });
-
-  planObserver.observe(document.getElementById("plansSection"), { childList: true, subtree: true });
-</script>
-
-<style>
-  .plan-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #00bfa6;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 10px 20px;
-    position: relative;
-    background-position: right 10px top 10px;
-    background-size: 40px 40px;
-  }
-  .recent-item {
-    background: rgba(255,255,255,0.05);
-    margin: 10px 20px;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    color: #ccc;
-  }
-</style>
 </body>
 </html>
+<!-- CHUNK 3 END -->
