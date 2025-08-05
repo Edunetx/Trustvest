@@ -12,11 +12,11 @@
       background: #000;
       color: #fff;
       overflow-x: hidden;
-      user-select: none; /* Prevent Text Copy */
+      user-select: none;
     }
     .container {
       padding: 20px;
-      padding-bottom: 80px; /* Leave space for navbar */
+      padding-bottom: 80px;
     }
     .header {
       text-align: center;
@@ -37,44 +37,47 @@
       border: 1px solid #00bfa6;
       border-radius: 15px;
       padding: 20px;
-      margin: 15px 0;
+      margin: 10px 20px;
       position: relative;
-      overflow: hidden;
     }
     .plan-card::before {
-      content: '';
+      content: attr(data-icon);
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 100px;
-      height: 100px;
-      background: url('https://cdn-icons-png.flaticon.com/512/1828/1828817.png') no-repeat center/contain;
-      opacity: 0.1;
+      top: 10px;
+      right: 15px;
+      font-size: 3rem;
+      opacity: 0.05;
     }
-    .plan-name {
+    .plan-title {
       font-size: 1.2rem;
-      font-weight: bold;
       color: #00d1b2;
+      margin-bottom: 10px;
     }
-    .plan-details {
-      margin-top: 10px;
-      color: #aaa;
+    .plan-description {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 10px;
     }
-    .buy-button {
+    .plan-price {
+      font-weight: bold;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .purchase-btn {
       background: #00bfa6;
       color: #000;
-      padding: 10px 20px;
+      padding: 10px 15px;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 15px;
+      float: right;
       font-weight: bold;
-      transition: background 0.3s ease;
+      transition: 0.3s ease;
     }
-    .buy-button:hover {
-      background: #00d1b2;
+    .purchase-btn:hover {
+      transform: scale(1.05);
     }
-    </style>
+  </style>
 </head>
 <body>
 
@@ -83,33 +86,14 @@
     <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
     <h1>Our Investment Plans</h1>
   </div>
-
-  <div id="plansContainer">
-    <!-- Plans will be dynamically loaded here from Firestore -->
+  <div id="plans-container">
+    <!-- Plans will be dynamically populated here -->
   </div>
 </div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-<div class="nav-bar">
-  <div class="nav-item" onclick="navigateTo('home.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    Home
-  </div>
-  <div class="nav-item active">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
-    Plans
-  </div>
-  <div class="nav-item" onclick="navigateTo('teams.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    Teams
-  </div>
-  <div class="nav-item" onclick="navigateTo('me.html')">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    Me
-  </div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
@@ -121,80 +105,100 @@
   };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
-</script>
-<script>
-  // Route Protection
-  if (!localStorage.getItem("trustvestUser")) {
-    window.location.href = "login.html";
-  }
+  const auth = firebase.auth();
 
-  function navigateTo(page) {
-    window.location.href = page;
-  }
-
-  // Load Plans from Firestore
-  const plansContainer = document.getElementById('plansContainer');
-
-  function loadPlans() {
-    db.collection('plans').get().then(snapshot => {
-      if (snapshot.empty) {
-        // Auto create sample plans if none exist
-        const defaultPlans = [
-          { name: 'TrustLite', price: 5000, returns: '₦500 Daily', bg: 'rgba(0, 191, 166, 0.1)' },
-          { name: 'TrustPro', price: 10000, returns: '₦1,200 Daily', bg: 'rgba(0, 209, 178, 0.1)' },
-          { name: 'TrustElite', price: 20000, returns: '₦2,500 Daily', bg: 'rgba(0, 191, 166, 0.1)' },
-          { name: 'TrustMega', price: 50000, returns: '₦6,000 Daily', bg: 'rgba(0, 209, 178, 0.1)' },
-          { name: 'TrustPremium', price: 100000, returns: '₦12,500 Daily', bg: 'rgba(0, 191, 166, 0.1)' }
-        ];
-        defaultPlans.forEach(plan => {
-          db.collection('plans').add(plan);
-        });
-        setTimeout(loadPlans, 1000);
-        return;
+  async function seedPlans() {
+    const plansRef = db.collection("plans");
+    const snapshot = await plansRef.get();
+    if (snapshot.empty) {
+      const plans = [
+        { name: "PGVIP 1", price: 3000, income: 750, icon: "💡" },
+        { name: "PGVIP 2", price: 6000, income: 1500, icon: "🪙" },
+        { name: "PGVIP 3", price: 10000, income: 2500, icon: "📈" },
+        { name: "PGVIP 4", price: 20000, income: 5000, icon: "🚀" },
+        { name: "PGVIP 5", price: 30000, income: 7500, icon: "💼" },
+        { name: "PGVIP 6", price: 50000, income: 12500, icon: "👑" },
+        { name: "PGVIP 7", price: 70000, income: 17500, icon: "🔥" },
+        { name: "PGVIP 8", price: 100000, income: 25000, icon: "🌟" },
+        { name: "PGVIP 9", price: 200000, income: 50000, icon: "🏆" },
+        { name: "PGVIP 10", price: 500000, income: 125000, icon: "💎" },
+        { name: "PGVIP 11", price: 1000000, income: 250000, icon: "🐉" }
+      ];
+      for (let plan of plans) {
+        await plansRef.add(plan);
       }
+    }
+  }
 
-      plansContainer.innerHTML = '';
-      snapshot.forEach(doc => {
-        const plan = doc.data();
-        const planCard = document.createElement('div');
-        planCard.style.background = plan.bg;
-        planCard.style.border = '1px solid #00bfa6';
-        planCard.style.borderRadius = '15px';
-        planCard.style.padding = '20px';
-        planCard.style.margin = '10px 20px';
-        planCard.style.position = 'relative';
-        planCard.innerHTML = `
-          <h3 style="color: #00d1b2;">${plan.name}</h3>
-          <p>Price: ₦${plan.price.toLocaleString()}</p>
-          <p>Returns: ${plan.returns}</p>
-          <button style="padding: 10px 20px; background: #00bfa6; color: #000; border: none; border-radius: 10px; cursor: pointer;" onclick="purchasePlan('${doc.id}', ${plan.price})">Purchase</button>
-        `;
-        plansContainer.appendChild(planCard);
-      });
+  async function loadPlans() {
+    await seedPlans();
+    const plansRef = db.collection("plans");
+    const snapshot = await plansRef.get();
+    const plansContainer = document.getElementById("plans-container");
+    plansContainer.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const plan = doc.data();
+      const planCard = document.createElement("div");
+      planCard.className = "plan-card";
+      planCard.setAttribute("data-icon", plan.icon);
+      planCard.innerHTML = `
+        <div class="plan-title">${plan.name}</div>
+        <div class="plan-description">Earn ₦${plan.income.toLocaleString()} every 20hrs</div>
+        <div class="plan-price">Price: ₦${plan.price.toLocaleString()}</div>
+        <button class="purchase-btn" onclick="purchasePlan('${doc.id}', ${plan.price})">Purchase</button>
+      `;
+      plansContainer.appendChild(planCard);
     });
   }
 
-  loadPlans();
-
-  function purchasePlan(planId, price) {
-    const userBalance = parseInt(localStorage.getItem('userBalance')) || 0;
-    if (userBalance >= price) {
-      db.collection('purchases').add({
-        user: localStorage.getItem('trustvestUser'),
+  async function purchasePlan(planId, planPrice) {
+    const user = auth.currentUser;
+    if (!user) {
+      alert('You must be logged in.');
+      window.location.href = 'login.html';
+      return;
+    }
+    const userRef = db.collection('users').doc(user.uid);
+    const userDoc = await userRef.get();
+    if (!userDoc.exists) {
+      alert('User data not found.');
+      return;
+    }
+    const balance = userDoc.data().balance || 0;
+    if (balance >= planPrice) {
+      await userRef.update({ balance: balance - planPrice });
+      await userRef.collection('purchasedPlans').add({
         planId: planId,
-        purchasedAt: new Date()
-      }).then(() => {
-        alert('Plan Purchased Successfully!');
-        localStorage.setItem('userBalance', userBalance - price);
+        purchasedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
+      alert('Plan Purchased Successfully!');
     } else {
-      localStorage.setItem('depositAmount', price);
-      window.location.href = 'deposit.html';
+      window.location.href = `deposit.html?amount=${planPrice}`;
     }
   }
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      loadPlans();
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+<div class="nav-bar" style="position:fixed; bottom:0; width:100%; background:#0a0a0a; display:flex; justify-content:space-around; padding:10px 0; border-top:1px solid #222;">
+  <div class="nav-item" onclick="navigateTo('home.html')">🏠<br>Home</div>
+  <div class="nav-item active" onclick="navigateTo('plans.html')">📊<br>Plans</div>
+  <div class="nav-item" onclick="navigateTo('teams.html')">👥<br>Teams</div>
+  <div class="nav-item" onclick="navigateTo('me.html')">👤<br>Me</div>
+</div>
+
+<script>
+function navigateTo(page) {
+  window.location.href = page;
+}
 </script>
 
-<!-- Tawk.to Apollo AI Chat -->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -208,11 +212,15 @@ s0.parentNode.insertBefore(s1,s0);
 Tawk_API.onLoad = function() {
   const tawkBubble = document.querySelector('iframe[title="chat widget"]');
   if (tawkBubble) {
-    tawkBubble.style.bottom = '70px'; // Adjust for navbar
+    tawkBubble.style.bottom = '70px';
     tawkBubble.style.right = '20px';
   }
 };
 </script>
+
+<footer style="text-align:center; padding:20px; color:#444; font-size:0.8rem;">
+  &copy; 2025 TrustVest. All Rights Reserved.
+</footer>
 
 </body>
 </html>
