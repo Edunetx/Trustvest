@@ -12,10 +12,24 @@
       background: #000;
       color: #fff;
       user-select: none;
+      overflow-x: hidden;
     }
     .container {
       padding: 20px;
-      padding-bottom: 100px; /* For Nav Bar space */
+      padding-bottom: 80px;
+      height: 85vh;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    .logo-section {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .logo-section img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
     }
     .section {
       background: rgba(255,255,255,0.05);
@@ -94,38 +108,16 @@
       color: #00bfa6;
       font-weight: bold;
     }
-    .spinner-overlay {
-      position: fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      display: none;
-    }
-    .spinner {
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #00bfa6;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
-    }
   </style>
 </head>
 <body>
 
-<div class="spinner-overlay" id="spinnerOverlay">
-  <div class="spinner"></div>
-</div>
-
 <div class="container">
+  <!-- Logo Section -->
+  <div class="logo-section">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+  </div>
+
   <!-- User Info Section -->
   <div class="section">
     <h2>User Info</h2>
@@ -146,11 +138,26 @@
   <!-- Account Stats Section -->
   <div class="section">
     <h2>Account Summary</h2>
-    <div class="info-row"><span class="info-label">Recharge Balance:</span><span class="info-value" id="rechargeBalance">₦0</span></div>
-    <div class="info-row"><span class="info-label">Withdraw Balance:</span><span class="info-value" id="withdrawBalance">₦0</span></div>
-    <div class="info-row"><span class="info-label">Daily Income:</span><span class="info-value" id="dailyIncome">₦0</span></div>
-    <div class="info-row"><span class="info-label">Team Income:</span><span class="info-value" id="teamIncome">₦0</span></div>
-    <div class="info-row"><span class="info-label">Total Withdrawn:</span><span class="info-value" id="totalWithdraw">₦0</span></div>
+    <div class="info-row">
+      <span class="info-label">Recharge Balance:</span>
+      <span class="info-value" id="rechargeBalance">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Withdraw Balance:</span>
+      <span class="info-value" id="withdrawBalance">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Daily Income:</span>
+      <span class="info-value" id="dailyIncome">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Team Income:</span>
+      <span class="info-value" id="teamIncome">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Total Withdrawn:</span>
+      <span class="info-value" id="totalWithdraw">₦0</span>
+    </div>
   </div>
 
   <!-- Action Buttons -->
@@ -170,16 +177,31 @@
   </div>
 </div>
 
-<!-- Firebase SDKs -->
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <div class="nav-item" data-page="home.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
+  </div>
+  <div class="nav-item active" data-page="me.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Me
+  </div>
+  <div class="nav-item" data-page="teams.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    Teams
+  </div>
+  <div class="nav-item" data-page="plans.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+    Plans
+  </div>
+</div>
+
+<!-- Firebase & Script Logic -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
     authDomain: "trustvest-a1bd9.firebaseapp.com",
@@ -188,32 +210,25 @@
     messagingSenderId: "676220073092",
     appId: "1:676220073092:web:b358f8821ac33da9babed1"
   };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  const spinner = document.getElementById('spinnerOverlay');
-
-  onAuthStateChanged(auth, async (user) => {
+  auth.onAuthStateChanged(async (user) => {
     if (user) {
-      spinner.style.display = 'flex';
       document.getElementById('userEmail').innerText = user.email;
-      const userDocRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userDocRef);
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        document.getElementById('vipLevel').innerText = userData.vipLevel || 'N/A';
-        document.getElementById('status').innerText = userData.status || 'Active';
-        document.getElementById('rechargeBalance').innerText = `₦${userData.rechargeBalance?.toLocaleString() || '0'}`;
-        document.getElementById('withdrawBalance').innerText = `₦${userData.withdrawBalance?.toLocaleString() || '0'}`;
-        document.getElementById('dailyIncome').innerText = `₦${userData.dailyIncome?.toLocaleString() || '0'}`;
-        document.getElementById('teamIncome').innerText = `₦${userData.teamIncome?.toLocaleString() || '0'}`;
-        document.getElementById('totalWithdraw').innerText = `₦${userData.totalWithdraw?.toLocaleString() || '0'}`;
-      } else {
-        alert("User data not found.");
+      const docRef = db.collection("users").doc(user.uid);
+      const docSnap = await docRef.get();
+      if (docSnap.exists) {
+        const data = docSnap.data();
+        document.getElementById('vipLevel').innerText = data.vipLevel || 'N/A';
+        document.getElementById('status').innerText = data.status || 'Active';
+        document.getElementById('rechargeBalance').innerText = `₦${(data.rechargeBalance || 0).toLocaleString()}`;
+        document.getElementById('withdrawBalance').innerText = `₦${(data.withdrawBalance || 0).toLocaleString()}`;
+        document.getElementById('dailyIncome').innerText = `₦${(data.dailyIncome || 0).toLocaleString()}`;
+        document.getElementById('teamIncome').innerText = `₦${(data.teamIncome || 0).toLocaleString()}`;
+        document.getElementById('totalWithdraw').innerText = `₦${(data.totalWithdraw || 0).toLocaleString()}`;
       }
-      spinner.style.display = 'none';
     } else {
       window.location.href = 'login.html';
     }
@@ -226,24 +241,16 @@
   document.getElementById('activeDeviceLink').onclick = () => window.location.href = 'active-device.html';
   document.getElementById('historyLink').onclick = () => window.location.href = 'history.html';
   document.getElementById('playStoreLink').onclick = () => window.open('https://play.google.com/store', '_blank');
-  document.getElementById('logoutLink').onclick = () => signOut(auth).then(() => window.location.href = 'login.html');
-</script>
+  document.getElementById('logoutLink').onclick = () => auth.signOut().then(() => window.location.href = 'login.html');
 
-<!-- Bottom Navigation Bar -->
-<div class="nav-bar">
-  <div class="nav-item" data-page="home.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home
-  </div>
-  <div class="nav-item active" data-page="me.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg> Me
-  </div>
-  <div class="nav-item" data-page="teams.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg> Teams
-  </div>
-  <div class="nav-item" data-page="plans.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg> Plans
-  </div>
-</div>
+  // Nav click
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const page = this.getAttribute('data-page');
+      if (page !== 'me.html') window.location.href = page;
+    });
+  });
+</script>
 
 <!-- Tawk.to AI Chat Widget -->
 <script type="text/javascript">
@@ -265,17 +272,10 @@ Tawk_API.onLoad = function() {
 };
 </script>
 
-<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0; margin-bottom:80px;">&copy; 2025 TrustVest. All Rights Reserved.</footer>
-
-<script>
-// Navigation Click Actions
-document.querySelectorAll('.nav-item').forEach(item => {
-  item.addEventListener('click', function() {
-    const page = this.getAttribute('data-page');
-    window.location.href = page;
-  });
-});
-</script>
+<!-- Footer -->
+<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0;">
+  &copy; 2025 TrustVest. All Rights Reserved.
+</footer>
 
 </body>
 </html>
