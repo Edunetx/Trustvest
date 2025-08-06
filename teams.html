@@ -1,94 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TrustVest - Teams</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #000;
-      color: #fff;
-      user-select: none;
-    }
-    .container {
-      padding: 20px;
-      padding-bottom: 100px;
-    }
-    .section {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid #00bfa6;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .section h2 {
-      margin: 0 0 10px 0;
-      color: #00bfa6;
-      font-size: 1.2rem;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .info-row:last-child {
-      border-bottom: none;
-    }
-    .info-label {
-      color: #bbb;
-    }
-    .info-value {
-      font-weight: bold;
-    }
-    .invitation-link {
-      background: #00bfa6;
-      color: #000;
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: bold;
-      cursor: pointer;
-      word-break: break-all;
-    }
-    .team-member {
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding: 10px 0;
-    }
-    .team-member:last-child {
-      border-bottom: none;
-    }
-    .team-email {
-      color: #00bfa6;
-      font-weight: bold;
-    }
-    .team-details {
-      font-size: 0.9rem;
-      color: #bbb;
-    }
-  </style>
-</head>
-<body>
-
-<div class="container">
-  <!-- Invitation Link Section -->
-  <div class="section">
-    <h2>Your Invitation Link</h2>
-    <div class="invitation-link" id="invitationLink">Generating...</div>
+<!-- Chunk 1: HEADER + NAVBAR + CAROUSEL START --><div class="teams-header">
+  <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+  <h1>Referrals</h1>
+</div><!-- Carousel Section --><div class="carousel">
+  <div class="carousel-track">
+    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Teamwork">
+    <img src="https://images.unsplash.com/photo-1600880292089-90e0839fa338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Workspace">
+    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Referral Tree">
   </div>
-
-  <!-- Team Members Section -->
-  <div class="section">
-    <h2>Your Team</h2>
-    <div id="teamList">
-      <!-- Team Members will load here -->
-    </div>
+</div><!-- Invitation Link Section --><div class="invite-section">
+  <h2>Your Invite Link</h2>
+  <div class="invite-link" id="inviteLink">Loading...</div>
+  <div class="btn-row">
+    <div class="btn" id="copyBtn">Copy Link</div>
+    <div class="btn" id="whatsappBtn">Share on WhatsApp</div>
+  </div>
+</div><!-- Navigation Bar --><div class="nav-bar">
+  <div class="nav-item" data-page="home">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
+  </div>
+  <div class="nav-item" data-page="plans">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+    Plans
+  </div>
+  <div class="nav-item active" data-page="teams">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    Teams
+  </div>
+  <div class="nav-item" data-page="me">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Me
   </div>
 </div>
+<!-- END OF CHUNK 1 -->
+<!-- Chunk 2: REFERRALS LIST & DROPDOWN FILTERS -->
+<div class="referrals-section">
+  <h2>Your Referrals</h2>
+  
+  <div class="dropdown-filters">
+    <select id="vipFilter">
+      <option value="all">All VIP Levels</option>
+      <option value="VIP1">VIP 1</option>
+      <option value="VIP2">VIP 2</option>
+      <option value="VIP3">VIP 3</option>
+      <option value="VIP4">VIP 4</option>
+    </select>
+    <select id="statusFilter">
+      <option value="all">All Status</option>
+      <option value="Active">Active</option>
+      <option value="Inactive">Inactive</option>
+    </select>
+  </div>
 
+  <div id="referralsList">
+    <!-- Dynamic Referrals Will Be Loaded Here -->
+    <p>Loading referrals...</p>
+  </div>
+</div>
+<!-- END OF CHUNK 2 -->
+<!-- CHUNK 3: Firebase Invite Link & Referrals Fetch Logic -->
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
@@ -97,7 +67,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, doc, getDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
@@ -114,68 +84,68 @@
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      const invitationLink = `${window.location.origin}/signup.html?ref=${user.uid}`;
-      document.getElementById('invitationLink').innerText = invitationLink;
+      const userId = user.uid;
+      const inviteLink = `${window.location.origin}/signup.html?ref=${userId}`;
+      document.getElementById('inviteLink').innerText = inviteLink;
 
-      const q = query(collection(db, "users"), where("referrer", "==", user.uid));
-      const querySnapshot = await getDocs(q);
+      // Fetch Referrals
+      const referralsQuery = query(collection(db, "users"), where("referrerId", "==", userId));
+      const querySnapshot = await getDocs(referralsQuery);
 
-      const teamList = document.getElementById('teamList');
+      const referralsList = document.getElementById('referralsList');
+      referralsList.innerHTML = ''; // Clear Placeholder
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const referralItem = document.createElement('div');
+        referralItem.className = 'referral-item';
+        referralItem.innerHTML = `
+          <div>
+            <div class="referral-name">${data.username || 'No Username'}</div>
+            <div class="referral-email">${data.email}</div>
+          </div>
+          <div class="referral-date">${new Date(data.signupDate?.toDate()).toLocaleDateString()}</div>
+        `;
+        referralsList.appendChild(referralItem);
+      });
+
       if (querySnapshot.empty) {
-        teamList.innerHTML = "<div>No team members yet.</div>";
-      } else {
-        querySnapshot.forEach((docSnap) => {
-          const data = docSnap.data();
-          const memberHTML = `
-            <div class="team-member">
-              <div class="team-email">${data.email}</div>
-              <div class="team-details">
-                Joined: ${new Date(data.createdAt?.seconds * 1000).toLocaleDateString()}<br>
-                Earnings: ₦${data.earnings?.toLocaleString() || '0'}<br>
-                Status: ${data.status || 'Active'}
-              </div>
-            </div>
-          `;
-          teamList.innerHTML += memberHTML;
-        });
+        referralsList.innerHTML = '<div style="text-align:center; color:#777;">No referrals found yet.</div>';
       }
-
     } else {
       window.location.href = 'login.html';
     }
   });
+
+  // Copy Invite Link Function
+  document.getElementById('copyBtn').onclick = () => {
+    const linkText = document.getElementById('inviteLink').innerText;
+    navigator.clipboard.writeText(linkText).then(() => {
+      alert('Invite Link Copied!');
+    });
+  };
+
+  // Share on WhatsApp Function
+  document.getElementById('whatsappBtn').onclick = () => {
+    const linkText = document.getElementById('inviteLink').innerText;
+    const message = `Join me on TrustVest and earn daily income! Use my invite link: ${linkText}`;
+    const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+  };
 </script>
+<!-- END OF CHUNK 3 -->
+<!-- CHUNK 4: Tawk.to Chat + Footer + Closing Tags -->
 
-<!-- Bottom Navigation Bar -->
-<div class="nav-bar">
-  <div class="nav-item" data-page="home.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    Home
-  </div>
-  <div class="nav-item active" data-page="teams.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    Teams
-  </div>
-  <div class="nav-item" data-page="plans.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
-    Plans
-  </div>
-  <div class="nav-item" data-page="me.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    Me
-  </div>
-</div>
-
-<!-- Tawk.to AI Chat -->
+<!-- Tawk.to Apollo AI Chat -->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 (function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
+  var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+  s1.async = true;
+  s1.src = 'https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+  s1.charset = 'UTF-8';
+  s1.setAttribute('crossorigin', '*');
+  s0.parentNode.insertBefore(s1, s0);
 })();
 Tawk_API.onLoad = function() {
   const tawkBubble = document.querySelector('iframe[title="chat widget"]');
@@ -186,8 +156,13 @@ Tawk_API.onLoad = function() {
 };
 </script>
 
+<!-- Footer -->
+<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0; margin-bottom:80px;">
+  &copy; 2025 TrustVest. All Rights Reserved.
+</footer>
+
+<!-- Navigation Functionality -->
 <script>
-// Navbar Click Navigation
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', function() {
     const page = this.getAttribute('data-page');
@@ -198,3 +173,4 @@ document.querySelectorAll('.nav-item').forEach(item => {
 
 </body>
 </html>
+<!-- END OF CHUNK 4 -->
