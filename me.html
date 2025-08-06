@@ -219,6 +219,19 @@
     }
   };
 </script>
-
+// In Chunk 5 Script Section:
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      document.getElementById("userEmail").textContent = userData.email || user.email;
+      // Optional: Dynamically set VIP status
+      document.getElementById("vipStatus").textContent = `VIP: ${userData.vipLevel || '1'} | STATUS: Active`;
+    }
+  } else {
+    window.location.href = 'login.html';
+  }
+});
 </body>
 </html>
