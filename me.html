@@ -43,7 +43,6 @@
     }
     .info-value {
       font-weight: bold;
-      transition: color 0.3s ease;
     }
     .btn-row {
       display: flex;
@@ -195,44 +194,32 @@
   const db = getFirestore(app);
 
   const spinner = document.getElementById('spinnerOverlay');
-  let currentUserUID = null;
 
-  const fetchUserData = async () => {
-    if (!currentUserUID) return;
-    spinner.style.display = 'flex';
-    const userDocRef = doc(db, "users", currentUserUID);
-    const userSnap = await getDoc(userDocRef);
-    if (userSnap.exists()) {
-      const userData = userSnap.data();
-      document.getElementById('vipLevel').innerText = userData.vipLevel || 'N/A';
-      document.getElementById('status').innerText = userData.status || 'Active';
-      document.getElementById('rechargeBalance').innerText = `₦${userData.rechargeBalance?.toLocaleString() || '0'}`;
-      document.getElementById('withdrawBalance').innerText = `₦${userData.withdrawBalance?.toLocaleString() || '0'}`;
-      document.getElementById('dailyIncome').innerText = `₦${userData.dailyIncome?.toLocaleString() || '0'}`;
-      document.getElementById('teamIncome').innerText = `₦${userData.teamIncome?.toLocaleString() || '0'}`;
-      document.getElementById('totalWithdraw').innerText = `₦${userData.totalWithdraw?.toLocaleString() || '0'}`;
-      // Blink effect
-      document.querySelectorAll('.info-value').forEach(el => {
-        el.style.color = '#00ffcc';
-        setTimeout(() => el.style.color = '#fff', 300);
-      });
-    } else {
-      alert("User data not found.");
-    }
-    spinner.style.display = 'none';
-  };
-
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
-      currentUserUID = user.uid;
+      spinner.style.display = 'flex';
       document.getElementById('userEmail').innerText = user.email;
-      fetchUserData();
-      setInterval(fetchUserData, 10000); // Auto-sync every 10 seconds
+      const userDocRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userDocRef);
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        document.getElementById('vipLevel').innerText = userData.vipLevel || 'N/A';
+        document.getElementById('status').innerText = userData.status || 'Active';
+        document.getElementById('rechargeBalance').innerText = `₦${userData.rechargeBalance?.toLocaleString() || '0'}`;
+        document.getElementById('withdrawBalance').innerText = `₦${userData.withdrawBalance?.toLocaleString() || '0'}`;
+        document.getElementById('dailyIncome').innerText = `₦${userData.dailyIncome?.toLocaleString() || '0'}`;
+        document.getElementById('teamIncome').innerText = `₦${userData.teamIncome?.toLocaleString() || '0'}`;
+        document.getElementById('totalWithdraw').innerText = `₦${userData.totalWithdraw?.toLocaleString() || '0'}`;
+      } else {
+        alert("User data not found.");
+      }
+      spinner.style.display = 'none';
     } else {
       window.location.href = 'login.html';
     }
   });
 
+  // Button Actions
   document.getElementById('rechargeBtn').onclick = () => window.location.href = 'recharge.html';
   document.getElementById('withdrawBtn').onclick = () => window.location.href = 'withdraw.html';
   document.getElementById('bankAccountLink').onclick = () => window.location.href = 'bank-accounts.html';
@@ -258,10 +245,30 @@
   </div>
 </div>
 
+<!-- Tawk.to AI Chat Widget -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+Tawk_API.onLoad = function() {
+  const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+  if (tawkBubble) {
+    tawkBubble.style.bottom = '70px';
+    tawkBubble.style.right = '20px';
+  }
+};
+</script>
+
 <footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0; margin-bottom:80px;">&copy; 2025 TrustVest. All Rights Reserved.</footer>
 
 <script>
-// Navigation Actions
+// Navigation Click Actions
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', function() {
     const page = this.getAttribute('data-page');
