@@ -43,6 +43,7 @@
     }
     .info-value {
       font-weight: bold;
+      transition: color 0.3s ease;
     }
     .btn-row {
       display: flex;
@@ -60,9 +61,70 @@
       font-weight: bold;
       cursor: pointer;
     }
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #0a0a0a;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid #222;
+      z-index: 999;
+    }
+    .nav-item {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-item svg {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 5px;
+      fill: #00bfa6;
+      transition: transform 0.3s ease;
+    }
+    .nav-item:hover svg {
+      transform: scale(1.2);
+    }
+    .nav-item.active {
+      color: #00bfa6;
+      font-weight: bold;
+    }
+    .spinner-overlay {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      display: none;
+    }
+    .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #00bfa6;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
   </style>
 </head>
 <body>
+
+<div class="spinner-overlay" id="spinnerOverlay">
+  <div class="spinner"></div>
+</div>
 
 <div class="container">
   <!-- User Info Section -->
@@ -85,26 +147,11 @@
   <!-- Account Stats Section -->
   <div class="section">
     <h2>Account Summary</h2>
-    <div class="info-row">
-      <span class="info-label">Recharge Balance:</span>
-      <span class="info-value" id="rechargeBalance">₦0</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Withdraw Balance:</span>
-      <span class="info-value" id="withdrawBalance">₦0</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Daily Income:</span>
-      <span class="info-value" id="dailyIncome">₦0</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Team Income:</span>
-      <span class="info-value" id="teamIncome">₦0</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Total Withdrawn:</span>
-      <span class="info-value" id="totalWithdraw">₦0</span>
-    </div>
+    <div class="info-row"><span class="info-label">Recharge Balance:</span><span class="info-value" id="rechargeBalance">₦0</span></div>
+    <div class="info-row"><span class="info-label">Withdraw Balance:</span><span class="info-value" id="withdrawBalance">₦0</span></div>
+    <div class="info-row"><span class="info-label">Daily Income:</span><span class="info-value" id="dailyIncome">₦0</span></div>
+    <div class="info-row"><span class="info-label">Team Income:</span><span class="info-value" id="teamIncome">₦0</span></div>
+    <div class="info-row"><span class="info-label">Total Withdrawn:</span><span class="info-value" id="totalWithdraw">₦0</span></div>
   </div>
 
   <!-- Action Buttons -->
@@ -123,6 +170,7 @@
     <div class="info-row link-row" id="logoutLink">Logout</div>
   </div>
 </div>
+
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
@@ -146,101 +194,71 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  onAuthStateChanged(auth, async (user) => {
+  const spinner = document.getElementById('spinnerOverlay');
+  let currentUserUID = null;
+
+  const fetchUserData = async () => {
+    if (!currentUserUID) return;
+    spinner.style.display = 'flex';
+    const userDocRef = doc(db, "users", currentUserUID);
+    const userSnap = await getDoc(userDocRef);
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      document.getElementById('vipLevel').innerText = userData.vipLevel || 'N/A';
+      document.getElementById('status').innerText = userData.status || 'Active';
+      document.getElementById('rechargeBalance').innerText = `₦${userData.rechargeBalance?.toLocaleString() || '0'}`;
+      document.getElementById('withdrawBalance').innerText = `₦${userData.withdrawBalance?.toLocaleString() || '0'}`;
+      document.getElementById('dailyIncome').innerText = `₦${userData.dailyIncome?.toLocaleString() || '0'}`;
+      document.getElementById('teamIncome').innerText = `₦${userData.teamIncome?.toLocaleString() || '0'}`;
+      document.getElementById('totalWithdraw').innerText = `₦${userData.totalWithdraw?.toLocaleString() || '0'}`;
+      // Blink effect
+      document.querySelectorAll('.info-value').forEach(el => {
+        el.style.color = '#00ffcc';
+        setTimeout(() => el.style.color = '#fff', 300);
+      });
+    } else {
+      alert("User data not found.");
+    }
+    spinner.style.display = 'none';
+  };
+
+  onAuthStateChanged(auth, (user) => {
     if (user) {
+      currentUserUID = user.uid;
       document.getElementById('userEmail').innerText = user.email;
-      const userDocRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userDocRef);
-
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-
-        document.getElementById('vipLevel').innerText = userData.vipLevel || 'N/A';
-        document.getElementById('status').innerText = userData.status || 'Active';
-
-        document.getElementById('rechargeBalance').innerText = `₦${userData.rechargeBalance?.toLocaleString() || '0'}`;
-        document.getElementById('withdrawBalance').innerText = `₦${userData.withdrawBalance?.toLocaleString() || '0'}`;
-        document.getElementById('dailyIncome').innerText = `₦${userData.dailyIncome?.toLocaleString() || '0'}`;
-        document.getElementById('teamIncome').innerText = `₦${userData.teamIncome?.toLocaleString() || '0'}`;
-        document.getElementById('totalWithdraw').innerText = `₦${userData.totalWithdraw?.toLocaleString() || '0'}`;
-
-      } else {
-        alert("User data not found.");
-      }
+      fetchUserData();
+      setInterval(fetchUserData, 10000); // Auto-sync every 10 seconds
     } else {
       window.location.href = 'login.html';
     }
   });
 
-  // Button Actions
-  document.getElementById('rechargeBtn').onclick = () => {
-    window.location.href = 'recharge.html';
-  };
-  document.getElementById('withdrawBtn').onclick = () => {
-    window.location.href = 'withdraw.html';
-  };
-  document.getElementById('bankAccountLink').onclick = () => {
-    window.location.href = 'bank-accounts.html';
-  };
-  document.getElementById('activeDeviceLink').onclick = () => {
-    window.location.href = 'active-device.html';
-  };
-  document.getElementById('historyLink').onclick = () => {
-    window.location.href = 'history.html';
-  };
-  document.getElementById('playStoreLink').onclick = () => {
-    window.open('https://play.google.com/store', '_blank');
-  };
-  document.getElementById('logoutLink').onclick = () => {
-    signOut(auth).then(() => {
-      window.location.href = 'login.html';
-    });
-  };
+  document.getElementById('rechargeBtn').onclick = () => window.location.href = 'recharge.html';
+  document.getElementById('withdrawBtn').onclick = () => window.location.href = 'withdraw.html';
+  document.getElementById('bankAccountLink').onclick = () => window.location.href = 'bank-accounts.html';
+  document.getElementById('activeDeviceLink').onclick = () => window.location.href = 'active-device.html';
+  document.getElementById('historyLink').onclick = () => window.location.href = 'history.html';
+  document.getElementById('playStoreLink').onclick = () => window.open('https://play.google.com/store', '_blank');
+  document.getElementById('logoutLink').onclick = () => signOut(auth).then(() => window.location.href = 'login.html');
 </script>
+
 <!-- Bottom Navigation Bar -->
 <div class="nav-bar">
   <div class="nav-item" data-page="home.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    Home
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Home
   </div>
   <div class="nav-item active" data-page="me.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    Me
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg> Me
   </div>
   <div class="nav-item" data-page="teams.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-    Teams
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg> Teams
   </div>
   <div class="nav-item" data-page="plans.html">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
-    Plans
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg> Plans
   </div>
 </div>
 
-<!-- Tawk.to Apollo AI Chat -->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-Tawk_API.onLoad = function() {
-  const tawkBubble = document.querySelector('iframe[title="chat widget"]');
-  if (tawkBubble) {
-    tawkBubble.style.bottom = '70px';
-    tawkBubble.style.right = '20px';
-  }
-};
-</script>
-
-<!-- Footer -->
-<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0; margin-bottom:80px;">
-  &copy; 2025 TrustVest. All Rights Reserved.
-</footer>
+<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0; margin-bottom:80px;">&copy; 2025 TrustVest. All Rights Reserved.</footer>
 
 <script>
 // Navigation Actions
