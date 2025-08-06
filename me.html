@@ -11,227 +11,246 @@
       font-family: 'Poppins', sans-serif;
       background: #000;
       color: #fff;
-      overflow-x: hidden;
       user-select: none;
     }
     .container {
       padding: 20px;
-      padding-bottom: 100px;
+      padding-bottom: 100px; /* For Nav Bar space */
     }
-    .header {
-      text-align: center;
+    .section {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #00bfa6;
+      border-radius: 15px;
+      padding: 20px;
       margin-bottom: 20px;
     }
-    .header img {
-      width: 80px;
-      margin-bottom: 10px;
-    }
-    .vip-status {
-      font-size: 1rem;
+    .section h2 {
+      margin: 0 0 10px 0;
       color: #00bfa6;
-      margin-bottom: 5px;
+      font-size: 1.2rem;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      color: #bbb;
+    }
+    .info-value {
       font-weight: bold;
     }
-    .user-email {
-      font-size: 0.9rem;
-      color: #aaa;
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .btn-action {
+      flex: 1;
+      margin: 0 5px;
+      background: #00bfa6;
+      color: #000;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header">
-    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
-    <div class="vip-status" id="vipStatus">VIP: 1 | STATUS: Active</div>
-    <div class="user-email" id="userEmail">Loading...</div>
+  <!-- User Info Section -->
+  <div class="section">
+    <h2>User Info</h2>
+    <div class="info-row">
+      <span class="info-label">VIP Level:</span>
+      <span class="info-value" id="vipLevel">-</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Status:</span>
+      <span class="info-value" id="status">-</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Email:</span>
+      <span class="info-value" id="userEmail">-</span>
+    </div>
   </div>
-  <!-- Chunk 2: Recharge & Balance Section -->
-<div class="action-buttons">
-  <button id="rechargeBtn">Recharge</button>
-  <button id="withdrawBtn">Withdraw</button>
-</div>
 
-<div class="balance-info">
-  <div class="balance-item">
-    <span>Total Withdraw</span>
-    <strong id="totalWithdraw">0 NGN</strong>
+  <!-- Account Stats Section -->
+  <div class="section">
+    <h2>Account Summary</h2>
+    <div class="info-row">
+      <span class="info-label">Recharge Balance:</span>
+      <span class="info-value" id="rechargeBalance">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Withdraw Balance:</span>
+      <span class="info-value" id="withdrawBalance">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Daily Income:</span>
+      <span class="info-value" id="dailyIncome">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Team Income:</span>
+      <span class="info-value" id="teamIncome">₦0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Total Withdrawn:</span>
+      <span class="info-value" id="totalWithdraw">₦0</span>
+    </div>
   </div>
-  <div class="balance-item">
-    <span>Recharge Balance</span>
-    <strong id="rechargeBalance">0 NGN</strong>
-  </div>
-  <div class="balance-item">
-    <span>Withdraw Balance</span>
-    <strong id="withdrawBalance">0 NGN</strong>
-  </div>
-  <div class="balance-item">
-    <span>Daily Income</span>
-    <strong id="dailyIncome">0 NGN</strong>
-  </div>
-  <div class="balance-item">
-    <span>Team Income</span>
-    <strong id="teamIncome">0 NGN</strong>
-  </div>
-</div>
 
-<style>
-  .action-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-  }
-  .action-buttons button {
-    padding: 10px 20px;
-    background: #00bfa6;
-    border: none;
-    border-radius: 8px;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .balance-info {
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
-  }
-  .balance-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  .balance-item:last-child {
-    border-bottom: none;
-  }
-</style>
-<div class="stats-box">
-  <div class="stats-item">
-    <div class="label">Recharge Balance</div>
-    <div class="value" id="rechargeBalance">₦0</div>
+  <!-- Action Buttons -->
+  <div class="btn-row">
+    <div class="btn-action" id="rechargeBtn">Recharge</div>
+    <div class="btn-action" id="withdrawBtn">Withdraw</div>
   </div>
-  <div class="stats-item">
-    <div class="label">Withdraw Balance</div>
-    <div class="value" id="withdrawBalance">₦0</div>
-  </div>
-  <div class="stats-item">
-    <div class="label">Daily Income</div>
-    <div class="value" id="dailyIncome">₦0</div>
-  </div>
-  <div class="stats-item">
-    <div class="label">Team Income</div>
-    <div class="value" id="teamIncome">₦0</div>
-  </div>
-  <div class="stats-item">
-    <div class="label">Withdrawal in Total</div>
-    <div class="value" id="withdrawalTotal">₦0</div>
-  </div>
-</div>
 
-<div class="options-section">
-  <div class="option-item" onclick="window.location.href='recharge.html'">
-    <span>Recharge</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
-  </div>
-  <div class="option-item" onclick="window.location.href='withdraw.html'">
-    <span>Withdraw</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9S3 7.03 3 12s4.03 9 9 9zm-1-4v-4H8l4-4 4 4h-3v4h-2z"/></svg>
-  </div>
-  <div class="option-item" onclick="window.location.href='bank-accounts.html'">
-    <span>Bank Account</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 3L2 9l10 6 10-6-10-6zm0 2.18L18.09 9 12 12.82 5.91 9 12 5.18zM2 17h20v2H2v-2zm0-4h20v2H2v-2z"/></svg>
-  </div>
-  <div class="option-item" onclick="window.location.href='device.html'">
-    <span>Active Device</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
-  </div>
-  <div class="option-item" onclick="window.location.href='history.html'">
-    <span>History</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M13 3a9 9 0 00-9 9H1l4 4 4-4H5a7 7 0 117 7 7.001 7.001 0 01-6.938-6H5a9 9 0 108-8.938V3z"/></svg>
-  </div>
-  <div class="option-item" onclick="window.location.href='https://play.google.com/store'">
-    <span>Play Store</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M3.9 2.5l13.9 8-13.9 8V2.5zm15.1 7.5l-2.2-1.3-2.5 2.5 2.5 2.5 2.2-1.3V10zm-4.7 2.5l-8.6 5V7.5l8.6 5z"/></svg>
-  </div>
-  <div class="option-item" onclick="logout()">
-    <span>Logout</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ff4d4d" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+  <!-- Links Section -->
+  <div class="section">
+    <h2>Quick Links</h2>
+    <div class="info-row link-row" id="bankAccountLink">Bank Account</div>
+    <div class="info-row link-row" id="activeDeviceLink">Active Device</div>
+    <div class="info-row link-row" id="historyLink">History</div>
+    <div class="info-row link-row" id="playStoreLink">Play Store</div>
+    <div class="info-row link-row" id="logoutLink">Logout</div>
   </div>
 </div>
-<!-- Navigation Bar -->
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+    authDomain: "trustvest-a1bd9.firebaseapp.com",
+    projectId: "trustvest-a1bd9",
+    storageBucket: "trustvest-a1bd9.appspot.com",
+    messagingSenderId: "676220073092",
+    appId: "1:676220073092:web:b358f8821ac33da9babed1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      document.getElementById('userEmail').innerText = user.email;
+      const userDocRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+
+        document.getElementById('vipLevel').innerText = userData.vipLevel || 'N/A';
+        document.getElementById('status').innerText = userData.status || 'Active';
+
+        document.getElementById('rechargeBalance').innerText = `₦${userData.rechargeBalance?.toLocaleString() || '0'}`;
+        document.getElementById('withdrawBalance').innerText = `₦${userData.withdrawBalance?.toLocaleString() || '0'}`;
+        document.getElementById('dailyIncome').innerText = `₦${userData.dailyIncome?.toLocaleString() || '0'}`;
+        document.getElementById('teamIncome').innerText = `₦${userData.teamIncome?.toLocaleString() || '0'}`;
+        document.getElementById('totalWithdraw').innerText = `₦${userData.totalWithdraw?.toLocaleString() || '0'}`;
+
+      } else {
+        alert("User data not found.");
+      }
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+
+  // Button Actions
+  document.getElementById('rechargeBtn').onclick = () => {
+    window.location.href = 'recharge.html';
+  };
+  document.getElementById('withdrawBtn').onclick = () => {
+    window.location.href = 'withdraw.html';
+  };
+  document.getElementById('bankAccountLink').onclick = () => {
+    window.location.href = 'bank-accounts.html';
+  };
+  document.getElementById('activeDeviceLink').onclick = () => {
+    window.location.href = 'active-device.html';
+  };
+  document.getElementById('historyLink').onclick = () => {
+    window.location.href = 'history.html';
+  };
+  document.getElementById('playStoreLink').onclick = () => {
+    window.open('https://play.google.com/store', '_blank');
+  };
+  document.getElementById('logoutLink').onclick = () => {
+    signOut(auth).then(() => {
+      window.location.href = 'login.html';
+    });
+  };
+</script>
+<!-- Bottom Navigation Bar -->
 <div class="nav-bar">
   <div class="nav-item" data-page="home.html">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
     Home
   </div>
-  <div class="nav-item" data-page="plans.html">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M20 6H8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
-    Plans
+  <div class="nav-item active" data-page="me.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Me
   </div>
   <div class="nav-item" data-page="teams.html">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
     Teams
   </div>
-  <div class="nav-item active" data-page="me.html">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
-    Me
+  <div class="nav-item" data-page="plans.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+    Plans
   </div>
 </div>
 
+<!-- Tawk.to Apollo AI Chat -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+Tawk_API.onLoad = function() {
+  const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+  if (tawkBubble) {
+    tawkBubble.style.bottom = '70px';
+    tawkBubble.style.right = '20px';
+  }
+};
+</script>
+
 <!-- Footer -->
-<footer style="text-align:center; color:#555; font-size:12px; margin-bottom:80px;">
+<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0; margin-bottom:80px;">
   &copy; 2025 TrustVest. All Rights Reserved.
 </footer>
 
-<!-- Navigation Script -->
 <script>
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function() {
-      const page = this.getAttribute('data-page');
-      window.location.href = page;
-    });
+// Navigation Actions
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    const page = this.getAttribute('data-page');
+    window.location.href = page;
   });
-
-  function logout() {
-    firebase.auth().signOut().then(() => {
-      window.location.href = 'login.html';
-    });
-  }
-</script>
-
-<!-- Tawk.to AI Chat Bubble -->
-<script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-  })();
-  Tawk_API.onLoad = function() {
-    const tawkBubble = document.querySelector('iframe[title="chat widget"]');
-    if (tawkBubble) {
-      tawkBubble.style.bottom = '70px'; // Lift above navbar
-      tawkBubble.style.right = '20px';
-    }
-  };
-</script>
-// In Chunk 5 Script Section:
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
-      document.getElementById("userEmail").textContent = userData.email || user.email;
-      // Optional: Dynamically set VIP status
-      document.getElementById("vipStatus").textContent = `VIP: ${userData.vipLevel || '1'} | STATUS: Active`;
-    }
-  } else {
-    window.location.href = 'login.html';
-  }
 });
+</script>
+
 </body>
 </html>
