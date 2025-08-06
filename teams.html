@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrustVest - Teams</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    .container {
+      padding: 20px;
+      padding-bottom: 80px; /* Space for Nav Bar */
+    }
+    h1 {
+      color: #00bfa6;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .team-summary {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #00bfa6;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .team-summary h2 {
+      font-size: 1.2rem;
+      margin: 0 0 10px 0;
+      color: #00bfa6;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      color: #bbb;
+    }
+    .info-value {
+      font-weight: bold;
+    }
+    .team-list {
+      margin-top: 20px;
+    }
+    .team-member {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #00bfa6;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    .member-email {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #00bfa6;
+      word-break: break-word;
+    }
+    .member-date {
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Your Team</h1>
+
+  <!-- Team Summary -->
+  <div class="team-summary">
+    <h2>Team Overview</h2>
+    <div class="info-row">
+      <span class="info-label">Total Team Members:</span>
+      <span class="info-value" id="teamCount">0</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Team Income:</span>
+      <span class="info-value" id="teamIncome">₦0</span>
+    </div>
+  </div>
+
+  <!-- Team List -->
+  <div class="team-list" id="teamList">
+    <!-- Team Members will appear here -->
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyArPe6RM7qbUC49XvbDZWvcpr_iGoIRzrA",
+    authDomain: "trustvest-a1bd9.firebaseapp.com",
+    projectId: "trustvest-a1bd9",
+    storageBucket: "trustvest-a1bd9.appspot.com",
+    messagingSenderId: "676220073092",
+    appId: "1:676220073092:web:b358f8821ac33da9babed1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      // Fetch Team Members where 'referrerId' == user.uid
+      const teamQuery = query(collection(db, "users"), where("referrerId", "==", user.uid));
+      const teamSnapshot = await getDocs(teamQuery);
+
+      let teamCount = 0;
+      let teamIncome = 0;
+      const teamListContainer = document.getElementById('teamList');
+
+      teamSnapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        teamCount++;
+
+        teamIncome += data.teamIncome || 0;
+
+        const memberDiv = document.createElement('div');
+        memberDiv.classList.add('team-member');
+
+        memberDiv.innerHTML = `
+          <div class="member-email">${data.email}</div>
+          <div class="member-date">Joined: ${new Date(data.createdAt?.seconds * 1000).toLocaleString()}</div>
+        `;
+        teamListContainer.appendChild(memberDiv);
+      });
+
+      document.getElementById('teamCount').innerText = teamCount;
+      document.getElementById('teamIncome').innerText = `₦${teamIncome.toLocaleString()}`;
+
+    } else {
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+<!-- Bottom Navigation Bar -->
+<div class="nav-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-top: 1px solid #222; z-index: 999;">
+  <div class="nav-item" data-page="home.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    <div style="font-size:12px; color:#888;">Home</div>
+  </div>
+  <div class="nav-item active" data-page="teams.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    <div style="font-size:12px; color:#00bfa6; font-weight:bold;">Teams</div>
+  </div>
+  <div class="nav-item" data-page="plans.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 14H4V6h5.17L11.17 8H20v12z"/></svg>
+    <div style="font-size:12px; color:#888;">Plans</div>
+  </div>
+  <div class="nav-item" data-page="me.html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    <div style="font-size:12px; color:#888;">Me</div>
+  </div>
+</div>
+
+<!-- Tawk.to Apollo AI Chat -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+Tawk_API.onLoad = function() {
+  const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+  if (tawkBubble) {
+    tawkBubble.style.bottom = '70px';
+    tawkBubble.style.right = '20px';
+  }
+};
+</script>
+
+<!-- Footer -->
+<footer style="text-align:center; color:#555; font-size:0.8rem; padding:20px 0; margin-bottom:80px;">
+  &copy; 2025 TrustVest. All Rights Reserved.
+</footer>
+
+<script>
+// Navigation Click Handling
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    const page = this.getAttribute('data-page');
+    if(page !== "teams.html") {
+      window.location.href = page;
+    }
+  });
+});
+</script>
+
+</body>
+</html>
