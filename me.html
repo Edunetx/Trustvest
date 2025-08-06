@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TrustVest - Me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+      user-select: none;
+    }
+    .container {
+      padding: 20px;
+      padding-bottom: 100px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+    .vip-status {
+      font-size: 1rem;
+      color: #00bfa6;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .user-email {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/Edunetx/Trustvest/main/Teal%20and%20White%20Modern%20Geometric%20Financial%20Service%20Business%20Logo_20250728_134253_0000.png" alt="TrustVest Logo">
+    <div class="vip-status" id="vipStatus">VIP: 1 | STATUS: Active</div>
+    <div class="user-email" id="userEmail">Loading...</div>
+  </div>
+  <!-- Chunk 2: Recharge & Balance Section -->
+<div class="action-buttons">
+  <button id="rechargeBtn">Recharge</button>
+  <button id="withdrawBtn">Withdraw</button>
+</div>
+
+<div class="balance-info">
+  <div class="balance-item">
+    <span>Total Withdraw</span>
+    <strong id="totalWithdraw">0 NGN</strong>
+  </div>
+  <div class="balance-item">
+    <span>Recharge Balance</span>
+    <strong id="rechargeBalance">0 NGN</strong>
+  </div>
+  <div class="balance-item">
+    <span>Withdraw Balance</span>
+    <strong id="withdrawBalance">0 NGN</strong>
+  </div>
+  <div class="balance-item">
+    <span>Daily Income</span>
+    <strong id="dailyIncome">0 NGN</strong>
+  </div>
+  <div class="balance-item">
+    <span>Team Income</span>
+    <strong id="teamIncome">0 NGN</strong>
+  </div>
+</div>
+
+<style>
+  .action-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  .action-buttons button {
+    padding: 10px 20px;
+    background: #00bfa6;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .balance-info {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .balance-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .balance-item:last-child {
+    border-bottom: none;
+  }
+</style>
+<div class="stats-box">
+  <div class="stats-item">
+    <div class="label">Recharge Balance</div>
+    <div class="value" id="rechargeBalance">₦0</div>
+  </div>
+  <div class="stats-item">
+    <div class="label">Withdraw Balance</div>
+    <div class="value" id="withdrawBalance">₦0</div>
+  </div>
+  <div class="stats-item">
+    <div class="label">Daily Income</div>
+    <div class="value" id="dailyIncome">₦0</div>
+  </div>
+  <div class="stats-item">
+    <div class="label">Team Income</div>
+    <div class="value" id="teamIncome">₦0</div>
+  </div>
+  <div class="stats-item">
+    <div class="label">Withdrawal in Total</div>
+    <div class="value" id="withdrawalTotal">₦0</div>
+  </div>
+</div>
+
+<div class="options-section">
+  <div class="option-item" onclick="window.location.href='recharge.html'">
+    <span>Recharge</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
+  </div>
+  <div class="option-item" onclick="window.location.href='withdraw.html'">
+    <span>Withdraw</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9S3 7.03 3 12s4.03 9 9 9zm-1-4v-4H8l4-4 4 4h-3v4h-2z"/></svg>
+  </div>
+  <div class="option-item" onclick="window.location.href='bank-accounts.html'">
+    <span>Bank Account</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 3L2 9l10 6 10-6-10-6zm0 2.18L18.09 9 12 12.82 5.91 9 12 5.18zM2 17h20v2H2v-2zm0-4h20v2H2v-2z"/></svg>
+  </div>
+  <div class="option-item" onclick="window.location.href='device.html'">
+    <span>Active Device</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
+  </div>
+  <div class="option-item" onclick="window.location.href='history.html'">
+    <span>History</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M13 3a9 9 0 00-9 9H1l4 4 4-4H5a7 7 0 117 7 7.001 7.001 0 01-6.938-6H5a9 9 0 108-8.938V3z"/></svg>
+  </div>
+  <div class="option-item" onclick="window.location.href='https://play.google.com/store'">
+    <span>Play Store</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00bfa6" viewBox="0 0 24 24"><path d="M3.9 2.5l13.9 8-13.9 8V2.5zm15.1 7.5l-2.2-1.3-2.5 2.5 2.5 2.5 2.2-1.3V10zm-4.7 2.5l-8.6 5V7.5l8.6 5z"/></svg>
+  </div>
+  <div class="option-item" onclick="logout()">
+    <span>Logout</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ff4d4d" viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zm3-10H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+  </div>
+</div>
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <div class="nav-item" data-page="home.html">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Home
+  </div>
+  <div class="nav-item" data-page="plans.html">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M20 6H8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+    Plans
+  </div>
+  <div class="nav-item" data-page="teams.html">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    Teams
+  </div>
+  <div class="nav-item active" data-page="me.html">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bfa6" viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/></svg>
+    Me
+  </div>
+</div>
+
+<!-- Footer -->
+<footer style="text-align:center; color:#555; font-size:12px; margin-bottom:80px;">
+  &copy; 2025 TrustVest. All Rights Reserved.
+</footer>
+
+<!-- Navigation Script -->
+<script>
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const page = this.getAttribute('data-page');
+      window.location.href = page;
+    });
+  });
+
+  function logout() {
+    firebase.auth().signOut().then(() => {
+      window.location.href = 'login.html';
+    });
+  }
+</script>
+
+<!-- Tawk.to AI Chat Bubble -->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/688fdc6c88d9b3192aa8420e/1j1ova251';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+  })();
+  Tawk_API.onLoad = function() {
+    const tawkBubble = document.querySelector('iframe[title="chat widget"]');
+    if (tawkBubble) {
+      tawkBubble.style.bottom = '70px'; // Lift above navbar
+      tawkBubble.style.right = '20px';
+    }
+  };
+</script>
+
+</body>
+</html>
